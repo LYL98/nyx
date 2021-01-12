@@ -1,0 +1,28 @@
+/* pages/province/province.wxss */
+
+.page-province {
+  padding: 110rpx 50rpx 0;
+}
+
+.page-province > .h1 {
+  font-size: 56rpx;
+  font-family: PingFangSC-Medium;
+}
+
+.page-province > .province-list {
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.page-province > .province-list > button {
+  width: 305rpx;
+  margin: 40rpx 0 0;
+  background: #fff;
+  color: #A1A6B3;
+}
+
+.page-province > .province-list > button.selected {
+  color: #00ADE7;
+}

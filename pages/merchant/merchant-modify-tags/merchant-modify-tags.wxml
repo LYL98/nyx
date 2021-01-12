@@ -1,0 +1,59 @@
+<!--pages/merchant/merchant-modify-tags/merchant-modify-tags.wxml-->
+
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<wxs src="./../merchant.wxs" module="merchant" />
+<view class="page-merchant-modify-tags">
+  <view class="form-item grade-tags">
+    <text class="label">商户等级</text>
+    <view class="card tags-container">
+      <view
+          wx:for="{{ gradeTags }}"
+          wx:key="index"
+          class="{{ item.code === editData.grade_code ? 'active' : '' }}"
+          data-item="{{item}}"
+          bind:tap="selectGradeTag"
+      >{{ tools.returnOmissionText(item.title, 6) }}</view>
+    </view>
+  </view>
+  <view class="form-item inner-tags">
+    <text class="label">内标签</text>
+    <view class="card" style="margin-top: 20rpx;">
+      <block wx:for="{{ innerTags }}" wx:key="index">
+        <view class="tags-title">{{item.title}}</view>
+        <view class="tags-container" style="margin-top: 0; padding-top: 20rpx;">
+          <view
+            wx:for="{{item.child_tags}}"
+            wx:for-item="c"
+            wx:for-index="i"
+            wx:key="i"
+            class="{{ merchant.judgeInnerTags(editData.inner_tag_ids, c) ? 'active' : '' }}"
+            data-updata="{{item}}"
+            data-item="{{c}}"
+            bind:tap="selectInnerTag"
+          >{{ tools.returnOmissionText(c.title, 6) }}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="form-item outer-tags">
+    <text class="label">外标签</text>
+    <view class="card tags-container">
+      <view
+          wx:for="{{ outerTags }}"
+          wx:key="index"
+          class="{{ merchant.judgeTags(editData.outer_tags, item) ? 'active' : '' }}"
+          data-item="{{item}}"
+          bind:tap="selectOuterTag"
+      >{{ tools.returnOmissionText(item.title, 6) }}</view>
+    </view>
+  </view>
+
+  <button
+      class="btn-submit"
+      hover-class="btn-submit-hover"
+      loading="{{ loading }}"
+      disabled="{{ loading }}"
+      bind:tap="submit"
+  >确认</button>
+</view>

@@ -1,0 +1,12 @@
+<!--components/form/avatar/avatar.wxml-->
+<view class="upload">
+  <ul class="image-container" wx:if="{{value.length > 0}}">
+    <li wx:for="{{value}}" wx:for-item="item" wx:for-index="index" wx:key="{{item}}">
+      <image class="image" src="{{ tencentPath + item + '_min200x200' }}"></image>
+      <view class="delete-button" bindtap="onDelete" data-item="{{ item }}" wx:if="{{ !detail_module }}">
+        <image src="./../../../assets/img/icon-delete.png"></image>
+      </view>
+    </li>
+  </ul>
+  <view wx:if="{{value.length < limit && !detail_module}}" class="upload-button" bind:tap="onChange"></view>
+</view>

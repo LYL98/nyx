@@ -1,0 +1,97 @@
+<!--pages/merchant/merchant-detail/merchant-detail.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<view class="page-merchant-detail">
+  <view class="header">
+    <text class="label">商户信息</text>
+    <view class="operate">
+      <view class="more-button" bindtap="toggerOperateDialog" wx:if="{{ auth.isAdmin || auth.MerchantEdit || auth.MerchantGradeTags }}">
+        <image src="./../../../assets/img/icon-more.png"></image>
+      </view>
+      <view class="operate-dialog" wx:if="{{ dialog.isShow }}" bindtap="toggerOperateDialog">
+        <view class="button"></view>
+        <view class="operate-list">
+          <!--<view class="item" data-type="add_merchant" bindtap="selectOperateItem">新增商户</view>-->
+          <view class="item" data-type="modify_detail" bindtap="selectOperateItem" wx:if="{{ auth.isAdmin || auth.MerchantEdit }}">修改信息</view>
+          <view class="item" data-type="modify_tags" bindtap="selectOperateItem" wx:if="{{ auth.isAdmin || auth.MerchantGradeTags }}">修改等级标签</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="card list-detail">
+    <view class="item">
+      <text class="label">商户名</text>
+      <text class="content">{{ detail.title }}</text>
+    </view>
+    <view class="item">
+      <text class="label">成长值</text>
+      <text class="content">{{ detail.growth }}</text>
+    </view>
+    <view class="item">
+      <text class="label">会员等级</text>
+      <text class="content">{{ detail.vip_title }}</text>
+    </view>
+    <view class="item">
+      <text class="label">协议商户</text>
+      <text class="content">{{ detail.is_post_pay ? '是' : '否'}}</text>
+    </view>
+    <view class="item" wx:if="{{ detail.is_post_pay }}">
+      <text class="label">授信额度</text>
+      <text class="content">￥{{ tools.returnPrice(detail.credit_limit) }}</text>
+    </view>
+    <view class="item">
+      <text class="label">账户余额</text>
+      <text class="content">￥{{ tools.returnPrice(detail.balance) }}</text>
+    </view>
+    <view class="item">
+      <text class="label">商户等级</text>
+      <text class="content">{{ detail.grade && detail.grade.title }}</text>
+    </view>
+    <view class="item">
+      <text class="label">内标签</text>
+      <view class="content">
+        <view class="tags-container">
+          <view class="li" wx:for="{{ detail.inner_tags }}" wx:key="index">
+            <text>{{ item.title }}</text>
+            <text wx:if="{{ index < detail.inner_tags.length - 1 }}" style="padding-right: 8rpx;">{{ '; ' }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <text class="label">外标签</text>
+      <view class="content">
+        <view class="tags-container">
+          <view class="li" wx:for="{{ detail.outer_tags }}" wx:key="index">
+            <text>{{ item }}</text>
+            <text wx:if="{{ index < detail.outer_tags.length - 1 }}" style="padding-right: 8rpx;">{{ '; ' }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <text class="label">创建时间</text>
+      <text class="content">{{ tools.returnDateFormat(detail.created, 'yyyy-MM-dd') }}</text>
+    </view>
+    <view class="item">
+      <text class="label">更新时间</text>
+      <text class="content">{{ tools.returnDateFormat(detail.updated, 'yyyy-MM-dd') }}</text>
+    </view>
+    <view class="item">
+      <text class="label">等级更新时间</text>
+      <text class="content">{{ tools.returnDateFormat(detail.vip_updated_time, 'yyyy-MM-dd') }}</text>
+    </view>
+  </view>
+  <view class="card list-operate">
+    <view class="item" bind:tap="handleShowStoreList" wx:if="{{ auth.isAdmin || auth.MerchantStoreList }}">
+      <text>查看门店信息</text>
+      <image src="./../../../assets/img/icon-right.png"></image>
+    </view>
+    <view class="ml-20" wx:if="{{ auth.isAdmin || (auth.MerchantStoreList && auth.MerchantMemberList) }}" />
+    <view class="item" bind:tap="handleShowMemberList" wx:if="{{ auth.isAdmin || auth.MerchantMemberList }}">
+      <text>查看用户信息</text>
+      <image src="./../../../assets/img/icon-right.png"></image>
+    </view>
+  </view>
+
+</view>

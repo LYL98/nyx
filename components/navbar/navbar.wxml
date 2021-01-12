@@ -1,0 +1,10 @@
+<view class="blank" wx:if="{{ fixed }}"></view>
+<scroll-view scroll-x="true" class="navbar {{ fixed && 'fixed' }}" style="top: {{top}}rpx;width: {{totalWidth}}rpx;" scroll-left="{{listOffset}}" scroll-with-animation="{{true}}">
+    <view class="item {{activeIndex == index && 'active'}}" style="width: {{width}}rpx;" wx:for="{{list}}" wx:item="item" wx:index="index" wx:key="index" id="{{index}}" bindtap="navTouch">
+        {{ item }}
+    </view>
+    <view class="slider" style="background-color: {{color}}; width:{{sliderWidth}}rpx; transform: translateX({{sliderLeft + sliderOffset}}rpx);"></view>
+</scroll-view>
+<!-- <view class="navbar {{ fixed && 'fixed' }}"> -->
+<!--  -->
+<!-- </view> -->

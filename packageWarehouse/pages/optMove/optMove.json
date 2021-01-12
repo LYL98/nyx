@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "selectWarehouseTray": "/components/selectWarehouseTray/selectWarehouseTray",
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

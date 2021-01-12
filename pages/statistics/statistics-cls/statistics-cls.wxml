@@ -1,0 +1,405 @@
+<!--pages/statistics/statistics-manager/statistics-index.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<wxs src="./../statistics.wxs" module="statistics" />
+
+<view class="page">
+  <!--<cover-view class="split-line-top"></cover-view>-->
+  <view class="weui-tab__panel">
+    <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+      <!--商品销售统计-->
+      <view class="chart">
+        <view class="chart-header">
+          <view class="area-selector">
+            <picker bindchange="onProvinceSelect" value="{{index}}" range="{{provinceNames}}">
+              {{selectedProvince}}
+              <image class="c-img" src="../../../assets/img/icon-arrow-down.png" ></image>
+            </picker>
+          </view>
+          <view class="text-left">
+            <view class="name">
+              订单商品总金额:
+<!--              <image class="help-img" style="width: 26rpx; height: 26rpx;" src="../../../assets/img/icon_specification.png" data-type="item" bindtap="onIndexSpecificationClick"></image>-->
+            </view>
+            <view class="content">￥{{totalItems.length > 0 ? totalItems[0].value : ''}}</view>
+          </view>
+          <view class="text-right">
+            <view class="name">销售总量:</view>
+            <view class="content">{{totalItems.length > 1 ? totalItems[1].value : ''}}件</view>
+          </view>
+        </view>
+        <view class="container">
+          <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+        </view>
+      </view>
+      <view class="list">
+        <view style="overflow-x: scroll;">
+          <view class="head-view" style="width: 740rpx;">
+            <view class="col1 col-text">一级科学分类</view>
+            <view class="col2 col-text" bindtap="changeSortProduct" data-sort="{{query.sort === 'amount_real' ? '-amount_real' : 'amount_real'}}">
+              订单商品金额
+              <image src="{{rankSSrc}}" wx:if="{{query.sort === 'amount_real' }}"></image>
+              <image src="{{rankSl}}" wx:elif="{{query.sort === '-amount_real'}}"></image>
+              <image src="{{rankSrc}}" wx:if="{{query.sort != '-amount_real' && query.sort != 'amount_real'}}"></image>
+            </view>
+            <!--<view class="col3 col-text" bindtap="changeSortProduct" data-sort="{{query.sort === 'fram_total_price' ? '-fram_total_price' : 'fram_total_price'}}">-->
+            <!--筐金额-->
+            <!--<image src="{{rankSSrc}}" wx:if="{{query.sort === 'fram_total_price' }}"></image>-->
+            <!--<image src="{{rankSl}}" wx:elif="{{query.sort === '-fram_total_price'}}"></image>-->
+            <!--<image src="{{rankSrc}}" wx:if="{{query.sort != '-fram_total_price' && query.sort != 'fram_total_price'}}"></image>-->
+            <!--</view>-->
+            <view class="col4 col-text" bindtap="changeSortProduct" data-sort="{{query.sort === 'count_real' ? '-count_real' : 'count_real'}}">
+              件数
+              <image src="{{rankSSrc}}" wx:if="{{query.sort === 'count_real' }}"></image>
+              <image src="{{rankSl}}" wx:elif="{{query.sort === '-count_real'}}"></image>
+              <image src="{{rankSrc}}" wx:if="{{query.sort != '-count_real' && query.sort != 'count_real'}}"></image>
+            </view>
+            <view class="col5 col-text">占比</view>
+          </view>
+          <view bindtap="onItemClick" style="width: 740rpx;"
+                data-item="{{item}}"
+                class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{orderClassSumData}}"
+                wx:key="index">
+            <view class="col1 col-text">{{item.item_system_class || '其它'}}</view>
+            <view class="col2 col-text">￥{{tools.returnPrice(item.amount_real)}}</view>
+            <!--<view class="col3 col-text">￥{{tools.returnPrice(item.fram_total_price)}}</view>-->
+            <view class="col4 col-text">{{item.count_real}}</view>
+            <view class="col5 col-text">{{tools.returnPercentage(item.amount_real / 100, totalItems[0].value)}}%</view>
+          </view>
+        </view>
+      </view>
+      <view class="cover-query">
+        <cover-view class="cover-query-container">
+
+          <cover-view class="fix-date-container">
+          </cover-view>
+
+          <cover-view class="custom-date-container">
+            <cover-image class="custom-date-icon" src="../../../assets/img/icon-date.png"></cover-image>
+            <cover-view class="custom-date-start-text"></cover-view>
+            <cover-view class="custom-date-inner-text">至</cover-view>
+            <cover-view class="custom-date-end-text"></cover-view>
+          </cover-view>
+        </cover-view>
+
+        <picker bindchange="onFixDateSelect" value="{{index}}" range="{{fixDates}}">
+          <cover-view class="fix-date">
+            <cover-view class="c-text">{{currentFixDate}}</cover-view>
+            <cover-image class="c-img" src="../../../assets/img/icon-arrow-down.png" />
+          </cover-view>
+        </picker>
+
+        <picker mode="date"
+                value="{{startDate}}"
+                start="2000-01-01"
+                end="2100-01-01"
+                bindchange="onSelectStartDate">
+          <cover-view class="custom-date-start-picker">
+            <cover-view style="width: 200rpx; text-align: right;">{{startDate}}</cover-view>
+          </cover-view>
+        </picker>
+
+        <picker mode="date"
+                value="{{endDate}}"
+                start="2000-01-01"
+                end="2100-01-01"
+                bindchange="onSelectEndDate">
+          <cover-view class="custom-date-end-picker">
+            <cover-view style="width: 200rpx; text-align: left;">{{endDate}}</cover-view>
+          </cover-view>
+        </picker>
+
+        <cover-view class="cover-split-line"></cover-view>
+      </view>
+    </view>
+
+    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+      <!--商品销售排行-->
+      <view class="chart">
+        <view class="chart-header">
+          <view class="area-selector">
+            <picker bindchange="onRanklistonProvinceSelect" value="{{index}}" range="{{provinceNames}}">
+              {{selectedProvince}}
+              <image class="c-img" src="../../../assets/img/icon-arrow-down.png" ></image>
+            </picker>
+          </view>
+          <view class="text-left">
+            <view class="name">
+              订单商品总金额:
+<!--              <image class="help-img" style="width: 26rpx; height: 26rpx;" src="../../../assets/img/icon_specification.png" data-type="item" bindtap="onIndexSpecificationClick"></image>-->
+            </view>
+            <view class="content">￥{{tools.returnPrice(ranklistData.sale_amount_total)}}</view>
+          </view>
+          <view class="text-right">
+            <view class="name">销售总量:</view>
+            <view class="content">{{ranklistData.item_amount_total || '0'}}件</view>
+          </view>
+        </view>
+      </view>
+      <view class="list">
+        <view style="overflow-x: scroll;">
+          <view class="head-view" style="width: 1100rpx;">
+            <view class="col1 col-text" style="width: 400rpx;">商品名称</view>
+            <view class="col-text" style="width: 190rpx;" bindtap="changeSortProductRanklist" data-sort="{{queryRanklist.sort === 'sale_amount' ? '-sale_amount' : 'sale_amount'}}">
+              商品金额
+              <image src="{{rankSSrc}}" wx:if="{{queryRanklist.sort === 'sale_amount' }}"></image>
+              <image src="{{rankSl}}" wx:elif="{{queryRanklist.sort === '-sale_amount'}}"></image>
+              <image src="{{rankSrc}}" wx:if="{{queryRanklist.sort != '-sale_amount' && queryRanklist.sort != 'sale_amount'}}"></image>
+            </view>
+            <view class="col-text" style="width: 170rpx;" bindtap="changeSortProductRanklist" data-sort="{{queryRanklist.sort === 'item_amount' ? '-item_amount' : 'item_amount'}}">
+              件数
+              <image src="{{rankSSrc}}" wx:if="{{queryRanklist.sort === 'item_amount' }}"></image>
+              <image src="{{rankSl}}" wx:elif="{{queryRanklist.sort === '-item_amount'}}"></image>
+              <image src="{{rankSrc}}" wx:if="{{queryRanklist.sort != '-item_amount' && queryRanklist.sort != 'item_amount'}}"></image>
+            </view>
+            <view class="col-text" style="width: 170rpx;">金额占比</view>
+            <view class="col-text" style="width: 170rpx;">件数占比</view>
+          </view>
+          <view style="width: 1100rpx;"
+                data-item="{{item}}"
+                class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{ranklistData.items}}"
+                wx:key="index">
+            <view class="col1 col-text font-size-24" style="width: 400rpx;">{{item.item_title || '-'}}</view>
+            <view class="col-text font-size-24" style="width: 190rpx;">￥{{tools.returnPrice(item.sale_amount)}}</view>
+            <view class="col-text font-size-24" style="width: 170rpx; padding-left: 15rpx;">{{item.item_amount}}</view>
+            <view class="col-text font-size-24" style="width: 170rpx;">{{item.sale_ratio}}</view>
+            <view class="col-text font-size-24" style="width: 170rpx;">{{item.item_ratio}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="page-list-footer" wx:if="{{ranklistData.num > 0}}">
+        <text>{{tools.returnMore(ranklistData.num, queryRanklist)}}</text>
+      </view>
+      <view class="cover-query">
+        <cover-view class="cover-query-container">
+
+          <cover-view class="fix-date-container">
+          </cover-view>
+
+          <cover-view class="custom-date-container">
+            <cover-image class="custom-date-icon" src="../../../assets/img/icon-date.png"></cover-image>
+            <cover-view class="custom-date-start-text"></cover-view>
+            <cover-view class="custom-date-inner-text">至</cover-view>
+            <cover-view class="custom-date-end-text"></cover-view>
+          </cover-view>
+        </cover-view>
+
+        <picker bindchange="onFixDateSelectRanklist" value="{{index}}" range="{{fixDates}}">
+          <cover-view class="fix-date">
+            <cover-view class="c-text">{{currentFixDateRanklist}}</cover-view>
+            <cover-image class="c-img" src="../../../assets/img/icon-arrow-down.png" />
+          </cover-view>
+        </picker>
+
+        <picker mode="date"
+                value="{{startDateRanklist}}"
+                start="2000-01-01"
+                end="2100-01-01"
+                bindchange="onSelectStartDateRanklist">
+          <cover-view class="custom-date-start-picker">
+            <cover-view style="width: 200rpx; text-align: right;">{{startDateRanklist}}</cover-view>
+          </cover-view>
+        </picker>
+
+        <picker mode="date"
+                value="{{endDateRanklist}}"
+                start="2000-01-01"
+                end="2100-01-01"
+                bindchange="onSelectEndDateRanklist">
+          <cover-view class="custom-date-end-picker">
+            <cover-view style="width: 200rpx; text-align: left;">{{endDateRanklist}}</cover-view>
+          </cover-view>
+        </picker>
+
+        <cover-view class="cover-split-line"></cover-view>
+      </view>
+    </view>
+
+    <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+      <!--运营统计-->
+
+      <view class="chart">
+        <view class="line-chart-header-container">
+          <view class="chart-header">
+            <view class="left-selector">
+              <picker bindchange="onOperationProvinceSelect" value="{{index}}" range="{{provinceNames}}">
+                {{selectedProvince}}
+              </picker>
+              <image class="c-img" src="../../../assets/img/icon-arrow-down.png" ></image>
+            </view>
+            <view class="right-selector">
+              <picker class="picker" bindchange="onOperationIndexSelect" value="{{index}}" range="{{indexNames}}">
+                <text>{{selectedOperationIndex}}</text>
+                <image class="c-img" src="../../../assets/img/icon-arrow-down.png" ></image>
+              </picker>
+            </view>
+          </view>
+          <view style="display: flex">
+            <view class="zoom-preview" bindtap="previewLineChart">
+              <image src="../../../assets/img/icon_zoom.png"></image>
+              <text>查看大图</text>
+            </view>
+            <!--<view class="index-spec" data-type="operation" bindtap="onIndexSpecificationClick">-->
+            <!--<image src="../../../assets/img/icon_specification.png"></image>-->
+            <!--<text>指标放大说明</text>-->
+            <!--</view>-->
+          </view>
+        </view>
+        <view class="line-chart-container">
+          <ec-canvas id="mychart-dom-line-operation" canvas-id="mychart-line-operation" ec="{{ ecOperation }}"></ec-canvas>
+        </view>
+      </view>
+
+      <view class="list">
+        <view style="overflow-x: scroll;">
+          <view class="operation-list-header">
+            <view class="col-operation1"></view>
+            <!--<view class="col-operation1 col-text">时间</view>-->
+            <view class="{{statistics.listLabelClass(index)}}"
+                  wx:for="{{indexNames}}"
+                  wx:for-item="label"
+                  wx:key="{{index}}">{{label}}</view>
+          </view>
+
+          <view class="operation-item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{operationDataItem}}"
+                wx:key="index">
+            <view class="col-operation1"></view>
+            <view class="col-operation2 col-text">{{statistics.formatPrice(item.gmv)}}</view>
+            <view class="col-operation3 col-text">{{statistics.formatValue(item.member_num)}}</view>
+            <view class="col-operation4 col-text">{{statistics.formatValue(item.item_num)}}</view>
+<!--            <view class="col-operation2 col-text">{{statistics.formatPrice(item.gmv)}}</view>-->
+<!--            <view class="col-operation3 col-text">{{statistics.formatPrice(item.amount_real)}}</view>-->
+<!--            <view class="col-operation4 col-text">{{statistics.formatValue(item.member_num)}}</view>-->
+<!--            <view class="col-operation5 col-text">{{statistics.formatValue(item.item_num)}}</view>-->
+<!--            <view class="col-operation6 col-text">{{statistics.formatValue(item.item_cat_num)}}</view>-->
+            <!--<view class="col-operation5 col-text">-->
+            <!--<text wx:if="{{item.check_chg < 0}}" style="color: #00d600;">{{statistics.formatPrice(item.check_chg)}}</text>-->
+            <!--<text wx:elif="{{item.check_chg > 0}}" style="color: #ff3724;">{{statistics.formatPrice(item.check_chg)}}</text>-->
+            <!--<text wx:else>{{statistics.formatPrice(item.check_chg)}}</text>-->
+            <!--</view>-->
+            <!--<view class="col-operation6 col-text">{{statistics.formatPrice(item.real_price)}}</view>-->
+            <!--<view class="col-operation7 col-text">{{statistics.formatPrice(item.total_delivery_item_price)}}</view>-->
+            <!--<view class="col-operation8 col-text">{{statistics.formatPrice(item.price_per_order)}}</view>-->
+            <!--<view class="col-operation9 col-text">{{statistics.formatValue(item.store_num)}}</view>-->
+            <!--<view class="col-operation10 col-text">{{statistics.formatValue(item.order_num)}}</view>-->
+          </view>
+        </view>
+
+        <!--表格固定列-->
+        <view class="fix-table-header">
+          <view class="operation-list-header">
+            <view class="col-operation1 col-text" style="width: 160rpx">时间</view>
+          </view>
+
+          <view class="operation-item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{operationDataItem}}"
+                wx:key="index" style="width: 160rpx">
+            <view class="col-operation1 col-text">{{statistics.formatDateStr(item.date)}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="cover-query">
+        <cover-view class="cover-query-container">
+
+          <cover-view class="fix-date-container">
+          </cover-view>
+
+          <cover-view class="custom-date-container">
+            <cover-image class="custom-date-icon" src="../../../assets/img/icon-date.png"></cover-image>
+            <cover-view class="custom-date-start-text"></cover-view>
+            <cover-view class="custom-date-inner-text">至</cover-view>
+            <cover-view class="custom-date-end-text"></cover-view>
+          </cover-view>
+        </cover-view>
+
+        <picker bindchange="onFixDateSelectOperation" value="{{index}}" range="{{operationFixDates}}">
+          <cover-view class="fix-date">
+            <cover-view class="c-text">{{currentFixDateOperation}}</cover-view>
+            <cover-image class="c-img" src="../../../assets/img/icon-arrow-down.png" />
+          </cover-view>
+        </picker>
+
+        <picker mode="date"
+                value="{{startDateOperation}}"
+                start="2000-01-01"
+                end="2100-01-01"
+                bindchange="onSelectStartDateOperation">
+          <cover-view class="custom-date-start-picker">
+            <cover-view style="width: 200rpx; text-align: right;">{{startDateOperation}}</cover-view>
+          </cover-view>
+        </picker>
+
+        <picker mode="date"
+                value="{{endDateOperation}}"
+                start="2000-01-01"
+                end="2100-01-01"
+                bindchange="onSelectEndDateOperation">
+          <cover-view class="custom-date-end-picker">
+            <cover-view style="width: 200rpx; text-align: left;">{{endDateOperation}}</cover-view>
+          </cover-view>
+        </picker>
+
+        <cover-view class="cover-split-line"></cover-view>
+      </view>
+    </view>
+  </view>
+
+  <cover-view class="weui-navbar">
+    <cover-view wx:for="{{tabs}}" wx:key="*this" style="flex: 1">
+      <cover-view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <cover-view class="weui-navbar__title">{{item}}</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></cover-view>
+  </cover-view>
+
+  <!--弹框提示-->
+  <cover-view class="index-spec-dialog-background" wx:if="{{isShowIndexSpecDialog}}" bindtap="closeIndexSpecDialog">
+    <cover-view class="index-spec-dialog" catchtap>
+      <cover-image class="close-icon" src="../../../assets/img/icon_close_operation.png" bindtap="closeIndexSpecDialog"></cover-image>
+      <cover-view class="title" wx:if="{{dialogType === 'operation'}}"><cover-view>指标放大倍数</cover-view></cover-view>
+      <!--商品销售统计-->
+      <cover-view class="content-container" wx:if="{{dialogType === 'item'}}" style="width: 520rpx;">
+        <cover-view class="content-left">
+          <cover-view class="content" wx:for="{{totalItems}}" wx:key="index">{{item.title}}:</cover-view>
+        </cover-view>
+        <cover-view class="content-right">
+          <cover-view class="content" wx:for="{{totalItems}}" wx:key="index">{{item.value}}{{index === 1 ? '件' : '元'}}</cover-view>
+        </cover-view>
+      </cover-view>
+      <!--客户订单统计-->
+      <cover-view class="content-container" wx:elif="{{dialogType === 'client'}}" style="width: 520rpx;">
+        <cover-view class="content-left">
+          <cover-view class="content" wx:for="{{totalClients}}" wx:key="index">{{item.title}}:</cover-view>
+        </cover-view>
+        <cover-view class="content-right">
+          <cover-view class="content" wx:for="{{totalClients}}" wx:key="index">
+            {{index === 4 && item.value > 0 ? '-' : ''}}{{item.value}}{{index === 6 ? '件' : (index === 5 ? '' : '元')}}
+          </cover-view>
+        </cover-view>
+      </cover-view>
+      <!--运营统计-->
+      <cover-view class="content-container" wx:else>
+        <cover-view class="content-left">
+          <cover-view class="content" wx:for="{{indexNames}}"
+                      wx:for-item="indexName"
+                      wx:key="{{index}}"
+                      wx:if="{{index !== 1 && index !== 3 && index !== 6}}"
+          >{{indexName}}:</cover-view>
+        </cover-view>
+        <cover-view class="content-right">
+          <cover-view class="content"
+                      wx:for="{{zoomRate}}"
+                      wx:for-item="zoom"
+                      wx:key="{{zoom}}"
+                      wx:if="{{index !== 1 && index !== 3 && index !== 6}}"
+          >{{zoom}}倍</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+
+</view>

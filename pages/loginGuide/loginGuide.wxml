@@ -1,0 +1,4 @@
+<image class="d-b" src="./../../assets/img/loginGuide/bg.png" style="width: 100%; height: 938rpx;"/>
+<view class="btn-view">
+    <navigator class="btn-primary btn-size-88" url="/pages/login/login">立即登录</navigator>
+</view>

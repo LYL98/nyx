@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "selectWarehouse": "/components/selectWarehouse/selectWarehouse",
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

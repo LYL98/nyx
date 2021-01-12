@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "仓库",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar"
+  }
+}

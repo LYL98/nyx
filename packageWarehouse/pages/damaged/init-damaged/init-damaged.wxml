@@ -1,0 +1,42 @@
+
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+    isScan bind:scan="scanInput" placeholder="商品编号/名称,供应商名称" fixed="{{false}}"
+    data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+    filter filterData="{{filterData}}" bind:filterChange="filterChange"
+    />
+<view style="height: 10rpx;"></view>
+<view class="margin-main item-list" wx:if="{{dataItem.items.length > 0}}">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff margin-bottom20">
+        <view class="top">
+            <view class="title font-w-bold">{{item.item_code}}/{{item.item_title}}<view class="sub-title" wx:if="{{item.sale_type === '平台'}}">平台</view></view>
+            <view class="num font-w-bold">{{damagedOptTypes[item.source]}}</view>
+        </view>
+        <view class="content padding26-20">
+            <view class="left">
+                <view class="font-size30 margin-bottom10">批次：{{item.batch_code}}</view>
+                <view class="font-size30 margin-bottom10">供应商：{{item.supplier_title}}</view>
+                <view class="font-size30 margin-bottom10">商品过期时间：{{item.due_date}}</view>
+                <view class="font-size30 margin-bottom10">库存过期时间：{{item.stock_due_date}}</view>
+                <view class="num font-w-bold">数量：{{item.num}}件</view>
+
+            </view>
+            <view class="right">
+                <navigator url="/packageWarehouse/pages/secondChoose/secondChoose?id={{item.id}}&from=damaged&operate=secondChoose">
+                    <button class="btn-primary btn-size-72">二次挑拣</button>
+                </navigator>
+                <navigator url="/packageWarehouse/pages/handle/handle?id={{item.id}}&from=damaged&operate=handle">
+                    <button class="btn-primary btn-size-72">处理</button>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+
+</view>
+<defaultPage wx:if="{{dataItem.items.length === 0}}" currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+
+<!-- <view class="bottom-btn" wx:if="{{operate}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫托盘码{{operates[operate].title}}</button>
+</view> -->

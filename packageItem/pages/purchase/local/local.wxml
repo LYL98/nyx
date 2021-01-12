@@ -1,0 +1,43 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<view class="top">
+    <view class="left">
+        <view class="b {{query.custom_type === 'B' && 'active'}}" hover-class="link-hover" data-key="B" bind:tap="changeCustomType">商城</view>
+        <view class="c {{query.custom_type === 'C' && 'active'}}" hover-class="link-hover" data-key="C" bind:tap="changeCustomType">零售</view>
+    </view>
+    <view class="right">
+        <searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+            isScan bind:scan="scanInput" placeholder="搜索" fixed="{{false}}"
+            data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+            filter filterData="{{filterData}}" bind:filterChange="filterChange"/>
+    </view>
+</view>
+<view class="margin-main item-list padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff" data-index="{{index}}" bind:tap="skipDetail">
+        <view class="top">
+            <view class="title">采购单：{{item.code}}</view>
+            <view class="status {{purchaseStatusType[item.status]}}">{{purchaseStatus[item.status]}}</view>
+        </view>
+        <view class="content">
+            <view class="left">
+                <view class="margin-bottom10 font-size32 font-w-bold">{{item.item_code}}/{{item.item_title}}</view>
+                <view class="margin-bottom10 aided font-size28">供应商：{{item.supplier_title}}</view>
+                <view class="margin-bottom10 aided font-size28">销售日期：{{item.available_date || '-'}}</view>
+                <view class="margin-bottom10 aided font-size28">送达仓：{{item.storehouse.title}}</view>
+                <view class="margin-bottom36 aided font-size28">预计到货：{{item.estimate_arrive_at}}</view>
+                <view class="font-size28 font-w-bold">采购数量：{{item.num}}件</view>
+            </view>
+            <view class="right" catch:tap>
+                <navigator wx:if="{{(auth.isAdmin || auth.ItemLocalPurchaseAdjustPrice) && item.status !== 'init' && !item.bdetail_audited}}"
+                    url="/packageItem/pages/purchase/purchaseAdjustPrice/purchaseAdjustPrice?id={{item.id}}&type=local" style="margin-top: 12rpx;">
+                    <button class="btn-primary btn-size-72">调价</button>
+                </navigator>
+                <navigator wx:if="{{(auth.isAdmin || auth.ItemLocalPurchaseClose) && (item.status === 'init' || item.status === 'audit_success' || item.status === 'part_in')}}"
+                    url="/packageItem/pages/purchase/purchaseClose/purchaseClose?id={{item.id}}&type=local" style="margin-top: 12rpx;">
+                    <button class="btn-white btn-size-72">关闭</button>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class="load-more margin-bottom20" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>

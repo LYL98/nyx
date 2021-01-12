@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "绑定微信",
+  "usingComponents": {
+    "getUserInfo": "/components/getUserInfo/getUserInfo"
+  }
+}

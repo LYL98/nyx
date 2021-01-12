@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "searchInput": "/components/searchInput/searchInput",
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

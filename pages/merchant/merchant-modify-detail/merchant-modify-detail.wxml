@@ -1,0 +1,59 @@
+<!--pages/merchant/merchant-modify-detail/merchant-modify-detail.wxml-->
+<view class="page-merchant-modify-detail">
+  <view class="form">
+    <view class="form-area">
+      <view class="card form-area-view">
+
+        <view class="form-item form-item-required">
+          <view class="form-item-content">
+            <text class="label">商户名称</text>
+            <input
+                type="text"
+                data-title="title"
+                value="{{ item.title }}"
+                bindinput="inputMerchantTitle"
+                bindchange="changeMerchantTitle"/>
+          </view>
+          <text class="form-item-error">{{ error.title }}</text>
+        </view>
+
+        <view class="form-item form-item-required">
+          <view class="form-item-content">
+            <text class="label">协议商户</text>
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{payList}}">
+              <view class="picker-is-post-pay">
+                <text class="label">{{ payList[index] }}</text>
+                <image src="./../../../assets/img/icon-right.png"></image>
+              </view>
+            </picker>
+          </view>
+          <text class="form-item-error">{{error.is_post_pay}}</text>
+        </view>
+
+        <view class="form-item form-item-required" wx:if="{{ item.is_post_pay }}">
+          <view class="form-item-content">
+            <text class="label">授信额度</text>
+            <input
+                type="text"
+                placeholder="请输入授信额度"
+                style="width: 480rpx;"
+                value="{{ item.credit_limit }}"
+                bindinput="inputCreditLimit"
+                bindchange="changeCreditLimit"
+            />
+          </view>
+          <text class="form-item-error">{{error.credit_limit}}</text>
+        </view>
+
+      </view>
+    </view>
+  </view>
+  <button
+      class="btn-submit"
+      hover-class="btn-submit-hover"
+      loading="{{loading}}"
+      disabled="{{ loading }}"
+      bind:tap="submit"
+  >确认
+  </button>
+</view>

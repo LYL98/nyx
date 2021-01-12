@@ -1,0 +1,34 @@
+@import './../../theme.scss';
+.default-page {
+    padding-top: 135rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > .icon {
+        width: 360rpx;
+        height: 360rpx;
+        &.loading{
+            position: relative;
+            animation: zy 1s infinite alternate;
+        }
+    }
+    > .title {
+        margin-top: 44rpx;
+        font-size: 30rpx;
+        line-height: 42rpx;
+        color: #A5A5A5;
+    }
+    >.retry{
+        width: 120rpx;
+        margin-top: 30rpx;
+    }
+}
+
+@keyframes zy{
+    0% {
+        top: 0rpx;
+    }
+    100% {
+        top: 20rpx;
+    }
+}

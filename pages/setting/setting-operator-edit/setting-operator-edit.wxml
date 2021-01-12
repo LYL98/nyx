@@ -1,0 +1,106 @@
+<!--pages/setting/setting-operator-edit/setting-operator-edit.wxml-->
+<wxs src="./../setting.wxs" module="setting" />
+
+<view class="setting-operator-edit">
+
+  <pg-form id="pg-form">
+
+    <view class="form-group">
+      <view class="header">
+        账号信息
+      </view>
+      <view class="content">
+        <pg-form-item label="上传头像">
+          <pg-avatar module="operator" value="{{ formData.avatar }}" data-key="avatar" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|max_length:10:blur" label="姓名">
+          <pg-input value="{{ formData.realname }}" placeholder="请输入姓名" data-key="realname" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|phone:blur" label="手机号">
+          <pg-input value="{{ formData.phone }}" type="number" placeholder="请输入手机号" data-key="phone" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required" label="密码" wx:if="{{ !formData.id }}">
+          <pg-input value="{{ formData.password }}" type="password" placeholder="请输入密码" data-key="password" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="max_length:10:blur" label="工号" borderless>
+          <pg-input value="{{ formData.employee_no }}" placeholder="请输入工号" data-key="employee_no" bind:change="onChangeKey"/>
+        </pg-form-item>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="header">
+        角色信息
+      </view>
+      <view class="content">
+        <pg-form-item label="级别权限" rules="required">
+          <pg-picker 
+            disabled="{{ loginUserInfo.opt_type === 'local' }}" 
+            options="{{ opt_type_options }}" 
+            value="{{ formData.opt_type }}" 
+            data-key="opt_type" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="所在区域" rules="required" wx:if="{{ formData.opt_type === 'local' }}">
+          <pg-picker
+            disabled="{{ loginUserInfo.opt_type === 'local' }}" 
+            options="{{ province_options }}" 
+            value="{{ formData.province_code }}" 
+            data-key="province_code" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="职务">
+          <pg-picker options="{{ formData.opt_type === 'local' ? post_options2 : post_options }}" value="{{ formData.post }}" data-key="post" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item label="角色" rules="required">
+          <pg-select multiple options="{{ filter_role_options }}" value="{{ formData.role_ids }}" data-key="role_ids" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item 
+          label="数据权限" 
+          rules="required" 
+          wx:if="{{ formData.opt_type === 'local' && formData.province_code && (formData.post === 'salesman' || formData.post === 'other') }}"
+        >
+          <pg-picker 
+            options="{{ filter_data_level_options }}" 
+            value="{{ formData.data_level }}" 
+            data-key="data_level" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="片区" rules="required" wx:if="{{ formData.opt_type === 'local' && formData.province_code && formData.data_level == '3' }}">
+          <pg-select multiple options="{{ zone_options }}" value="{{ formData.data_value }}" data-key="data_value" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="县域" rules="required" wx:if="{{ formData.opt_type === 'local' && formData.province_code && formData.data_level == '4' }}">
+          <pg-select multiple options="{{ city_options }}" value="{{ formData.data_value }}" data-key="data_value" bind:change="onChangeKey" />
+        </pg-form-item>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="header">
+        备注
+      </view>
+      <view class="content textarea-container">
+        <textarea maxlength="200" placeholder="请输入备注" value="{{ formData.remark }}" data-key="remark" bindinput="onChangeKey" />
+      </view>
+    </view>
+
+    <view style="height: 188rpx;"></view>
+
+  </pg-form>
+
+  <view class="fixed-footer">
+    <button 
+      class="btn-submit" 
+      hover-class="btn-submit-hover"
+      loading="{{loading}}"
+      disabled="{{ loading }}" 
+      bindtap="onSubmit"
+    >确认</button>
+  </view>
+
+</view> 
+
+

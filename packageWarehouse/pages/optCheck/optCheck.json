@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "盘点信息",
+  "usingComponents": {
+    "selectWarehouseTray": "/components/selectWarehouseTray/selectWarehouseTray",
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

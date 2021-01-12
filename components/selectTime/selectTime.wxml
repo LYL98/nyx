@@ -1,0 +1,15 @@
+
+<view class="time-bg" bind:tap="hideTime">
+  <view class="time" catch:tap>
+    <view class="time-haed">
+      <view class="left" bind:tap="hideTime">取消</view>
+      <view class="center"></view>
+      <view class="right" bind:tap="selectTime">确定</view>
+    </view>
+    <picker-view value="{{selectTime}}" bindchange="changeTime">
+      <picker-view-column><view wx:for="{{hours}}" wx:key="index">{{item < 10 ? '0' : ''}}{{item}}</view></picker-view-column>
+      <picker-view-column><view wx:for="{{minutes}}" wx:key="index">{{item < 10 ? '0' : ''}}{{item}}</view></picker-view-column>
+      <picker-view-column><view wx:for="{{seconds}}" wx:key="index">{{item < 10 ? '0' : ''}}{{item}}</view></picker-view-column>
+    </picker-view>
+  </view>
+</view>

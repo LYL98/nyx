@@ -1,0 +1,91 @@
+
+<view style="height: 10rpx;"></view>
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+    <view class="item">
+        <view class="title" style="min-width: 80rpx">商品</view>
+        <view class="input" data-page="/packageWarehouse/pages/selectStockItem/selectStockItem?from=addCheck" bind:tap="skipPage">
+            <view class="select" style="display: flex; justify-content: flex-end;align-items: center;">
+                <view class="content" wx:if="{{addData.item_code}}">
+                    {{addData.item_code}}/{{addData.item_title}} 
+                </view>
+                <view class="content placeholder" style="color:#A1A6B3; font-weight: normal;" wx:else>请选择商品</view>
+                <image class="icon d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;margin: 0 20rpx;" />
+            </view>
+            <view class="error-hint" style="color:#ff6262;font-size:24rpx;line-height: 24rpx; position:absolute; right: 20rpx; bottom: -24rpx;" wx:if="{{addData.c_item_id_error}}">{{addData.c_item_id_error}}</view>
+        </view>
+        <view bind:tap="handleScan">
+            <image class="icon d-b" style="width: 44rpx; height: 44rpx;" src="./../../assets/img/index/icon_scan.png" />
+        </view>
+    </view>
+    <view class="item">
+        <view class="title">批次</view>
+        <view class="input" data-page="/packageWarehouse/pages/selectBatchCode/selectBatchCode?from=addCheck" bind:tap="skipPage">
+            <view class="select">
+                <view class="content" wx:if="{{addData.batch_code}}">
+                    {{addData.batch_code}}
+                </view>
+                <view class="content placeholder" wx:else>请选择批次</view>
+                <image class="icon d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+            </view>
+            <view class="error-hint" wx:if="{{addData.batch_code_error}}">{{addData.batch_code_error}}</view>
+        </view>
+
+    </view>
+</view>
+<view class="margin-main item-list">
+    <view class="item bg-body-fff margin-bottom20">
+        <!-- <view class="top"> -->
+        <!-- <view class="title font-w-bold">{{detail.warehouse_title}}/{{detail.tray_code}}</view> -->
+        <!-- </view> -->
+        <view class="content padding26-20">
+            <!-- <view class="font-size30 margin-bottom10">批次：{{detail.batch_code}}</view> -->
+            <view class="font-size30 margin-bottom10">供应商：{{detail.supplier_title}}</view>
+            <view class="font-size30 margin-bottom10">入库时间：{{detail.created}}</view>
+            <view class="font-size30 margin-bottom10">商品过期时间：{{detail.due_date}}</view>
+            <view class="font-size30 margin-bottom16">库存过期时间：{{detail.stock_due_date}}</view>
+            <!-- <view class="font-size32 font-w-bold">库存：{{detail.num}}件</view> -->
+        </view>
+    </view>
+</view>
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+    <view class="item">
+        <view class="title">盘点数量(件)</view>
+        <view class="input">
+            <input placeholder="请输入数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus" type="number" data-maindata="addData" data-fieldkey="num" value="{{addData.num}}" />
+            <view class="error-hint" wx:if="{{addData.num_error}}">
+                {{addData.num_error}}
+            </view>
+        </view>
+    </view>
+<selectWarehouse bind:change="changeWarehouse" storehouseId="{{selectStorehouse.id}}">
+
+    <view class="item">
+            <view class="title">入库</view>
+            <view class="input">
+                <view class="select" >
+                    <view class="content" wx:if="{{addData.warehouse_title}}">
+                        {{addData.warehouse_title}}
+                    </view>
+                    <view class="content placeholder"  wx:else>请选择仓库</view>
+                    <image class="icon d-b"  src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint"  wx:if="{{addData.warehouse_id_error}}">{{addData.warehouse_id_error}}</view>
+            </view>
+            
+
+    </view>
+</selectWarehouse>
+
+</view>
+
+<view class="margin-main bg-body-fff remark-body margin-bottom20">
+    <myTextarea placeholder="请输入备注（选填）" maxlength="50" bind:input="inputChange" bind:focus="inputFocus" data-maindata="addData" data-fieldkey="remark" value="{{addData.remark}}" />
+    <view class="error-hint" wx:if="{{addData.remark_error}}">{{addData.remark_error}}</view>
+    <view class="hint font-size24">{{addData.remark.length}}/50</view>
+</view>
+<view class="bottom-btn">
+    <view class="title">确认后，系统将根据增加的盘点数量增加库存</view>   
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">
+        确认
+    </button>
+</view>

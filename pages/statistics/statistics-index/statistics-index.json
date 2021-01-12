@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "统计",
+  "usingComponents": {
+    "statistics-bsc": "../statistics-bsc/statistics-bsc",
+    "statistics-cls": "../statistics-cls/statistics-cls"
+  }
+}

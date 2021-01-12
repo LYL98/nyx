@@ -1,0 +1,2 @@
+<!--调拨计划-->
+<plan wx:if="{{activeIndex === 0}}" pageOnPullDownRefresh="{{pageOnPullDownRefresh}}" pageOnReachBottom="{{pageOnReachBottom}}" auth="{{auth}}" id="plan"/>

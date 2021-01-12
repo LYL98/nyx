@@ -1,0 +1,30 @@
+<!--程序错误-->
+<view class="default-page" wx:if="{{appError}}">
+  <block wx:if="{{appError === 'netfail'}}">
+    <image src="{{ default.imgSrc }}" class="icon"></image>
+    <text class="title">请检查网络是否可用</text>
+    <text class="btn-white btn-size-circle-60 retry" bind:tap="clickRetry">重试</text>
+  </block>
+  <block wx:elif="{{appError === 'timeout'}}">
+    <image src="{{ default.imgSrc }}" class="icon"></image>
+    <text class="title">请求超时，请重试</text>
+    <text class="btn-white btn-size-circle-60 retry" bind:tap="clickRetry">重试</text>
+  </block>
+  <block wx:else>
+    <image src="{{ default.imgSrc }}" class="icon"></image>
+    <text class="title">程序员小哥开了个小差~</text>
+    <text class="btn-white btn-size-circle-60 retry" bind:tap="clickRetry">重试</text>
+  </block>
+</view>
+
+<!--加载中-->
+<view class="default-page" wx:elif="{{loading}}">
+  <image src="{{ default.imgSrc }}" class="icon loading"></image>
+  <text class="title">加载中...</text>
+</view>
+
+<!--默认页面-->
+<view class="default-page" wx:else>
+  <image src="{{ default.imgSrc }}" class="icon"></image>
+  <text class="title">{{ default.title }}</text>
+</view>

@@ -1,0 +1,41 @@
+.title-add{
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10rpx;
+    >.left{
+        flex: 1;
+        >view{
+            display: inline-block;
+            &.title{
+                margin-right: 20rpx;
+            }
+        }
+    }
+}
+
+.delete{
+    margin: 0 40rpx 20rpx;
+    padding-top: 10px;
+    overflow: hidden;
+    >view{
+        float: right;
+        color: #A1A6B3;
+    }
+}
+.bottom-btn{
+    margin-top: 10rpx;
+    .title{
+        // height: 30rpx;
+        color: red;
+        font-size: 28rpx;
+        text-align: center;
+        padding-top: 10rpx;
+        padding-bottom: 10rpx;
+        background-color: #fff;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 114rpx;
+        z-index: 2
+    }
+}

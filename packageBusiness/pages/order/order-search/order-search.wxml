@@ -1,0 +1,14 @@
+<!--pages/order/order-search/order-search.wxml-->
+<view class="page-order-search">
+  <view class="header">
+    <input
+        type="text"
+        class="search-input"
+        value="{{ condition }}"
+        auto-focus
+        placeholder="输入订单号或门店名称"
+        confirm-type="search"
+        bind:confirm="confirmCondition"
+    />
+  </view>
+</view>

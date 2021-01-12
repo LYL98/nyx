@@ -1,0 +1,163 @@
+.blank{
+  height: 100rpx;
+}
+/*文字太宽加....*/
+.add-dot {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+.search-body{
+  background: #fff;
+  padding: 16rpx 20rpx;
+  &.fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+  }
+  &.is-filter{
+    padding-right: 0;
+  }
+  
+  >.search{
+    height: 68rpx;
+    display: flex;
+    align-items: center;
+    > .add {
+      height: 92rpx;
+      width: 92rpx;
+      text-align: center;
+      >image{
+        margin-top: 16rpx;
+      }
+      >view {
+        font-size: 20rpx;
+        line-height: 20rpx;
+        color: #A1A6B3;
+      }
+    }
+    >.icon{
+      width: 34rpx;
+      height: 68rpx;
+      padding: 0 20rpx;
+      background: #F7F7F8;
+      border-radius: 8rpx 0 0 8rpx;
+      >image{
+        display: block;
+        margin-top: 17rpx;
+      }
+    }
+    >.input{
+      flex: 1;
+      background: #F7F7F8;
+      border-radius: 0 8rpx 8rpx 0;
+      >input{
+        height: 68rpx;
+        line-height: 68rpx;
+        font-size: 30rpx;
+      }
+    }
+    >.filter{
+      height: 92rpx;
+      width: 92rpx;
+      text-align: center;
+      >image{
+        margin-top: 16rpx;
+      }
+      >view{
+        font-size: 20rpx;
+        line-height: 20rpx;
+        color: #A1A6B3;
+      }
+    }
+  }
+}
+.search-input-placeholder{
+  color: #D1D4DB;
+}
+
+@keyframes filter-right
+{
+  from {right: -1000rpx;}
+  to {right: 0;}
+}
+
+//筛选
+.filter-body{
+  position: fixed;
+  background: rgba($color: #000, $alpha: 0.5);
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  >.filter{
+    background: #fff;
+    width: 620rpx;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-flow: column;
+    animation: filter-right .3s;
+    >.top{
+      flex: 1;
+      overflow-y: auto;
+      padding: 20rpx 0 0 20rpx;
+      >.title{
+        font-size: 28rpx;
+        line-height: 28rpx;
+        margin-top: 10rpx;
+        margin-bottom: 20rpx;
+      }
+      >.values{
+        overflow: hidden;
+        >.item{
+          border: 1rpx solid #A1A6B3;
+          width: 180rpx;
+          height: 72rpx;
+          line-height: 72rpx;
+          text-align: center;
+          border-radius: 6px;
+          color: #A1A6B3;
+          float: left;
+          margin: 0 18rpx 20rpx 0;
+          font-size: 28rpx;
+          &.active{
+            border: 1rpx solid #00ADE7;
+            color: #00ADE7;
+          }
+        }
+      }
+    }
+    >.bottom{
+      height: 110rpx;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      line-height: 110rpx;
+      font-size: 34rpx;
+      >.reset{
+        height: 100%;
+        color: #00ADE7;
+        width: 260rpx;
+        border-top: 1rpx solid #00ADE7;
+      }
+      >.affirm{
+        border-top: 1rpx solid #00ADE7;
+        height: 100%;
+        background: #00ADE7;
+        color: #fff;
+        flex: 1;
+      }
+    }
+  }
+}
+
+.hover{
+  opacity: 0.7;
+}

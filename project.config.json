@@ -1,0 +1,119 @@
+{
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.11.0",
+  "appid": "wxd511ebaec832b1f8",
+  "projectname": "nyx",
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "场地 - 品控收货",
+          "pathName": "packageOperate/pages/receiving/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 1,
+          "name": "场地 - 品控收货 - 采购 - 品控",
+          "pathName": "packageOperate/pages/receiving/purchase-opt/purchase-opt",
+          "query": "id=50123",
+          "scene": null
+        },
+        {
+          "name": "场地 - 品控收货 - 采购 - 收货",
+          "pathName": "packageOperate/pages/receiving/purchase-receiv/purchase-receiv",
+          "query": "id=89734",
+          "scene": null
+        },
+        {
+          "id": 3,
+          "name": "场地 - 品控收货 - 调拨 - 品控",
+          "pathName": "packageOperate/pages/receiving/distribute-opt/distribute-opt",
+          "query": "id=230",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "场地 - 品控收货 - 调拨 - 收货",
+          "pathName": "packageOperate/pages/receiving/distribute-receiv/distribute-receiv",
+          "query": "id=230",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "仓库",
+          "pathName": "packageWarehouse/pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "商品 - 采购",
+          "pathName": "packageItem/pages/purchase/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "业务 - 商户 - 地图模式",
+          "pathName": "pages/merchant/merchant-location/merchant-location",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

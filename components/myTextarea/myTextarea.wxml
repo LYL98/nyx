@@ -1,0 +1,6 @@
+<textarea wx:if="{{isShowTextarea}}" placeholder="{{placeholder}}" maxlength="{{maxlength}}"
+    bindinput="textareaChange" bindfocus="textareaFocus" bindblur="textareaBlur" value="{{value}}" focus></textarea>
+<block wx:else>
+    <text class="textarea" wx:if="{{value}}" bind:tap="clickText">{{value}}</text>
+    <text class="textarea placeholder" wx:else bind:tap="clickText">{{placeholder}}</text>
+</block>

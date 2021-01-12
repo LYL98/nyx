@@ -1,0 +1,124 @@
+<!--packageBusiness/pages/aftersale/aftersale-done/aftersale-done.wxml-->
+
+<view class="aftersale-done">
+  <pg-form id="pg-form">
+
+    <view class="form-group">
+      <view class="content">
+        <pg-form-item rules="required" label="处理类型">
+          <pg-picker
+              placeholder="请选择处理类型"
+              options="{{ opt_type_options }}"
+              value="{{ formData.opt_type }}"
+              data-key="opt_type"
+              bind:change="changeOptType"
+          />
+        </pg-form-item>
+        <pg-form-item rules="required" label="处理方式">
+          <pg-picker
+              placeholder="请选择处理方式"
+              options="{{ handle_way_options }}"
+              value="{{ formData.handle_way }}"
+              data-key="handle_way"
+              bind:change="changeHandleWay"
+          />
+        </pg-form-item>
+
+        <pg-form-item
+            wx:if="{{ formData.handle_way == 'only_refund' || formData.handle_way == 'other' }}"
+            label="处理件数"
+            rules="{{'required|number|min_value:1:blur|max_value:' + item.count_real}}"
+        >
+          <view style="display: flex; align-items: center;">
+            <pg-input
+                value="{{ formData.num }}"
+                type="number"
+                placeholder="请输入处理件数"
+                data-key="num"
+                bind:change="onChangeKey"
+            />
+            <text style="margin-left: 15rpx;">件</text>
+          </view>
+        </pg-form-item>
+
+        <pg-form-item
+            wx:if="{{ formData.handle_way == 'only_goods' || formData.handle_way == 'refund_goods' }}"
+            label="退货件数"
+            rules="{{'required|number|min_value:1:blur|max_value:' + item.count_real}}"
+        >
+          <view style="display: flex; align-items: center;">
+            <pg-input
+                value="{{ formData.num }}"
+                type="number"
+                placeholder="请输入退货件数"
+                data-key="num"
+                bind:change="changeRefundNum"
+            />
+            <text style="margin-left: 15rpx;">件</text>
+          </view>
+        </pg-form-item>
+
+        <pg-form-item
+            wx:if="{{ formData.handle_way == 'only_refund' }}"
+            label="退款金额"
+            rules="{{ refund_validator }}"
+            borderless
+            help-text="最多可退货金额：{{maxRefundPriceStr}} 元"
+        >
+          <view style="display: flex; align-items: center;">
+            <pg-input
+                value="{{ formData.refund }}"
+                type="decimal"
+                placeholder="请输入退款金额"
+                data-key="refund"
+                bind:change="onChangeKey"
+            />
+            <text style="margin-left: 15rpx;">元</text>
+          </view>
+        </pg-form-item>
+
+        <pg-form-item
+            wx:if="{{ formData.handle_way == 'refund_goods' }}"
+            label="退货金额"
+            rules="{{ refund_validator }}"
+            borderless
+            help-text="最多可退货金额：{{maxRefundPriceStr}} 元"
+        >
+          <view style="display: flex; align-items: center;">
+            <pg-input
+                value="{{ formData.refund }}"
+                type="decimal"
+                placeholder="请输入退货金额"
+                data-key="refund"
+                bind:change="onChangeKey"
+            />
+            <text style="margin-left: 15rpx;">元</text>
+          </view>
+        </pg-form-item>
+
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="header">
+        处理描述
+      </view>
+      <view class="content textarea-container">
+        <textarea maxlength="200" placeholder="请输入处理描述..." value="{{ formData.opt_detail }}" data-key="opt_detail" bindinput="onChangeKey" />
+      </view>
+    </view>
+
+    <view style="height: 188rpx;"></view>
+
+  </pg-form>
+
+  <view class="fixed-footer">
+    <button
+        class="btn-submit"
+        hover-class="btn-submit-hover"
+        loading="{{loading}}"
+        disabled="{{ loading }}"
+        bindtap="onSubmit"
+    >确认</button>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "用户订单",
+  "usingComponents": {
+    "container-order-list": "/packageBusiness/pages/order/order-list/order-list"
+  }
+}

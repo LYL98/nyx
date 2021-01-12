@@ -1,0 +1,7 @@
+<navbar wx:if="{{status.values.length >= 2}}" list="{{status.values}}" fixed width="{{750 / status.values.length}}" totalWidth="{{750}}" slider="{{0.2}}" bindnavtouch="clickTab" defaultIndex="{{activeIndex}}"/>
+
+<!--销售-->
+<market wx:if="{{activeIndex === 0}}" pageOnPullDownRefresh="{{pageOnPullDownRefresh}}" pageOnReachBottom="{{pageOnReachBottom}}" auth="{{auth}}" id="market"/>
+
+<!--调拨-->
+<distribute wx:elif="{{activeIndex === 1}}" pageOnPullDownRefresh="{{pageOnPullDownRefresh}}" pageOnReachBottom="{{pageOnReachBottom}}" auth="{{auth}}" id="distribute"/>

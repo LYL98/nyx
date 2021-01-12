@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "选择司机",
+  "usingComponents": {
+    "searchInput": "/components/searchInput/searchInput"
+  }
+}

@@ -1,0 +1,22 @@
+<!--pages/setting/setting-operator-edit-select/setting-operator-edit-select.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+<wxs src="./../setting.wxs" module="setting" />
+
+<view class="page">
+    <view class="tags-container">
+        <text
+                class="{{ setting.isSelected(values, item.value) }}"
+                wx:for="{{ options }}"
+                wx:for-item="item"
+                wx:key="{{ item.value }}"
+                data-item="{{ item }}"
+                catch:tap="onSelect"
+        >{{ tools.returnOmissionText(item.label, 5) }}</text>
+    </view>
+
+    <button
+            class="btn-submit"
+            hover-class="btn-submit-hover"
+            bind:tap="submit"
+    >确认</button>
+</view>

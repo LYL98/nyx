@@ -1,0 +1,27 @@
+
+<view class="calender-bg" bind:tap="hideCalender">
+  <view class="calender" catch:tap>
+    <view class="celender-head">
+      <view class="left" bindtap="left">
+        <image class="b-d" src="./../../assets/img/icon-left.png" style="width: 19rpx; height: 30rpx;" />
+      </view>
+      <view class="center">{{header}}</view>
+      <view class="right" bindtap="right">
+        <image class="b-d" src="./../../assets/img/icon-right.png" style="width: 19rpx; height: 30rpx;" />
+      </view>
+    </view>
+    <view class="calender-body">
+      <view class='head'>
+        <view class="item" wx:for="{{heads}}" wx:key="index" >{{item}}</view>
+      </view>
+      <view class="date-day" wx:for="{{show}}" wx:key="index">
+        <block></block>
+        <view wx:for-item="d" wx:for-index="i" wx:for="{{item}}" wx:key="i" class="item">
+          <view class="num {{d.now ? 'now' : ''}} {{d.select}} {{d.attr}}" wx:if="{{idShowLastNextMonth}}" bind:tap="selectDate" data-date="{{d.date}}">
+            <view>{{d.num}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

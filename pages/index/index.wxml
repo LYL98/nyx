@@ -1,0 +1,20 @@
+<view class="page-index">
+  <!--<navigator class="top" url="/pages/province/province">-->
+    <!--<image class="left" src="./../../assets/img/address.png" />-->
+    <!--<text class="text">{{ province.title }}</text>-->
+    <!--<image class="right" src="./../../assets/img/right.png" style="width: 13rpx; height: 24rpx" />-->
+  <!--</navigator>-->
+  <view class="bottom">
+    <navigator wx:for="{{dataItem}}" wx:key="index" url="{{ auth.isAdmin || auth[item.auth] ? item.url : '' }}" class="{{ auth.isAdmin || auth[item.auth] ? '' : 'lock' }}">
+      <image src="./../../assets/img/{{item.icon}}" />
+      <view>{{item.title}}</view>
+      <view class="lock-float-layer"></view>
+    </navigator>
+    
+    <navigator url="/pages/setting/setting">
+      <image src="./../../assets/img/setting.png" />
+      <view>设置</view>
+    </navigator>
+
+  </view>
+</view>

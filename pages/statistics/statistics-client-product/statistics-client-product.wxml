@@ -1,0 +1,153 @@
+<!--pages/statistics/statistics-client-product/statistics-client-product.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<wxs src="./../statistics.wxs" module="statistics" />
+
+<skeleton selector="skeleton" bgcolor="transparent" wx:if="{{showSkeleton}}"></skeleton>
+
+<view class="page">
+    <view class="background"></view>
+    <view class="query">
+        <view class="search">{{store_title}}</view>
+        <view class="filter" bindtap="toggerFilterDialog">
+            <image src="./../../../assets/img/icon-filter.png"/>
+            <text>筛选</text>
+        </view>
+
+        <view class="filter-dialog" wx:if="{{ dialog.isShowFilterDialog }}">
+            <view class="overlay" bindtap="toggerFilterDialog"></view>
+
+            <view class="form-container" wx:if="{{ dialog.isShowFilterDialog && !dialog.isShowBuyerDialog && !dialog.isShowDisplayClassDialog }}">
+                <view class="form">
+                    <view class="form-item">
+                        <view class="label">
+                            <text>选择采购员</text>
+                            <view class="more" catch:tap="openBuyerDialog">
+                                <text class="{{ hasSelectBuyer !== '全部' ? 'active' : '' }}">{{hasSelectBuyer}}</text>
+                                <image src="./../../../assets/img/icon-right.png"></image>
+                            </view>
+                        </view>
+                        <view class="tags-container city">
+                            <text
+                                    class="{{ item.id === query.buyer_id ? 'active' : '' }}"
+                                    wx:for="{{ showBuyerList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.id }}"
+                                    data-key="buyer_id"
+                                    data-value="{{ item.id }}"
+                                    data-name="{{ item.realname }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.realname, 5) }}</text>
+                        </view>
+                    </view>
+
+                    <view class="form-item">
+                        <view class="label">
+                            <text>选择展示分类</text>
+                            <view class="more" catch:tap="openDisplayClassDialog">
+                                <text class="{{ hasSelectDisplayClass !== '全部' ? 'active' : '' }}">{{hasSelectDisplayClass}}</text>
+                                <image src="./../../../assets/img/icon-right.png"></image>
+                            </view>
+                        </view>
+                        <view class="tags-container city">
+                            <text
+                                    class="{{ item.title === query.display_class ? 'active' : '' }}"
+                                    wx:for="{{ showDisplayClassList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.id }}"
+                                    data-key="display_class"
+                                    data-value="{{ item.title }}"
+                                    data-name="{{ item.title }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="operate">
+                    <view class="reset" bind:tap="resetQuery">重置</view>
+                    <view class="submit" bind:tap="submitQuery">确认</view>
+                </view>
+
+            </view>
+
+            <view class="city-container" wx:if="{{ dialog.isShowBuyerDialog }}">
+                <view class="header">
+                    <view class="image-container" catch:tap="closeBuyerDialog">
+                        <image src="./../../../assets/img/icon-left.png"></image>
+                    </view>
+                    <view class="title">
+                        <text>选择采购员</text>
+                    </view>
+                </view>
+                <view class="tags-container">
+                    <text
+                            class="{{ item.id === query.buyer_id ? 'active' : '' }}"
+                            wx:for="{{ buyerList }}"
+                            wx:for-item="item"
+                            wx:key="{{ item.id }}"
+                            data-key="buyer_id"
+                            data-value="{{ item.id }}"
+                            data-name="{{ item.realname }}"
+                            catch:tap="changeSecondQuery"
+                    >{{ tools.returnOmissionText(item.realname, 5) }}</text>
+                </view>
+            </view>
+
+            <view class="city-container" wx:if="{{ dialog.isShowDisplayClassDialog }}">
+                <view class="header">
+                    <view class="image-container" catch:tap="closeDisplayClassDialog">
+                        <image src="./../../../assets/img/icon-left.png"></image>
+                    </view>
+                    <view class="title">
+                        <text>选择展示分类</text>
+                    </view>
+                </view>
+                <view class="tags-container">
+                    <text
+                            class="{{ item.title === query.display_class ? 'active' : '' }}"
+                            wx:for="{{ displayClassList }}"
+                            wx:for-item="item"
+                            wx:key="{{ item.id }}"
+                            data-key="display_class"
+                            data-value="{{ item.title }}"
+                            data-name="{{ item.title }}"
+                            catch:tap="changeSecondQuery"
+                    >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                </view>
+            </view>
+        </view>
+
+    </view>
+    <view class="title"></view>
+    <view class="list">
+        <view style="overflow-x: scroll;">
+            <view class="head-view" style="width: 680rpx;">
+                <view class="col1-client col-text">商品</view>
+                <view class="col2-client col-text" bindtap="changeSort" data-sort="{{query.sort === 'count_real' ? '-count_real' : 'count_real'}}">
+                    件数
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'count_real' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-count_real'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-count_real' && query.sort != 'count_real'}}"></image>
+                </view>
+                <view class="col3-client col-text" bindtap="changeSort" data-sort="{{query.sort === 'item_total_price' ? '-item_total_price' : 'item_total_price'}}">
+                    订单商品金额
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'item_total_price' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-item_total_price'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-item_total_price' && query.sort != 'item_total_price'}}"></image>
+                </view>
+            </view>
+            <view class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                 style="width: 680rpx;"
+                wx:for="{{productListData.items}}"
+                wx:key="index">
+                <text class="col1-client col-text">{{item.item_title}}</text>
+                <view class="col2-client col-text">{{item.count_real}}</view>
+                <view class="col3-client col-text">￥{{tools.returnPrice(item.item_total_price)}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="page-bottom">
+        <view class="load-more" wx:if="{{productListData.num > 0 && !showSkeleton}}">{{tools.returnMore(productListData.num, query)}}</view>
+        <view class="load-none" wx:elif="{{!showSkeleton}}">暂无数据</view>
+    </view>
+</view>

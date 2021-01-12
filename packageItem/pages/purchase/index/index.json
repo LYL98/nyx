@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "采购",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "global": "/packageItem/pages/purchase/global/global",
+    "local": "/packageItem/pages/purchase/local/local"
+  }
+}

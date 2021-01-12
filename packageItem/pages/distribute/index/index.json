@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "调拨计划",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "plan": "/packageItem/pages/distribute/plan/plan"
+  }
+}

@@ -1,0 +1,3 @@
+<picker mode="multiSelector" value="{{ids}}" range="{{dataItem}}" range-key="title" bindcolumnchange="columnChange" bindchange="bindChange">
+  <slot></slot>
+</picker>

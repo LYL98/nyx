@@ -1,0 +1,48 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+    isScan bind:scan="scanInput" placeholder="搜索" fixed="{{false}}"
+    data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+    filter filterData="{{filterData}}" bind:filterChange="filterChange"/>
+<view class="margin-main item-list padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff">
+        <view class="top">
+            <view class="title">调拨单号：{{item.code}}<text wx:if="{{item.creator_id === 0}}" class="sign">反采</text></view>
+            <view class="status {{distributeWaybillStatusType[item.status]}}">{{distributeWaybillStatus[item.status]}}</view>
+        </view>
+        <view class="content">
+            <view class="left">
+                <view class="margin-bottom10 aided font-size28">调出仓：{{item.src_storehouse.title}}</view>
+                <view class="margin-bottom10 aided font-size28">预计到货：{{item.estimate_arrive_at}}</view>
+            </view>
+        </view>
+        <view class="content" wx:for="{{item.distribute_details}}" wx:for-item="dds" wx:for-index="i" wx:key="i">
+            <view class="left">
+                <view class="margin-bottom10 font-size32 font-w-bold">{{dds.item_code}}/{{dds.item_title}}</view>
+                <view class="margin-bottom10 aided font-size28">批次：{{dds.batch_code}}</view>
+                <view class="margin-bottom36 aided font-size28">状态：{{distributeReceiveStatus[dds.status]}}</view>
+                <view class="font-size28 font-w-bold">调拨数量：{{dds.num}}件</view>
+            </view>
+            <view class="right">
+                <navigator
+                    url="/packageOperate/pages/receiving/distribute-opt/distribute-opt?id={{dds.id}}"
+                    wx:if="{{dds.status === 'init' && (auth.isAdmin || auth.OperateReceivingDistributeAdd)}}"
+                >
+                    <button class="btn-primary btn-size-72">品控</button>
+                    <view class="btn-num" wx:if="{{dds.qa_times > 0}}">{{dds.qa_times}}</view>
+                </navigator>
+                <button wx:if="{{dds.status === 'init' && (auth.isAdmin || auth.OperateReceivingDistributeReceiv)}}"
+                    class="btn-primary btn-size-72"
+                    style="margin-top: 10rpx;"
+                    data-item="{{dds}}"
+                    bind:tap="skipReceiv"
+                >收货</button>
+            </view>
+        </view>
+    </view>
+    <view class="load-more margin-bottom20" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{auth.isAdmin || auth.OperateReceivingDistributeAdd}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫码品控</button>
+</view>

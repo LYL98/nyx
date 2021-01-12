@@ -1,0 +1,21 @@
+.title-add{
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10rpx;
+    margin-bottom: 20rpx;
+    >.left{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        >.title{
+            margin-left: 10rpx;
+        }
+        >.delete{
+            color: #A1A6B3;
+            padding: 0 30rpx;
+        }
+    }
+    >.right{
+        color: #999;
+    }
+}

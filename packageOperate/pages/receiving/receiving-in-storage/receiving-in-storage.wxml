@@ -1,0 +1,77 @@
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 padding20">
+        <view class="margin-bottom10 font-size32 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+        <view class="font-size28">收货数量：{{inventoryData.num_accept}}件</view>
+    </view>
+</view>
+
+<view class="margin-main margin-bottom16 title-add">
+    <view class="left">入库</view>
+</view>
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+    <selectWarehouse bind:change="changeWarehouse" storehouseId="{{selectStorehouseId}}">
+        <view class="item">
+            <view class="title">选择库</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.warehouse_id}}">{{addData.warehouse_title}}</view>
+                    <view class="content placeholder" wx:else>请选择库</view>
+                    <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.warehouse_id_error}}">{{addData.warehouse_id_error}}</view>
+            </view>
+        </view>
+    </selectWarehouse>
+    <view class="item">
+        <view class="title">是否上架</view>
+        <view class="input">
+            <switch color="#00ADE7" style="position: relative; right: -10rpx;" checked="{{isPutaway}}" bindchange="changeIsPutaway"></switch>
+        </view>
+    </view>
+</view>
+
+<!--上架-->
+<block wx:if="{{isPutaway}}">
+    <view class="margin-main title-add margin-bottom20">
+        <view class="left">上架</view>
+        <view class="right margin-right20">
+            <button class="btn-white btn-size-62" bind:tap="addTray">手动增加</button>
+        </view>
+        <view class="right">
+            <button class="btn-primary btn-size-62" bind:tap="handleScan">扫码增加</button>
+        </view>
+    </view>
+
+    <block wx:for="{{addData.trays}}" wx:key="index">
+        <view class="delete font-size30" wx:if="{{index > 0}}">
+            <view hover-class="link-hover" bind:tap="deleteTray" data-index="{{index}}">删除</view>
+        </view>
+        <view class="margin-main bg-body-fff margin-bottom30 list-input">
+            <selectTray bind:change="changeTray" data-index="{{index}}" storehouseId="{{selectStorehouseId}}" warehouseId="{{addData.warehouse_id}}">
+                <view class="item">
+                    <view class="title">上架托盘</view>
+                    <view class="input">
+                        <view class="select">
+                            <view class="content" wx:if="{{item.tray_id}}">{{item.tray_code}}</view>
+                            <view class="content placeholder" wx:else>请选择库/托盘</view>
+                            <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                        </view>
+                        <view class="error-hint" wx:if="{{item.tray_id_error}}">{{item.tray_id_error}}</view>
+                    </view>
+                </view>
+            </selectTray>
+            <view class="item">
+                <view class="title">上架数量</view>
+                <view class="input">
+                    <input placeholder="请输入数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                        type="number" data-maindata="addData" data-fieldkey="trays[{{index}}].num" value="{{item.num}}"/>
+                    <view class="error-hint" wx:if="{{item.num_error}}">{{item.num_error}}</view>
+                </view>
+            </view>
+        </view>
+    </block>
+</block>
+
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+</view>

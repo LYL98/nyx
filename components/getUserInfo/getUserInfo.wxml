@@ -1,0 +1,7 @@
+<button
+    open-type="getUserInfo"
+    bindgetuserinfo="onGetUserInfo"
+    class="btn-primary btn-size-88"
+    loading="{{loading}}"
+    disabled="{{loading || !loginRes.code ? true : false}}"
+>绑定微信</button>

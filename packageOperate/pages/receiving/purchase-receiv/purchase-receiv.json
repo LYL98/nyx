@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "收货",
+  "usingComponents": {
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

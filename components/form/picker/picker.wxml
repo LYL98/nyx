@@ -1,0 +1,9 @@
+<!--components/form/picker/picker.wxml-->
+
+<picker bindchange="onChange" value="{{index}}" range-key="label" range="{{options}}" disabled="{{ disabled || detail_module }}">
+  <view class="picker">
+    <text class="label" wx:if="{{ options[index] }}">{{ options[index].label }}</text>
+    <text class="placeholder" wx:if="{{ !options[index] && !detail_module }}">{{ placeholder }}</text>
+    <view class="icon-right" wx:if="{{ !disabled && !detail_module }}"></view>
+  </view>
+</picker>

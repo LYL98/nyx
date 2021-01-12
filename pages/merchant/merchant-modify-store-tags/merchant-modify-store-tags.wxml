@@ -1,0 +1,33 @@
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<wxs src="./../merchant.wxs" module="merchant" />
+<view class="page-merchant-modify-tags">
+  <view class="form-item inner-tags">
+    <text class="label">门店标签</text>
+    <view class="card" style="margin-top: 20rpx;">
+      <block wx:for="{{ tags }}" wx:key="index">
+        <view class="tags-title">{{item.title}}</view>
+        <view class="tags-container" style="margin-top: 0; padding-top: 20rpx;">
+          <view
+            wx:for="{{item.child_tags}}"
+            wx:for-item="c"
+            wx:for-index="i"
+            wx:key="i"
+            class="{{ merchant.judgeStoreTags(editData.tag_ids, c) ? 'active' : '' }}"
+            data-updata="{{item}}"
+            data-item="{{c}}"
+            bind:tap="selectTag"
+          >{{ tools.returnOmissionText(c.title, 6) }}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <button
+      class="btn-submit"
+      hover-class="btn-submit-hover"
+      loading="{{ loading }}"
+      disabled="{{ loading }}"
+      bind:tap="submit"
+  >确认</button>
+</view>

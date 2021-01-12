@@ -1,0 +1,32 @@
+/* pages/merchant/merchant-province-list/merchant-province-list.wxss */
+
+.page-merchant-city-list {
+    height: 100%;
+    padding: 30rpx 20rpx;
+    background-color: #f7f7f8;
+    font-size: 28rpx;
+    color: #A1A6B3;
+}
+
+.page-merchant-city-list > .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30rpx 10rpx;
+}
+
+.page-merchant-city-list > .tags-container > text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 210rpx;
+    height: 56rpx;
+    border-radius: 6rpx;
+    box-sizing: border-box;
+    border: 1rpx solid #A1A6B3;
+    margin: 10rpx;
+}
+
+.page-merchant-city-list > .tags-container > text.active {
+    color: #00ADE7;
+    border-color: #00ADE7;
+}

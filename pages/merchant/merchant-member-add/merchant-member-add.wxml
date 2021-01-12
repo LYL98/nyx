@@ -1,0 +1,83 @@
+<!--pages/merchant/merchant-member-add/merchant-member-add.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<view class="page-merchant-member-add">
+  <view class="form">
+    <view class="card form-area-view">
+      <view class="form-item avatar form-item-required">
+        <view class="form-item-content">
+          <text class="label">上传头像</text>
+          <view class="image-operate">
+            <ul class="image-container" wx:if="{{editData.avatar}}">
+              <li>
+                <image class="image" src="{{ tencentPath + editData.avatar + '_min200x200' }}"></image>
+                <view class="delete-button" bindtap="deleteAvatar">
+                  <image src="./../../../assets/img/icon-delete.png"></image>
+                </view>
+              </li>
+            </ul>
+            <view wx:if="{{!editData.avatar}}" class="upload-button" bind:tap="changeAvatar"></view>
+          </view>
+        </view>
+        <text class="form-item-error">{{error.avatar}}</text>
+      </view>
+
+      <view class="form-item form-item-required">
+        <view class="form-item-content">
+          <text class="label">姓名</text>
+          <input
+              type="text"
+              placeholder="请输入姓名"
+              value="{{ editData.realname }}"
+              bindinput="inputRealname"
+              bindchange="changeRealname"
+          />
+        </view>
+        <text class="form-item-error">{{error.realname}}</text>
+      </view>
+
+      <view class="form-item form-item-required">
+        <view class="form-item-content">
+          <text class="label">登录手机</text>
+          <input
+              type="number"
+              placeholder="请输入登录手机"
+              value="{{ editData.phone }}"
+              bindinput="inputPhone"
+              bindchange="changePhone"
+          />
+        </view>
+        <text class="form-item-error">{{error.phone}}</text>
+      </view>
+
+      <view class="form-item form-item-required">
+        <view class="form-item-content">
+          <text class="label">账号权限</text>
+          <picker bindchange="changeAccountAuth" range-key="name" value="{{ editData.is_main }}" range="{{ accountAuths }}">
+            <view class="picker">
+              <label>{{ accountAuths[editData.is_main].name }}</label>
+              <view class="icon-right"></view>
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="form-item form-item-required" wx:if="{{editData.is_main === 0}}">
+        <view class="form-item-content">
+          <text class="label">指定门店</text>
+          <pg-select multiple options="{{ storeList }}" value="{{ editData.store_ids }}" data-key="store_ids" bind:change="onChangeKey" />
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <button
+      class="btn-submit"
+      hover-class="btn-submit-hover"
+      loading="{{loading}}"
+      disabled="{{ loading }}"
+      bind:tap="submit"
+  >确认</button>
+</view>
+

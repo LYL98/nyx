@@ -1,0 +1,62 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<view class="top">
+    <view class="left">
+        <view class="b {{query.custom_type === 'B' && 'active'}}" hover-class="link-hover" data-key="B" bind:tap="changeCustomType">商城</view>
+        <view class="c {{query.custom_type === 'C' && 'active'}}" hover-class="link-hover" data-key="C" bind:tap="changeCustomType">零售</view>
+    </view>
+    <view class="right">
+        <searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+            isScan bind:scan="scanInput" placeholder="搜索" fixed="{{false}}"
+            data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+            filter filterData="{{filterData}}" bind:filterChange="filterChange"/>
+    </view>
+</view>
+<view class="margin-main item-list padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff">
+        <view class="top">
+            <view class="title">采购单号：{{item.code}}
+                <text wx:if="{{item.creator_id === 0}}" class="sign">反采</text>
+                <text wx:if="{{item.purchase_place_type === 'origin'}}" class="sign">异地</text>
+            </view>
+            <view class="status {{qCStatusType[item.status]}}">{{qCStatus[item.status]}}</view>
+        </view>
+        <view class="content">
+            <view class="left">
+                <view class="margin-bottom10 font-size32 font-w-bold">{{item.item_code}}/{{item.item_title}}<view class="sub-title" wx:if="{{item.sale_type === '平台'}}">平台</view></view>
+                <view class="margin-bottom10 aided font-size28">供应商：{{item.supplier_title}}</view>
+                <view class="margin-bottom10 aided font-size28">采购员：{{item.buyer_name}}</view>
+                <view class="margin-bottom10 aided font-size28">采购日期：{{item.order_date}}</view>
+                <view class="margin-bottom36 aided font-size28">预计到货：{{item.estimate_arrive_at}}</view>
+                <view class="font-size28 font-w-bold">采购数量：{{item.num}}件</view>
+            </view>
+            <view class="right">
+                <navigator
+                    url="/packageOperate/pages/receiving/purchase-opt/purchase-opt?id={{item.id}}"
+                    wx:if="{{(item.status === 'audit_success' || item.status === 'part_in') && (auth.isAdmin || auth.OperateReceivingPurchaseAdd)}}"
+                >
+                    <button class="btn-primary btn-size-72">品控</button>
+                    <view class="btn-num" wx:if="{{item.qa_times > 0}}">{{item.qa_times}}</view>
+                </navigator>
+                <button wx:if="{{(item.status === 'audit_success' || item.status === 'part_in') && (auth.isAdmin || auth.OperateReceivingPurchaseReceiv)}}"
+                    class="btn-primary btn-size-72"
+                    style="margin-top: 10rpx;"
+                    data-item="{{item}}"
+                    bind:tap="skipReceiv"
+                >收货</button>
+                <navigator
+                    url="/packageOperate/pages/receiving/purchase-close/purchase-close?id={{item.id}}"
+                    style="margin-top: 10rpx;"
+                    wx:if="{{(item.status === 'audit_success' || item.status === 'part_in') && (auth.isAdmin || auth.OperateReceivingPurchaseClose)}}"
+                >
+                    <button class="btn-white btn-size-72">关闭</button>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class="load-more margin-bottom20" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{auth.isAdmin || auth.OperateReceivingPurchaseAdd}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫码品控</button>
+</view>

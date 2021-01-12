@@ -1,0 +1,19 @@
+<view class="page-aftersale-search">
+  <view class="header">
+    <picker bind:change="changeType" value="{{index}}" range="{{typeList}}">
+      <view class="picker-view">
+        <text>{{ typeList[index] }}</text>
+        <image src="./../../../../assets/img/icon-bottom.png"></image>
+      </view>
+    </picker>
+    <input
+        type="text"
+        class="search-input"
+        value="{{ index == 0 ? condition : item}}"
+        placeholder="搜索"
+        auto-focus
+        confirm-type="search"
+        bind:confirm="confirmCondition"
+    />
+  </view>
+</view>

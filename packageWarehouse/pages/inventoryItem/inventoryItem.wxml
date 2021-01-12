@@ -1,0 +1,37 @@
+<view class="padding30-40-20" wx:if="{{dataItem.items.length > 0}}">
+    <view class="font-size28 line-height38 font-w-bold margin-bottom10">{{dataItem.items[0].item_code}}/{{dataItem.items[0].item_title}}</view>
+    <view class="font-size28 line-height38" wx:if="{{operate === 'out_storage_plan'}}">
+        应出库：{{outStoragePlanData.num}}件，已出库：<block wx:if="{{outStoragePlanData.num_out}}">{{outStoragePlanData.num_out}}件</block><block wx:else>-</block>
+    </view>
+</view>
+<view class="margin-main item-list">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff margin-bottom20">
+        <view class="top">
+            <view class="title font-w-bold">{{item.warehouse_title}}/{{item.tray_code}}</view>
+            <view class="num font-w-bold">{{item.num}}件</view>
+        </view>
+        <view class="content padding26-20">
+            <view class="left">
+                <view class="font-size30 margin-bottom10">批次：{{item.batch_code}}</view>
+                <view class="font-size30 margin-bottom10">供应商：{{item.supplier_title}}</view>
+                <view class="font-size30 margin-bottom10">商品过期时间：{{item.due_date}}</view>
+                <view class="font-size30 margin-bottom10">库存过期时间：{{item.stock_due_date}}</view>
+                <view class="font-size30 margin-bottom10">入库时间：{{item.created}}</view>
+                <view class="font-size30 margin-bottom10">生产日期：{{item.produce_date || '-'}}</view>
+                <view class="font-size30 margin-bottom10">保质期：{{item.shelf_life ? item.shelf_life + '天' : '-'}}</view>
+                <view class="font-size30 margin-bottom10">库龄：{{item.stock_age ? item.stock_age + '天' : '-'}}</view>
+
+            </view>
+            <view class="right" wx:if="{{operate}}">
+                <navigator url="{{operates[operate].url}}?index={{index}}&from=inventoryItem&operate={{operate}}">
+                    <button class="btn-primary btn-size-72">{{operates[operate].title}}</button>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <defaultPage wx:if="{{dataItem.items.length === 0}}" currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{operate}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫托盘码{{operates[operate].title}}</button>
+</view>

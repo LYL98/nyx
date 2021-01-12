@@ -1,0 +1,87 @@
+module.exports = {
+    /**
+     * 判断用户是否拥有该 外标签
+     * @param tags 用户拥有的标签列表
+     * @param item 需要判断的当前项
+     */
+    judgeTags: function(tags, item) {
+        return tags.some(function(tag) {
+            return tag === item.title;
+        });
+    },
+
+    /**
+     * 判断用户是否拥有该 内标签
+     * @param tags 用户拥有的标签列表
+     * @param item 需要判断的当前项
+     */
+    judgeInnerTags: function(tags, item) {
+      return tags.some(function(tag) {
+          return tag === item.id;
+      });
+    },
+
+    judgeStoreTags: function(tags, item) {
+      return tags.some(function(tag) {
+          return tag === item.id;
+      });
+    },
+
+    is_post_pay_options: function(key) {
+      return key ? '是' : '否';
+    },
+
+    store_type_options: function(key) {
+      return {
+        boutique_fruit_shop: '精品水果店',
+        business_super_system: '商超系统',
+        convenience_system: '便利系统',
+        volkswagen_fruit_shop: '大众水果店',
+        microboss: '微商',
+        inner_test_account: '员工内部账号',
+        other: '其他',
+      }[key];
+    },
+
+    kp_gender_options: function(key) {
+      return !key ? '男' : '女';
+    },
+
+    pur_channels_options: function(key) {
+      return {
+        inter_service_provider: '互联网服务商',
+        county_wholesalers: '县级批发商',
+        city_wholesalers: '市级批发市场',
+        province_wholesalers: '省级批发市场',
+        host_distribution: '连锁店总部统一配送',
+        other: '其他',
+      }[key];
+    },
+
+    is_post_options: function(key) {
+      return key ? '是' : '否';
+    },
+
+    online_sale_tool_options: function(key) {
+      return {
+        wechat_group_friends: '朋友圈+微信群',
+        takeaway: '外卖平台',
+        group_pur: '社区团购',
+        other: '其他电商平台',
+      }[key] || '未做线上销售';
+    },
+
+    business_status_options: function(key) {
+      return {
+        business: '营业中',
+        closed: '已关闭',
+        need_to_freeze: '因客户恶意情况需要冻结',
+      }[key];
+    },
+
+    business_category_options: function(values) {
+      if (!values) return '';
+      return values.join(',');
+    },
+
+}

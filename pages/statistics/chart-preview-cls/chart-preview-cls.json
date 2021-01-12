@@ -1,0 +1,7 @@
+{
+  "pageOrientation": "landscape",
+  "navigationBarTitleText": "统计图表",
+  "usingComponents": {
+    "ec-canvas": "../../../components/ec-canvas/ec-canvas"
+  }
+}

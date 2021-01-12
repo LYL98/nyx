@@ -1,0 +1,17 @@
+.picker {
+  display: flex;
+  align-items: center;
+  padding-right: 10rpx;
+}
+
+.picker .placeholder {
+  color: rgb(140, 140, 140);
+}
+
+.picker > .icon-right {
+  margin-left: 20rpx;
+  width: 13rpx;
+  height: 24rpx;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAAAXNSR0IArs4c6QAAANpJREFUOBFjYCADMC5ctnk2IyMjPwczd1JYmOMXYsxgYmBkMPv//3/ojz9ftq9atZ+HKE2MzGwBjIwMj/4zMNgQq5ERZPKiVTsVGf7+OvD/P4McUOAIBwuPJz6ngjWRqhGuiRSNKJqI1YihiRiNWDUR0ohTEz6NTCBJXCAuzP0+AzObAzwe/36dB1KLVxMuw/Bqwoh0YPoEGYTTTxgakFIJVk34NGC1iZAGDE3EaEDRRKwGuCZSNIA1kaoBpInl/99fGxiIzHwgDSDAAtRwCliw3CSlYIFoJZEEAFSNv2ioNnsDAAAAAElFTkSuQmCC") no-repeat center;
+  background-size: cover;
+}

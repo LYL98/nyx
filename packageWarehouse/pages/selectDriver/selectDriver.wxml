@@ -1,0 +1,12 @@
+<searchInput value="{{query.condition}}" bind:confirm="getData" placeholder="请输入司机姓名/手机号" focus data-maindata="query" data-fieldkey="condition" bind:input="inputChange" />
+<view class="margin-main margin-bottom20">
+    <view wx:for="{{dataItem}}" wx:key="index" class="item bg-body-fff padding26-20 margin-bottom20" hover-class="link-acitve" data-item="{{item}}" bind:tap="selectDriver">
+        <view class="left">
+            <view class="title font-size32 font-w-bold margin-bottom16">{{item.realname}} {{item.phone}}</view>
+            <view class="num font-size28">车型:{{item.driver_car_type}}  车牌:{{item.driver_car_num}}</view>
+        </view>
+        <view class="right">
+            <image class="d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+        </view>
+    </view>
+</view>

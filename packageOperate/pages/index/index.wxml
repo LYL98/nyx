@@ -1,0 +1,19 @@
+<view class="padding-top20">
+<!-- <navbar list="{{status.values}}" fixed width="{{750 / status.values.length}}" totalWidth="{{750}}" slider="{{0.2}}" bindnavtouch="clickTab" defaultIndex="{{activeIndex}}"/> -->
+
+
+  <!-- <navigator class="bg-body-fff margin-main margin-bottom20 select-storehouse" url="/packageWarehouse/pages/selectStorehouse/selectStorehouse">
+    <view class="left">
+      <image class="d-b" src="./../../../assets/img/address.png" style="width: 28rpx; height: 34rpx;" />
+    </view>
+    <view class="right">{{selectStorehouse.title || 'loading...'}}</view>
+  </navigator> -->
+  
+  <view class="margin-main items bg-body-fff">
+    <navigator wx:for="{{items}}" wx:key="index" url="{{item.url}}" wx:if="{{auth.isAdmin || auth[item.auth]}}">
+      <image class="left" src="./../../assets/img/index/{{item.icon}}" style="width: 58rpx; height: 58rpx;" />
+      <view>{{item.str}}</view>
+      <image class="right" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;"/>
+    </navigator>
+  </view>
+</view>

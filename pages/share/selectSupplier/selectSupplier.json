@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择供应商",
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "searchInput": "/components/searchInput/searchInput"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "关闭",
+  "usingComponents": {
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

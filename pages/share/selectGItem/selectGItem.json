@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择商品",
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "searchInput": "/components/searchInput/searchInput"
+  }
+}

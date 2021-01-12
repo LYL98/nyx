@@ -1,0 +1,96 @@
+
+module.exports = {
+
+    returnOrderStatus: function(type) {
+        return {
+            wait_confirm: '待确认',
+            confirmed: '待发货',
+            assigned: '待发货',
+            wait_delivery: '待发货',
+            deliveried: '待收货',
+            received: '已完成',
+            order_done: '已完成',
+            order_canceled: '已取消'
+        }[type];
+    },
+
+    returnOrderLogs: function(type) {
+        return {
+            order: '订单创建', // 下单
+            pay: '订单付款',
+            confirm: '订单确认',
+            delivery: '订单发货',
+            receive: '订单完成',
+            cancel: '订单取消',
+            launch_pay: '支付发起',
+            callback_begin: '支付回调',
+            callback_success: '回调成功'
+        }[type];
+    },
+
+    returnOrderStatusClassName: function(type) {
+        return {
+            wait_confirm: 'wait_confirm',
+            confirmed: 'wait_delivery',
+            assigned: 'wait_delivery',
+            wait_delivery: 'wait_delivery',
+            deliveried: 'deliveried',
+            received: 'order_done',
+            order_done: 'order_done',
+            order_canceled: 'order_canceled'
+        }[type];
+    },
+
+    returnOrderColorClass: function(pre, real) {
+        if (pre === real) return '';
+        return pre - real < 0 ? 'red' : 'green'
+    },
+
+    returnPayStatus: function(type) {
+        return {
+            wait_complete: '未付清',
+            done: '已付清'
+        }[type];
+    },
+
+    returnRefundReason: function(type) {
+        return {
+            sys_refund: '改单退款',
+            freight_redone: '运费重算',
+            cancel_order_refund: '取消订单退款'
+        }[type];
+    },
+
+    returnAfterSaleStatus: function(type) {
+        return {
+            waiting_dispose: '待处理',
+            close: '已完成'
+        }[type]
+    },
+
+    returnAfterSaleStatusClassName: function(type) {
+        return {
+            waiting_dispose: 'waiting_dispose',
+            close: 'close'
+        }[type];
+    },
+
+    returnAfterSaleOptType: function(type) {
+        return {
+            init: '暂未处理',
+            quality: '质量异常',
+            delivery: '物流异常',
+            amount_delivery: '运费退还',
+            weight: '少称',
+            num: '缺货/错货',
+            not_match: '与SKU描述不相符',
+            betray_low_price: '违反低价承诺',
+            other: '其他'
+        }[type];
+    },
+
+    returnAbs: function(value) {
+        return Math.abs(value);
+    }
+
+}

@@ -1,0 +1,63 @@
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+<view class="padding30-40-20 font-size28 line-height38 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+<view class="margin-main item-list">
+    <view class="item bg-body-fff margin-bottom20">
+        <!-- <view class="top">
+            <view class="title font-w-bold">{{detail.warehouse_title}}/{{detail.tray_code}}</view>
+        </view> -->
+        <view class="content padding26-20">
+            <view class="font-size30 margin-bottom10">批次：{{detail.batch_code}}</view>
+            <view class="font-size30 margin-bottom10">供应商：{{detail.supplier_title}}</view>
+            <view class="font-size30 margin-bottom10">创建时间：{{detail.created}}</view>
+            <view class="font-size32 font-w-bold">数量：{{detail.num}}件</view>
+        </view>
+    </view>
+</view>
+<view class="padding30-40-20 font-size28 line-height38 font-w-bold">处理信息</view>
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+     <block >
+        <view class="item">
+            <view class="title">处理数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入数量(件)" placeholder-class="list-input-placeholder" bindinput="inputNum" bindfocus="inputFocus"
+                    type="number" data-maindata="addData" data-fieldkey="handle_num" value="{{addData.handle_num}}"/>
+                <view class="error-hint" wx:if="{{addData.handle_num_error}}">{{addData.handle_num_error}}</view>
+            </view>
+        </view>
+        <view class="item disabled">
+            <view class="title">处理后数量</view>
+            <view class="input">{{addData.handle_num_later}}</view>
+        </view>
+    </block>
+     <picker range="{{rangeData}}" range-key="value" bindchange="changeOrderType">
+        <view class="item">
+            <view class="title">处理类型</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.type}}">{{optTypes[addData.type]}}</view>
+                    <view class="content placeholder" wx:else>请选择类型</view>
+                    <image class="icon d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.type_error}}">{{addData.type_error}}</view>
+            </view>
+        </view>
+    </picker>
+   <view class="item" wx:if="{{addData.type === 'offline_sale' || addData.type === 'back_to_supply_for_sale'}}">
+        <view class="title">销售金额(元)</view>
+        <!--  -->
+        <view class="input">
+                <input placeholder="请输入金额(元)" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="digit" data-maindata="addData" data-fieldkey="sale_amount" value="{{addData.sale_amount}}"/>
+                <view class="error-hint" wx:if="{{addData.sale_amount_error}}">{{addData.sale_amount_error}}</view></view>
+    </view>
+</view>
+
+<view class="margin-main bg-body-fff remark-body margin-bottom20">
+    <myTextarea placeholder="请输入备注（选填）" maxlength="50" bind:input="inputChange" bind:focus="inputFocus" data-maindata="addData" data-fieldkey="remark" value="{{addData.remark}}" />
+    <view class="hint font-size24">{{addData.remark.length}}/50</view>
+</view>
+
+<view class="bottom-btn">
+     <view class="title">*退供代售和退供都会给该供应商产生相对应的退货流水</view>
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+</view>

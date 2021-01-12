@@ -1,0 +1,97 @@
+/* pages/statistics/statistics-product.wxss */
+
+.page{
+  background: #F7F7F8;
+}
+
+.page > .title {
+  font-size: 28rpx;
+  margin-left: 40rpx;
+  padding: 16rpx 0;
+  font-weight: bold;
+}
+
+.head-view > view > image {
+  width: 16rpx;
+  height: 20rpx;
+  margin-left: 5rpx;
+  position: relative;
+  top: 2rpx;
+}
+
+.list{
+  background: #fff;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 20rpx 40rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.list .head-view{
+  display: flex;
+  height: 88rpx;
+  align-items: center;
+  color: #A1A6B3;
+}
+
+.list .item-view{
+  display: flex;
+  min-height: 100rpx;
+  align-items: center;
+  color: #20232C;
+}
+
+.highlight-row{
+  background-color: #F9FAFC;
+}
+
+.col-text{
+  text-align: left;
+  font-size: 28rpx;
+  word-wrap:break-word;
+}
+
+.col1{
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  padding-right: 10rpx;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+}
+
+.col2{
+  width: 240rpx;
+}
+
+.col3{
+  width: 160rpx;
+}
+
+.col4{
+  width: 160rpx;
+}
+
+.col5{
+  width: 130rpx;
+}
+
+
+.col1 > .info{
+  margin-top: 20rpx;
+  display: flex;
+  color: #A1A6B3;
+}
+
+.col1 > .info >.display-class{
+  flex: initial;
+}
+
+.col1 > .info >.buyer{
+  margin-left: 26rpx;
+  flex: initial;
+}
+
+

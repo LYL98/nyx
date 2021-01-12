@@ -1,0 +1,60 @@
+
+<view class="padding-top20">
+    <view class="margin-main margin-bottom16 font-w-bold padding-left20">调拨信息</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item disabled">
+            <view class="title">调出仓</view>
+            <view class="input">{{detail.src_storehouse.title}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">调入仓</view>
+            <view class="input">{{detail.tar_storehouse.title}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">销售日期</view>
+            <view class="input">{{detail.available_date}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">预计到货时间</view>
+            <view class="input">{{detail.estimate_arrive_at}}</view>
+        </view>
+    </view>
+
+    <block wx:for="{{detail.p_items}}" wx:key="index">
+        <view class="margin-main margin-bottom20 font-w-bold padding-left20">调拨商品-{{index + 1}}</view>
+        <view class="margin-main bg-body-fff margin-bottom20 list-input">
+            <view class="item disabled">
+                <view class="title">商品</view>
+                <view class="input">{{item.item_title}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">调拨数量</view>
+                <view class="input">{{item.num}}件</view>
+            </view>
+        </view>
+    </block>
+
+    <view class="margin-main margin-bottom20 font-w-bold padding-left20">操作人</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input" wx:key="index">
+        <block wx:if="{{detail.creator_id}}">
+            <view class="item disabled">
+                <view class="title">创建人</view>
+                <view class="input">{{detail.creator && (detail.creator.realname || '系统')}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">创建时间</view>
+                <view class="input">{{detail.created}}</view>
+            </view>
+        </block>
+        <block wx:if="{{item.auditor_id}}">
+            <view class="item disabled">
+                <view class="title">审核人</view>
+                <view class="input">{{detail.auditor && (detail.auditor.realname || '系统')}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">审核时间</view>
+                <view class="input">{{detail.audit_time}}</view>
+            </view>
+        </block>
+    </view>
+</view>

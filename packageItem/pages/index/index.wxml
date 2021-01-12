@@ -1,0 +1,9 @@
+<view class="padding-top20">
+  <view class="margin-main items bg-body-fff">
+    <navigator wx:for="{{items}}" wx:key="index" url="{{item.url}}" wx:if="{{auth.isAdmin || auth[item.auth]}}">
+      <image class="left" src="./../../assets/img/index/{{item.icon}}" style="width: 58rpx; height: 58rpx;" />
+      <view>{{item.str}}</view>
+      <image class="right" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;"/>
+    </navigator>
+  </view>
+</view>

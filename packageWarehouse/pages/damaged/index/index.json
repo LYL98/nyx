@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "残损区",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "initDamaged": "/packageWarehouse/pages/damaged/init-damaged/init-damaged",
+    "msgDamaged": "/packageWarehouse/pages/damaged/msg-damaged/msg-damaged"
+  }
+}

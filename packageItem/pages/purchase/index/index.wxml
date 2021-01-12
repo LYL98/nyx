@@ -1,0 +1,7 @@
+<navbar wx:if="{{status.values.length >= 2}}" list="{{status.values}}" fixed width="{{750 / status.values.length}}" totalWidth="{{750}}" slider="{{0.2}}" bindnavtouch="clickTab" defaultIndex="{{activeIndex}}"/>
+
+<!--预采-->
+<global wx:if="{{activeIndex === 0}}" pageOnPullDownRefresh="{{pageOnPullDownRefresh}}" pageOnReachBottom="{{pageOnReachBottom}}" auth="{{auth}}" id="global"/>
+
+<!--反采-->
+<local wx:elif="{{activeIndex === 1}}" pageOnPullDownRefresh="{{pageOnPullDownRefresh}}" pageOnReachBottom="{{pageOnReachBottom}}" auth="{{auth}}" id="local"/>

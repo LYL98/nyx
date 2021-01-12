@@ -1,0 +1,41 @@
+
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+    isScan bind:scan="scanInput" placeholder="搜索商品编号,名称,门店"
+    data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+    filter filterData="{{filterData}}" bind:filterChange="filterChange"
+    />
+<view style="height: 10rpx;"></view>
+
+<view class="margin-main item-list" wx:if="{{dataItem.items.length > 0}}">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff margin-bottom20">
+        <view class="top">
+            <view class="title font-w-bold">{{item.item_code}}/{{item.item_title}}<view class="sub-title" wx:if="{{item.sale_type === '平台'}}">平台</view></view>
+            <view class="num font-w-bold">{{saleBackTypes[item.status]}}</view>
+        </view>
+        <view class="content padding26-20">
+            <view class="left">
+                <view class="font-size30 margin-bottom10">退货单号：{{item.code}}</view>
+                <view class="font-size30 margin-bottom10">门店名称：{{item.store_title}}</view>
+                <view class="font-size30 margin-bottom30">县域：{{item.city_title}}</view>
+                <view class="font-size30 margin-bottom10 font-w-bold">数量：{{item.back_num}}件</view>
+            </view>
+            <view class="right" >
+                <navigator url="/packageWarehouse/pages/saleBackGoods/saleBackGoods?index={{index}}&from=saleBack&operate=saleBack">
+                    <button class="btn-primary btn-size-72">收货</button>
+                </navigator>
+            </view>
+        </view>
+    </view>
+
+</view>
+<view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+
+<defaultPage wx:if="{{dataItem.items.length === 0}}" currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+<view class="bottom-btn" wx:if="{{dataItem.items.length > 0}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫码收货</button>
+</view>
+
+
+    

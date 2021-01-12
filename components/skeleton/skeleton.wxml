@@ -1,0 +1,11 @@
+<!--<canvas canvas-id="skeleton" disable-scroll="true"></canvas>-->
+<view style="background-color: {{bgcolor}}; position: absolute; left:0; top: 0; right: 0; z-index: 10; overflow: hidden; height: {{height}}px;">
+
+  <view wx:for="{{skeletonRectLists}}" wx:key="key" style="width: {{item.width}}px; height: {{item.height}}px; background-color: #f3f4f6; position: absolute; left: {{item.left}}px; top: {{item.top}}px">
+
+  </view>
+  <view wx:for="{{skeletonCircleLists}}" wx:key="key" style="width: {{item.width}}px; height: {{item.height}}px; background-color: #f3f4f6; border-radius: {{item.width}}px; position: absolute; left: {{item.left}}px; top: {{item.top}}px">
+
+  </view>
+
+</view>

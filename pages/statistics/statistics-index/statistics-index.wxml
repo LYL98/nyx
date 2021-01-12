@@ -1,0 +1,8 @@
+<cover-view class="tabs">
+  <cover-view class="tab{{ tab_index === 'bsc' ? ' active' : '' }}" data-index="bsc" bind:tap="onTabChange">商城</cover-view>
+  <cover-view class="border-1"></cover-view>
+  <cover-view class="tab{{ tab_index === 'cls' ? ' active' : '' }}" data-index="cls" bind:tap="onTabChange">零售</cover-view>
+</cover-view>
+
+<statistics-bsc wx:if="{{ tab_index === 'bsc' }}"></statistics-bsc>
+<statistics-cls wx:if="{{ tab_index === 'cls' }}" reachBottom="{{ reachBottom }}"></statistics-cls>

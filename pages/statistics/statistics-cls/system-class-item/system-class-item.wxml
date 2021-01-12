@@ -1,0 +1,43 @@
+<!--pages/statistics/statistics-product.wxml-->
+<wxs src="../../../../utils/tools.wxs" module="tools" />
+<wxs src="./../../statistics.wxs" module="statistics" />
+
+<view class="page">
+
+    <view class="title">商品销售统计 / {{query.system_class1 || '其它'}} / {{query.system_class2 || '其它'}} / {{query.system_class3 || '其它'}}</view>
+
+    <view class="list" wx:if="{{orderItemSumData.num > 0}}">
+        <view style="overflow-x: scroll;">
+            <view class="head-view" style="width: 700rpx;">
+                <view class="col1 col-text">商品</view>
+                <view class="col2 col-text" bindtap="changeSort" data-sort="{{query.sort === 'sale_amount' ? '-sale_amount' : 'sale_amount'}}">
+                    订单商品金额
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'sale_amount' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-sale_amount'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-sale_amount' && query.sort != 'sale_amount'}}"></image>
+                </view>
+                <view class="col5 col-text" bindtap="changeSort" data-sort="{{query.sort === 'item_amount' ? '-item_amount' : 'item_amount'}}">
+                    件数
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'item_amount' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-item_amount'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-item_amount' && query.sort != 'item_amount'}}"></image>
+                </view>
+            </view>
+            <view bindtap="onItemClick" style="width: 700rpx;"
+                  data-item-id="{{item.id}}"
+                  data-item-code="{{item.code}}"
+                  data-item-title="{{item.title}}"
+                  class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                  wx:for="{{orderItemSumData.items}}"
+                  wx:key="index">
+                <view class="col1 col-text">{{item.item_title}}</view>
+                <view class="col2 col-text">￥{{tools.returnPrice(item.sale_amount)}}</view>
+                <view class="col3 col-text">{{item.item_amount}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="page-bottom">
+        <view class="load-more" wx:if="{{orderItemSumData.num > 0 && !showSkeleton}}">{{tools.returnMore(orderItemSumData.num, query)}}</view>
+        <view class="load-none" wx:elif="{{!showSkeleton}}">暂无数据</view>
+    </view>
+</view>

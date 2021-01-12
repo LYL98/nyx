@@ -1,0 +1,380 @@
+<!--pages/order/order-detail/order-detail.wxml-->
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<wxs src="./../order.wxs" module="order" />
+
+<view class="page-order-detail">
+  <view class="detail-container">
+
+    <!-- 订单信息 begin -->
+
+    <view class="item-area">
+      <text class="item-area-label">订单信息</text>
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">订单号</text>
+          <text class="content">{{ detail.code }}</text>
+        </view>
+        <view class="item">
+          <text class="label">订单状态</text>
+          <text class="{{ 'content ' + order.returnOrderStatusClassName(orderStatus) }}">{{ order.returnOrderStatus(orderStatus) }}</text>
+        </view>
+        <view class="item">
+          <text class="label">付款状态</text>
+          <text class="content" style="{{ detail.pay_status === 'wait_complete' ? 'color: #FF6868;' : '' }}">{{ order.returnPayStatus(detail.pay_status) }}</text>
+        </view>
+      </view>
+
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">配送时间</text>
+          <text class="content">{{ detail.delivery_date }}</text>
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 订单信息 end -->
+
+    <!-- 收货地址 begin -->
+
+    <view class="item-area">
+      <text class="item-area-label">收货地址</text>
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">县域</text>
+          <text class="content">{{ detail.city_title }}</text>
+        </view>
+        <view class="item max-width">
+          <text class="label">门店</text>
+          <text class="content">{{ detail.store_title }}</text>
+        </view>
+        <view class="item max-width">
+          <text class="label">收货地址</text>
+          <text class="content">{{ detail.address }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 收货地址 end -->
+
+    <!-- 商品信息 begin -->
+
+    <view class="item-area">
+      <text class="item-area-label">商品信息</text>
+
+      <view class="card area-card">
+
+        <view class="commodity-wrapper">
+          <view class="commodity">
+
+            <!-- 商品列表 begin -->
+            <view class="list" wx:for="{{ detail.items }}" wx:for-item="item" wx:for-index="index" wx:key="index">
+
+              <view  class="list-item">
+                <image data-src="{{item.item_image}}" bindtap="previewImage" src="{{ tencentPath + item.item_image + '_min200x200' }}"></image>
+                <view class="detail-item">
+                  <view class="title">{{ item.item_title }} <view class="sub-title" wx:if="{{item.sale_type === '平台'}}">平台</view></view>
+                  <view class="tags">
+                    <text
+                        wx:for="{{ item.item_attrs }}"
+                        wx:for-item="attr"
+                        wx:for-index="index"
+                        wx:key="index"
+                        class="{{ index === 0 && 'active' }}"
+                    >{{ attr }}</text>
+                  </view>
+                  <view class="price">
+                    <view class="left">
+                      <text class="real">
+                        ￥{{ tools.returnPrice(item.item_price_sale) }}/件
+                      </text>
+                      <text class="frame-id" wx:if="{{item.frame_id}}">(含筐￥{{tools.returnPrice(item.frame_price)}})</text>
+                    </view>
+                    <view class="right">
+                      <text class="number">X{{ item.count_real }}</text>
+                      <text class="total">￥{{ tools.returnPrice(item.amount_real) }}</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+
+              <view class="price-change" wx:if="{{ item.amount_real !== item.amount_pre }}">
+
+                <view class="header" data-item="{{ item }}" catch:tap="toggerFlodPriceChange">
+                  <text class="label">价格变动</text>
+                  <view class="change">
+                    <view class="{{  order.returnOrderColorClass(item.amount_pre, item.amount_real) }}">
+                      <text>{{ item.amount_real > item.amount_pre ? '+' : '-' }}</text>
+                      <text>￥</text>
+                      <text>{{ order.returnAbs(tools.returnPrice(item.amount_real - item.amount_pre)) }}</text>
+                    </view>
+                    <image wx:if="{{ item.ui_is_open }}" src="./../../../../assets/img/icon-top.png"></image>
+                    <image wx:else src="./../../../../assets/img/icon-bottom.png"></image>
+                  </view>
+                </view>
+
+                <view class="content" wx:if="{{ item.ui_is_open }}">
+
+                  <view class="change-item">
+                    <text>原价:￥{{ tools.returnPrice(item.amount_pre) }}</text>
+                    <view class="trend">
+                      <view class="{{ 'num ' + order.returnOrderColorClass(item.amount_pre, item.amount_real) }}">
+                        <text>{{ item.amount_real > item.amount_pre ? '+' : '-' }}</text>
+                        <text>￥</text>
+                        <text>{{ order.returnAbs(tools.returnPrice(item.amount_real - item.amount_pre)) }}</text>
+                      </view>
+                      <view class="line">
+                        <text class="horizontal-line"></text>
+                        <text class="arrow"></text>
+                      </view>
+                    </view>
+                    <text style="text-align: right;">现价:￥{{ tools.returnPrice(item.amount_real) }}</text>
+                  </view>
+
+                  <view class="change-item number-change" wx:if="{{ item.count_real !== item.count_pre }}">
+                    <text>原数量:{{ item.count_pre }}件</text>
+                    <view class="trend">
+                      <view class="{{ 'num ' + order.returnOrderColorClass(item.count_pre, item.count_real) }}">
+                        <text>{{ item.count_real > item.count_pre ? '+' : '-' }}</text>
+                        <text>{{ order.returnAbs(item.count_real - item.count_pre) }}</text>
+                        <text>件</text>
+                      </view>
+                      <view class="line">
+                        <text class="horizontal-line"></text>
+                        <text class="arrow"></text>
+                      </view>
+                    </view>
+                    <text style="text-align: right;">现数量:{{ item.count_real }}件</text>
+                  </view>
+
+                  <view class="change-item weight-change" wx:if="{{ item.weight_real !== item.weight_pre }}">
+                    <text>原重量:{{ tools.returnWeight(item.weight_pre) }}斤</text>
+                    <view class="trend">
+                      <view class="{{ 'num ' + order.returnOrderColorClass(item.weight_pre, item.weight_real) }}">
+                        <text>{{ item.weight_real > item.weight_pre ? '+' : '-' }}</text>
+                        <text>{{ order.returnAbs(tools.returnWeight(item.weight_real - item.weight_pre)) }}</text>
+                        <text>斤</text>
+                      </view>
+                      <view class="line">
+                        <text class="horizontal-line"></text>
+                        <text class="arrow"></text>
+                      </view>
+                    </view>
+                    <text style="text-align: right;">现重量:{{ tools.returnWeight(item.weight_real) }}斤</text>
+                  </view>
+
+                </view>
+
+              </view>
+
+            </view>
+            <!-- 商品列表 end -->
+
+            <view class="total-price">
+              <view class="price-item">
+                <text>商品总额</text>
+                <text>￥{{ tools.returnPrice(detail.item_total_price) }}</text>
+              </view>
+              <view class="price-item" wx:if="{{ detail.coupon_reduction > 0 }}">
+                <text>优惠券</text>
+                <text>-￥{{ tools.returnPrice(detail.coupon_reduction) }}</text>
+                <!--<text wx:else>0</text>-->
+              </view>
+              <view class="price-item" wx:if="{{ detail.promotion_reduction > 0 }}">
+                <text wx:if="{{ detail.promotion && detail.promotion.promotion_type === 'scope_discount' }}">订单满折</text>
+                <text wx:else>订单满减</text>
+                <text>-￥{{ tools.returnPrice(detail.promotion_reduction) }}</text>
+                <!--<text wx:else>0</text>-->
+              </view>
+              <view class="price-item" wx:if="{{ detail.fram_total_price > 0 }}">
+                <text>筐费用</text>
+                <text>+￥{{ tools.returnPrice(detail.fram_total_price) }}</text>
+              </view>
+              <view class="price-item" wx:if="{{ detail.delivery_fee > 0 }}">
+                <text>运费</text>
+                <text>+￥{{ tools.returnPrice(detail.delivery_fee) }}</text>
+              </view>
+            </view>
+
+            <view class="price-compute">
+              <view class="compute-item">
+                <text>合计</text>
+                <text>￥{{ tools.returnPrice(detail.price_at_created) }}</text>
+              </view>
+
+              <view class="compute-item" wx:if="{{ detail.delivery_fee_chg !== 0 }}">
+                <view>
+                  <text>运费重算</text>
+                  <text class="remark">因运费重新计算</text>
+                </view>
+                <view style="display: flex; align-items: center;" class="{{ detail.delivery_fee_chg > 0 ? 'red' : 'green' }}">
+                  <text>{{ detail.delivery_fee_chg > 0 ? '+' : '-' }}</text>
+                  <text>￥</text>
+                  <text>{{ tools.returnPriceAbs(detail.delivery_fee_chg) }}</text>
+                </view>
+              </view>
+
+
+              <view class="compute-item" wx:if="{{ detail.check_chg + detail.fram_total_price_chg !== 0 }}">
+                <view>
+                  <text>价格变化</text>
+                  <text class="remark">因商品数量发生变化</text>
+                </view>
+                <view style="display: flex; align-items: center;" class="green">
+                  <text>-</text>
+                  <text>￥</text>
+                  <text>{{ tools.returnPriceAbs(detail.check_chg + detail.fram_total_price_chg) }}</text>
+                </view>
+              </view>
+
+            </view>
+
+            <view class="total-price">
+              <text>共</text>
+              <text>{{ detail.piece_num }}</text>
+              <text>件商品, 订单价格:</text>
+              <text class="price black">￥{{ tools.returnPrice(detail.order_price) }}</text>
+            </view>
+
+            <view class="pay-status" wx:if="{{ detail.status !== 'order_canceled' }}">
+              <text>已付款:</text>
+              <text>￥{{ tools.returnPrice(detail.amount_pay) }}</text>
+              <text wx:if="{{ detail.remain_pay > 0 }}">, 待付款:</text>
+              <text class="price red" wx:if="{{ detail.remain_pay > 0 }}">￥{{ tools.returnPrice(detail.remain_pay) }}</text>
+            </view>
+
+          </view>
+        </view>
+
+        <!-- 付款历史 和 退款记录 -->
+
+        <view class="records-wrapper">
+          <view class="pay-records">
+
+            <view class="header" catch:tap="toggerFlodPayRecord">
+              <text>付款历史</text>
+              <image wx:if="{{ !pay_record_is_open }}" class="icon-flod" src="./../../../../assets/img/icon-bottom.png"></image>
+              <image wx:if="{{ pay_record_is_open }}" class="icon-flod" src="./../../../../assets/img/icon-top.png"></image>
+            </view>
+
+            <view
+                wx:if="{{ detail.pay_record.length > 0 && pay_record_is_open }}"
+                class="record"
+                wx:for="{{ detail.pay_record }}"
+                wx:for-item="item"
+                wx:for-index="index"
+                wx:key="index"
+            >
+              <view
+                  class="record-header"
+              >
+                <text>支付金额</text>
+                <text>￥{{ tools.returnPrice(item.total_fee) }}</text>
+              </view>
+              <view class="record-item">
+                <text>余额支付</text>
+                <text>￥{{ tools.returnPrice(item.balance_fee) }}</text>
+              </view>
+              <view class="record-item">
+                <text>第三方支付</text>
+                <text>￥{{ tools.returnPrice(item.pay_fee) }}</text>
+              </view>
+              <view class="record-item">
+                <text>发起时间</text>
+                <text>{{ item.created }}</text>
+              </view>
+              <view class="record-item">
+                <text>完成时间</text>
+                <text>{{ item.updated }}</text>
+              </view>
+              <view class="record-item">
+                <text>付款编号</text>
+                <text>{{ item.code }}</text>
+              </view>
+              <view class="record-item">
+                <text>付款状态</text>
+                <text wx:if="{{item.status === 'success'}}" style="color: #67c23a;">成功</text>
+                <text wx:else>失败</text>
+              </view>
+            </view>
+
+            <view wx:if="{{ detail.pay_record.length <= 0 && pay_record_is_open }}" class="no-record">
+              <text>暂无付款历史</text>
+            </view>
+
+          </view>
+
+          <view class="return-records">
+
+            <view class="header" catch:tap="toggerFlodRefundRecord">
+              <text>退款记录</text>
+              <image wx:if="{{ !refund_record_is_open }}" class="icon-flod" src="./../../../../assets/img/icon-bottom.png"></image>
+              <image wx:if="{{ refund_record_is_open }}" class="icon-flod" src="./../../../../assets/img/icon-top.png"></image>
+            </view>
+
+            <view
+                wx:if="{{ detail.refund_record.length > 0 && refund_record_is_open }}"
+                class="record"
+                wx:for="{{ detail.refund_record }}"
+                wx:for-item="item"
+                wx:for-index="index"
+                wx:key="index"
+            >
+              <view class="record-header">
+                <text>退款金额</text>
+                <text>￥{{ tools.returnPrice(item.amount) }}</text>
+              </view>
+              <view class="record-item">
+                <text>退款前总价</text>
+                <text>￥{{ tools.returnPrice(item.amount_order_pre) }}</text>
+              </view>
+              <view class="record-item">
+                <text>退款后总价</text>
+                <text>￥{{ tools.returnPrice(item.amount_order) }}</text>
+              </view>
+              <view class="record-item">
+                <text>退款原因</text>
+                <text>{{ order.returnRefundReason(item.reason) }}</text>
+              </view>
+              <view class="record-item">
+                <text>时间</text>
+                <text>{{ item.created }}</text>
+              </view>
+            </view>
+
+            <view wx:if="{{ detail.refund_record.length <= 0 && refund_record_is_open }}" class="no-record">
+              <text>暂无退款记录</text>
+            </view>
+
+          </view>
+        </view>
+
+        <!-- 付款历史 和 退款记录 -->
+
+        <view class="logs-wrapper">
+          <view class="order-logs">
+            <view
+                wx:for="{{ detail.action_log }}"
+                wx:for-item="item"
+                wx:for-index="index"
+                wx:key="index"
+            >
+              <text>{{ order.returnOrderLogs(item.action) }}</text>
+              <text>: {{ item.created }}</text>
+              <text wx:if="{{ item.action === 'cancel' }}"> ({{ item.remark }})</text>
+            </view>
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+
+  </view>
+
+  <!-- 只有待确认的订单可以取消 -->
+  <view class="fixed-view" wx:if="{{ orderStatus === 'wait_confirm' && (auth.isAdmin || auth.OrderCancel) }}">
+    <button plain hover-class="button-hover" bind:tap="submit" loading="{{ loading }}" disabled="{{ loading }}">取消订单</button>
+  </view>
+
+</view>

@@ -1,0 +1,3 @@
+<picker value="{{value}}" range="{{dataItem}}" range-key="code" bindchange="bindChange">
+  <slot></slot>
+</picker>

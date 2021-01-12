@@ -1,0 +1,15 @@
+<!--pages/merchant/merchant-province-list/merchant-province-list.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<view class="page-merchant-city-list">
+    <view class="tags-container">
+        <text
+                class="{{ item.code === selectedProvince.code ? 'active' : '' }}"
+                wx:for="{{ provinceList }}"
+                wx:for-item="item"
+                wx:key="{{ item.code }}"
+                data-item="{{ item }}"
+                catch:tap="selectProvince"
+        >{{ tools.returnOmissionText(item.title, 5) }}</text>
+    </view>
+</view>

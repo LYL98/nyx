@@ -1,0 +1,81 @@
+
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<wxs src="./../purchase.wxs" module="handle" />
+
+<view class="padding-top20">
+    <view class="margin-main margin-bottom16 font-w-bold padding-left20">采购信息</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item disabled">
+            <view class="title">供应商</view>
+            <view class="input">{{detail.supplier_title}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">采购日期</view>
+            <view class="input">{{detail.order_date}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">销售日期</view>
+            <view class="input">{{detail.available_date || '-'}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">预计到货时间</view>
+            <view class="input">{{detail.estimate_arrive_at}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">送达仓</view>
+            <view class="input">{{detail.storehouse.title}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">采购地</view>
+            <view class="input">{{detail.purchase_place_type === 'origin' ? '异地' : '本地'}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">商品</view>
+            <view class="input">{{detail.item_title}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">采购价</view>
+            <view class="input">{{detail.price_buy}}元</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">采购数量</view>
+            <view class="input">{{detail.num}}件</view>
+        </view>
+        <block wx:if="{{detail.frame_id}}">
+            <view class="item disabled">
+                <view class="title">采购商品总金额</view>
+                <view class="input">{{handle.returnItemTotalPrice(detail)}}元</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">筐金额</view>
+                <view class="input">{{handle.returnFrameTotalPrice(detail)}}元</view>
+            </view>
+        </block>
+        <view class="item disabled">
+            <view class="title">采购总金额</view>
+            <view class="input">{{handle.returnTotalPrice(detail)}}元</view>
+        </view>
+    </view>
+
+    <view class="margin-main margin-bottom16 font-w-bold padding-left20">调价信息</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item">
+            <view class="title">新采购价(元)</view>
+            <view class="input">
+                <input placeholder="请输入新采购价" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="digit" data-maindata="editData" data-fieldkey="price_buy" value="{{item.price_buy}}"/>
+                <view class="error-hint" wx:if="{{editData.price_buy_error}}">{{editData.price_buy_error}}</view>
+        </view>
+        </view>
+    </view>
+    <view class="margin-main bg-body-fff remark-body margin-bottom20">
+        <myTextarea placeholder="请输入备注（必填）" maxlength="50" bind:input="inputChange" bind:focus="inputFocus"
+            data-maindata="editData" data-fieldkey="remark" value="{{editData.remark}}"/>
+        <view class="error-hint" wx:if="{{editData.remark_error}}">{{editData.remark_error}}</view>
+        <view class="hint font-size24">{{editData.remark.length}}/50</view>
+    </view>
+    
+    <view class="bottom-btn">
+        <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+    </view>
+</view>

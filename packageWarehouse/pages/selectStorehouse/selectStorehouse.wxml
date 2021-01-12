@@ -1,0 +1,12 @@
+<view class="page-storehouse">
+  <text class="margin-bottom30 font-size38 font-w-bold">选择仓库</text>
+  <view class="storehouse-list">
+    <button 
+      wx:for="{{storehouseList}}"
+      wx:key="index"
+      data-item="{{item}}"
+      bind:tap="selectStorehouse"
+      class="add-dot {{selectStorehouse.id === item.id ? 'selected' : ''}}"
+    >{{ item.title }}</button>
+  </view>
+</view>

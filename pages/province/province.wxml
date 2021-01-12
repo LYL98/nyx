@@ -1,0 +1,15 @@
+<!--pages/province/province.wxml-->
+<view class="page-province">
+  <text class="h1">选择区域</text>
+  <view class="province-list">
+    <button 
+      wx:for="{{ provinceList }}"
+      wx:for-item="item"
+      wx:for-index="index"
+      wx:key="{{index}}"
+      data-item="{{item}}" 
+      bind:tap="selectProvince"
+      class="{{ globalProvince.title === item.title ? 'selected' : '' }}"
+    >{{ item.title }}</button>
+  </view>
+</view>

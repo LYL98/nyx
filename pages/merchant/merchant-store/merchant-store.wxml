@@ -1,0 +1,195 @@
+<!--pages/merchant/merchant-store/merchant-store.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+<wxs src="./../merchant.wxs" module="merchant" />
+
+<view class="page-merchant-store">
+  <view
+      class="store-item"
+      wx:for="{{ listItem }}"
+      wx:for-item="item"
+      wx:for-index="index"
+      wx:key="{{ index }}"
+  >
+
+    <view class="header">
+
+      <text class="label">{{ index < 9 ? '0' + (index + 1) : index + 1}}</text>
+      <view class="operate"
+            wx:if="{{ auth.isAdmin || auth.MerchantStoreAdd || auth.MerchantStoreEditTag || (auth.MerchantStoreApprove && item.status === 'wait_audit') || (auth.MerchantStoreFreeze && item.status === 'business') || (auth.MerchantStoreUnFreeze && item.status === 'freeze') || auth.MerchantStoreEditCity || auth.MerchantStoreEdit }}"
+      >
+        <view class="more-button" data-item="{{ item }}" catch:tap="toggerOperateDialog">
+          <image src="./../../../assets/img/icon-more.png"></image>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="card list-detail">
+      <view class="item">
+        <text class="label">门店名</text>
+        <text class="content">{{ item.title }}</text>
+      </view>
+      <view class="item">
+        <text class="label">成长值</text>
+        <text class="content">{{ item.growth }}</text>
+      </view>
+      <view class="item">
+        <text class="label">黑名单</text>
+        <text class="content">{{ item.is_black ? '是' : '否' }}</text>
+      </view>
+      <view class="item">
+        <text class="label">自提点</text>
+        <text class="content">{{ item.gb_included ? '是' : '否'}}</text>
+      </view>
+      <view class="item">
+        <text class="label">县域</text>
+        <text class="content">{{ item.city && tools.returnOmissionText(item.city.title, 10) }}</text>
+      </view>
+
+      <view class="item address"  >
+        <text class="label">地理位置</text>
+        <text class="content">{{ item.geo && item.geo.poi }}</text>
+        <view class="mygeo color-primary" data-item="{{ item }}" wx:if="{{ auth.isAdmin || auth.MerchantStoreEdit }}" bind:tap="handleStoreModify">修改</view>
+      </view>
+
+      <view class="item address">
+        <text class="label">收货地址</text>
+        <text class="content">{{ item.address }}</text>
+      </view>
+
+      <view class="item">
+        <text class="label">客户经理</text>
+        <text class="content">{{ item.csm_er }}</text>
+      </view>
+
+      <block wx:if="{{ item.ui_is_open }}">
+        <view class="item">
+          <text class="label">标签</text>
+          <view class="content">
+            <view class="tags-container">
+              <view class="li" wx:for="{{ item.tags }}" wx:for-item="t" wx:for-index="i" wx:key="i">
+                <text>{{ t.title }}</text>
+                <text wx:if="{{ index < detail.tags.length - 1 }}" style="padding-right: 8rpx;">{{ '; ' }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="item">
+          <text class="label">收货人</text>
+          <text class="content">{{ item.linkman }}</text>
+        </view>
+        <view class="item">
+          <text class="label">电话</text>
+          <text class="content">{{ item.phone }}</text>
+        </view>
+        <view class="item">
+          <text class="label">创建时间</text>
+          <text class="content">{{ tools.returnDateFormat(item.created, 'yyyy-MM-dd') }}</text>
+        </view>
+        <!-- <view class="item">
+          <text class="label">审核状态</text>
+          <text class="content">{{ item.is_audited ? '已审核' : '未审核' }}</text>
+        </view>
+        <view class="item">
+          <text class="label">是否冻结</text>
+          <text class="content">{{ item.is_freeze ? '已冻结' : '未冻结' }}</text>
+        </view> -->
+        <view class="item">
+          <text class="label">门店子账号</text>
+          <view class="content child-member-container">
+            <text class="child-member-info" wx:for="{{ item.member_ids_obj }}" wx:for-item="member"  wx:key="{{member.id}}"> {{member.phone + ' - ' + member.realname}} </text>
+          </view>
+        </view>
+        <view class="item">
+          <text class="label">门店状态</text>
+          <text class="content">{{ item.status === 'wait_audit' ? '待审核' : ( item.status === 'business' ? '营业中' : '冻结中' ) }}</text>
+        </view>
+        <view class="item">
+          <text class="label">门店图片</text>
+          <view class="content image-container">
+            <image
+                wx:for="{{ item.images }}"
+                wx:for-item="img"
+                wx:for-index="index"
+                wx:key="{{ index }}"
+                class="image"
+                src="{{ tencentPath + img + '_min200x200' }}"
+                data-src="{{item.images}}"
+                data-index="{{index}}"
+                bindtap="previewImages"
+            ></image>
+          </view>
+        </view>
+        <view class="item">
+          <text class="label">门店类型</text>
+          <view class="content">{{ merchant.store_type_options(item.store_type) }}</view>
+        </view>
+        <view class="item">
+          <text class="label">经营面积</text>
+          <view class="content">{{ item.business_ares }}</view>
+        </view>
+        <view class="item">
+          <text class="label">KP性别</text>
+          <view class="content">{{ merchant.kp_gender_options(item.kp_gender) }}</view>
+        </view>
+        <view class="item">
+          <text class="label">KP年龄</text>
+          <view class="content">{{ item.kp_age }}</view>
+        </view>
+        <view class="item">
+          <text class="label">其他采购渠道</text>
+          <view class="content">{{ merchant.pur_channels_options(item.pur_channels) }}</view>
+        </view>
+        <view class="item">
+          <text class="label">经营年限</text>
+          <view class="content">{{ item.business_years }}</view>
+        </view>
+        <view class="item">
+          <text class="label">一体化收银机</text>
+          <view class="content">{{ merchant.is_post_options(item.is_post) }}</view>
+        </view>
+        <view class="item">
+          <text class="label">线上销售工具</text>
+          <view class="content">{{ merchant.online_sale_tool_options(item.online_sale_tool) }}</view>
+        </view>
+        <view class="item">
+          <text class="label">月营业额</text>
+          <view class="content">{{ item.monthly_turnover }}</view>
+        </view>
+        <view class="item">
+          <text class="label">营业状态</text>
+          <view class="content">{{ merchant.business_status_options(item.business_status) }}</view>
+        </view>
+        <view class="item">
+          <text class="label">经营品类</text>
+          <view class="content">{{ merchant.business_category_options(item.business_category) }}</view>
+        </view>
+      </block>
+
+      <view class="item flod-detail" data-item="{{ item }}" catch:tap="toggerFlodDetail">
+        <text wx:if="{{ item.ui_is_open }}">收起详情</text>
+        <text wx:elif="{{ !item.ui_is_open }}">展开详情</text>
+        <!--<text>{{ item.ui_is_open ? '收起详情' : '展开详情' }}</text>-->
+        <image wx:if="{{ item.ui_is_open }}" src="./../../../assets/img/icon-top.png"></image>
+        <image wx:elif="{{ !item.ui_is_open }}" src="./../../../assets/img/icon-bottom.png"></image>
+      </view>
+    </view>
+
+    <view class="operate-dialog" wx:if="{{ dialog.isShow == item.id }}" bindtap="toggerOperateDialog">
+      <view class="button"></view>
+      <view class="operate-list">
+        <view class="item" data-item="{{ item }}" wx:if="{{ auth.isAdmin || auth.MerchantStoreAdd }}" bind:tap="handleStoreAdd">新增门店</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ (auth.isAdmin || auth.MerchantStoreApprove) && item.status === 'wait_audit' }}" bind:tap="handleStoreApprove">审核通过</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ (auth.isAdmin || auth.MerchantStoreFreeze) && item.status === 'business' }}" bind:tap="handleStoreFreeze">冻结</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ (auth.isAdmin || auth.MerchantStoreUnFreeze) && item.status === 'freeze'}}" bind:tap="handleStoreUnFreeze">解冻</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ (auth.isAdmin || auth.MerchantStoreBlacklistAdd) && !item.is_black}}" bind:tap="handleBlacklistAdd">添加黑名单</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ (auth.isAdmin || auth.MerchantStoreBlacklistRemove) && item.is_black}}" bind:tap="handleBlacklistRemove">移除黑名单</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ auth.isAdmin || auth.MerchantStoreEdit }}" bind:tap="handleStoreModify">修改详情</view>
+        <view class="item" data-item="{{ item }}" wx:if="{{ auth.isAdmin || auth.MerchantStoreEditTag }}" bind:tap="handleStoreModifyTag">修改标签</view>
+        <!-- <view class="item" data-item="{{ item }}" wx:if="{{ (auth.isAdmin || auth.MerchantStoreDelete) && item.status === 'wait_audit' }}" bind:tap="handleStoreDelete">删除门店</view> -->
+      </view>
+    </view>
+
+  </view>
+
+</view>

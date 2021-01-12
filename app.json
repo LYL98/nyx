@@ -1,0 +1,153 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/loginGuide/loginGuide",
+    "pages/merchant/merchant",
+    "pages/merchant/merchant-edit/merchant-edit",
+    "pages/merchant/merchant-member-reset/merchant-member-reset",
+    "pages/merchant/merchant-store/merchant-store",
+    "pages/merchant/merchant-modify-store-tags/merchant-modify-store-tags",
+    "pages/merchant/merchant-city-list/merchant-city-list",
+    "pages/merchant/merchant-search/merchant-search",
+    "pages/merchant/merchant-detail/merchant-detail",
+    "pages/merchant/merchant-modify-tags/merchant-modify-tags",
+    "pages/merchant/merchant-modify-detail/merchant-modify-detail",
+    "pages/merchant/merchant-member/merchant-member",
+    "pages/merchant/merchant-member-add/merchant-member-add",
+    "pages/merchant/merchant-location/merchant-location",
+    "pages/province/province",
+    "pages/setting/setting",
+    "pages/statistics/statistics-index/statistics-index",
+    "pages/statistics/chart-preview-bsc/chart-preview-bsc",
+    "pages/statistics/chart-preview-cls/chart-preview-cls",
+    "pages/statistics/statistics-class2/statistics-class2",
+    "pages/statistics/statistics-class3/statistics-class3",
+    "pages/statistics/statistics-product/statistics-product",
+    "pages/statistics/statistics-product-merchant/statistics-product-merchant",
+    "pages/statistics/statistics-client-city/statistics-client-city",
+    "pages/statistics/statistics-client-merchant/statistics-client-merchant",
+    "pages/statistics/statistics-client-product/statistics-client-product",
+    "pages/setting/setting-operator-edit/setting-operator-edit",
+    "pages/setting/setting-operator-edit-select/setting-operator-edit-select",
+    "pages/setting/setting-operator-detail/setting-operator-detail",
+    "pages/setting/setting-operator-reset-password/setting-operator-reset-password",
+    "pages/statistics/statistics-client-zone/statistics-client-zone",
+    "pages/merchant/merchant-province-list/merchant-province-list",
+    "pages/updateSystem/updateSystem",
+    "pages/share/selectGItem/selectGItem",
+    "pages/share/selectStorehouse/selectStorehouse",
+    "pages/share/selectSupplier/selectSupplier",
+    "pages/amap/amap",
+    "pages/loginBind/loginBind",
+    "pages/statistics/statistics-cls/system-class2/system-class2",
+    "pages/statistics/statistics-cls/system-class3/system-class3",
+    "pages/statistics/statistics-cls/system-class4/system-class4",
+    "pages/statistics/statistics-cls/system-class-item/system-class-item"
+  ],
+  "subpackages": [
+    {
+      "root": "packageBusiness",
+      "pages": [
+        "pages/index/index",
+        "pages/order/order",
+        "pages/order/order-detail/order-detail",
+        "pages/order/order-search/order-search",
+        "pages/aftersale/aftersale",
+        "pages/aftersale/aftersale-search/aftersale-search",
+        "pages/aftersale/aftersale-detail/aftersale-detail",
+        "pages/aftersale/aftersale-done/aftersale-done"
+      ]
+    },
+    {
+      "root": "packageWarehouse",
+      "pages": [
+        "pages/index/index",
+        "pages/inventory/inventory",
+        "pages/inventoryItem/inventoryItem",
+        "pages/trayDetail/trayDetail",
+        "pages/optCheck/optCheck",
+        "pages/optVariation/optVariation",
+        "pages/optMove/optMove",
+        "pages/optOutStorage/optOutStorage",
+        "pages/selectStorehouse/selectStorehouse",
+        "pages/selectDriver/selectDriver",
+        "pages/out-storage-plan/index/index",
+        "pages/out-storage-plan/market-out-storage/market-out-storage",
+        "pages/out-storage-plan/distribute-out-storage/distribute-out-storage",
+        "pages/addCheck/addCheck",
+        "pages/optQualityControl/optQualityControl",
+        "pages/qualityControlMsg/qualityControlMsg",
+        "pages/saleBack/saleBack",
+        "pages/saleBackDriver/saleBackDriver",
+        "pages/saleBackGoods/saleBackGoods",
+        "pages/secondChoose/secondChoose",
+        "pages/handle/handle",
+        "pages/selectStockItem/selectStockItem",
+        "pages/selectBatchCode/selectBatchCode",
+        "pages/damaged/index/index",
+        "pages/damaged/init-damaged/init-damaged",
+        "pages/damaged/msg-damaged/msg-damaged",
+        "pages/damaged/handle-money/handle-money"
+      ]
+    },
+    {
+      "root": "packageOperate",
+      "pages": [
+        "pages/index/index",
+        "pages/receiving/index/index",
+        "pages/receiving/receiving-in-storage/receiving-in-storage",
+        "pages/receiving/purchase-opt/purchase-opt",
+        "pages/receiving/purchase-receiv/purchase-receiv",
+        "pages/receiving/purchase-record-opt/purchase-record-opt",
+        "pages/receiving/purchase-record-receiv/purchase-record-receiv",
+        "pages/receiving/purchase-close/purchase-close",
+        "pages/receiving/distribute-opt/distribute-opt",
+        "pages/receiving/distribute-receiv/distribute-receiv",
+        "pages/receiving/distribute-record-opt/distribute-record-opt",
+        "pages/receiving/distribute-record-receiv/distribute-record-receiv",
+        "pages/item/item",
+        "pages/sup-stock-warehousing/sup-stock-warehousing",
+        "pages/sup-stock-distribute/sup-stock-distribute",
+        "pages/select-dis-driver/select-dis-driver"
+      ]
+    },
+    {
+      "root": "packageItem",
+      "pages": [
+        "pages/index/index",
+        "pages/purchase/index/index",
+        "pages/purchase/globalAdd/globalAdd",
+        "pages/purchase/globalEdit/globalEdit",
+        "pages/purchase/purchaseDetail/purchaseDetail",
+        "pages/purchase/purchaseAudit/purchaseAudit",
+        "pages/purchase/purchaseAdjustPrice/purchaseAdjustPrice",
+        "pages/purchase/purchaseClose/purchaseClose",
+        "pages/distribute/index/index",
+        "pages/distribute/planAdd/planAdd",
+        "pages/distribute/planEdit/planEdit",
+        "pages/distribute/planDetail/planDetail",
+        "pages/distribute/distributeAudit/distributeAudit",
+        "pages/distribute/distributeClose/distributeClose"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#f7f7f8",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 100000
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "请点击确认"
+    }
+  }
+}

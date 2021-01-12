@@ -1,0 +1,22 @@
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 padding26-20">
+        <view class="font-size32 font-w-bold margin-bottom16">{{detail.storehouse.title}}/{{detail.warehouse.title}}/{{detail.code}}</view>
+        <view class="font-size30">{{detail.skus}}个SKU，共计{{detail.nums}}件</view>
+    </view>
+    <view class="content margin-main bg-body-fff margin-bottom20 padding26-20" wx:for="{{detail.tray_items}}" wx:key="index">
+        <view class="left">
+            <view class="font-size32 font-w-bold margin-bottom10">{{item.item_code}}/{{item.item_title}}</view>
+            <view class="font-size30 margin-bottom10">批次：{{item.batch_code}}</view>
+            <view class="font-size30 margin-bottom36">供应商：{{item.supplier_title}}</view>
+            <view class="font-size32 font-w-bold">库存：{{item.num}}件</view>
+        </view>
+        <view class="right" wx:if="{{operate !== '' && operate !== 'stock_pending'}}">
+            <navigator url="{{operates[operate].url}}?index={{index}}&from=trayDetail&operate={{operate}}">
+                <button class="btn-primary btn-size-72">{{operates[operate].title}}</button>
+            </navigator>
+        </view>
+    </view>
+</view>
+<view class="bottom-btn" wx:if="{{operate}}">
+    <button class="margin-main btn-primary btn-size-88" disabled="{{operate === 'stock_pending' || detail.tray_items.length > 0 ? false : true}}" bind:tap="handleScan">扫商品码{{operates[operate].title}}</button>
+</view>

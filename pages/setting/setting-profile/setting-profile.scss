@@ -1,0 +1,114 @@
+/* pages/setting/setting-profile/setting-profile.wxss */
+/* pages/setting/setting.wxss */
+.page-setting {
+    padding: 20rpx;
+    background: #F7F7F8;
+    height: 100%;
+}
+
+.page-setting > .setting-list {
+    background: #fff;
+    border-radius: 8rpx;
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    font-size: 30rpx;
+}
+
+.page-setting > .setting-list > .ml-20 {
+    background: #E5E5E5;
+    height: 1rpx;
+    margin: 0 0 0 20rpx;
+}
+
+.page-setting > .setting-list > navigator {
+    height: 110rpx;
+    padding: 0 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-setting > .setting-list > navigator.top {
+    border-radius: 8rpx 8rpx 0 0;
+}
+
+.page-setting > .setting-list > navigator.bottom {
+    border-radius: 0 0 8rpx 8rpx;
+}
+
+.page-setting > .setting-list > navigator > .setting-item {
+    display: flex;
+    align-items: center;
+    font-size: 28rpx;
+    color: #A1A6B3;
+}
+
+.page-setting > .setting-list > navigator > .setting-item > image {
+    width: 13rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+}
+
+.page-setting > .btn-logout {
+    margin-top: 100rpx;
+    height: 88rpx;
+    color: #fff;
+    background: #F26A6A;
+    border-radius: 8rpx;
+}
+
+
+.page-setting > .list-detail > .item > .content.image-container {
+    display: flex;
+    align-items: center;
+}
+
+.page-setting > .list-detail > .item > .content.image-container > image {
+    width: 100rpx;
+    height: 100rpx;
+    box-sizing: border-box;
+    border-radius: 50rpx;
+}
+
+.page-setting > .list-detail {
+    margin-top: 20rpx;
+    padding-left: 20rpx;
+    margin-bottom: 30rpx;
+}
+
+.page-setting > .list-detail > .item {
+    padding: 35rpx 20rpx 35rpx 0;
+    line-height: 40rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-setting > .list-detail > .item+.item {
+    border-top: 1rpx solid #E5E5E5;
+}
+
+.page-setting > .list-detail > .item > .label {
+    color: #A1A6B3;
+}
+
+.page-setting > .list-detail > .item > .content {
+    max-width: 480rpx;
+}
+
+.page-setting > .list-detail > .item > .content > .tags-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.page-setting > .list-detail > .item > .content > .tags-container > .li::after + .li {
+    content: '; ';
+}
+
+.page-setting > .card {
+    background: #fff;
+    border-radius: 8rpx;
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}

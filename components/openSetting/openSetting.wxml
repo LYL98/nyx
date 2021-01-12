@@ -1,0 +1,15 @@
+<cover-view class="setting-body">
+    <cover-view class="setting bg-img-main">
+        <!--背景-->
+        <cover-image class="bg" src="./explain_bg.png" style="width: 100%;" mode="widthFix"/>
+
+        <cover-view class="title font-size34">授权设置</cover-view>
+        <cover-view class="content">
+            <cover-view>请前往设置允许</cover-view>
+            <cover-view>{{warn}}</cover-view>
+        </cover-view>
+        <cover-view class="setting-btn-view">
+            <button class="btn-primary" open-type="openSetting" bindtap="onTap">前往设置</button>
+        </cover-view>
+    </cover-view>
+</cover-view>

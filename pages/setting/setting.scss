@@ -1,0 +1,67 @@
+/* pages/setting/setting.wxss */
+.weui-navbar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  background: #fff;
+  position: fixed;
+  z-index: 500;
+  top: 0;
+  height: 100rpx;
+  width: 100%;
+  border-top: 1rpx solid #EEEEEE;
+  border-bottom: 1rpx solid #E5E5E5
+}
+
+.weui-navbar__item {
+  position: relative;
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  padding: 13px 0;
+  text-align: center;
+  font-size: 0
+}
+
+.weui-navbar__item.weui-bar__item_on {
+  color: #00ADE7
+}
+
+.weui-navbar__slider {
+  position: absolute;
+  content: " ";
+  left: 0;
+  bottom: 0;
+  width: 180rpx;
+  height: 4rpx;
+  background-color: #00ADE7;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s
+}
+
+.weui-navbar__title {
+  display: inline-block;
+  font-size: 30rpx;
+  max-width: 180rpx;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal
+}
+
+.weui-tab__panel {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch
+}
+
+.page-setting {
+  height: 100%;
+  padding-top: 100rpx;
+  background-color: #f7f7f8;
+}

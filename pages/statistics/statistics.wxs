@@ -1,0 +1,62 @@
+
+module.exports = {
+
+    isSelected: function(item, activeIndexes, index) {
+        return activeIndexes.indexOf(item) !== -1 ? 'active' + index : ''
+    },
+
+    isSelectedIcon: function(item, activeIndexes, index) {
+        return activeIndexes.indexOf(item) !== -1 ? 'index-icon icon-active' + index : 'index-icon'
+    },
+
+    listLabelClass: function(index) {
+        return 'col-operation' + (index + 2) + ' col-text'
+    },
+
+    returnIndexName: function(indexName) {
+        if (indexName === '下单商品件数') {
+            return '下单件数'
+        } else if (indexName === '下单商品种类数量') {
+            return '下单商品数'
+        } else {
+            return indexName;
+        }
+    },
+
+    formatDateStr: function(date) {
+        var tmpDate = Date.parse(date);
+        if (tmpDate > 0) {
+            var d = getDate(tmpDate);
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+            return (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+        } else {
+            return date
+        }
+    },
+
+    formatPrice: function(price){
+        if (price || price === 0) {
+            var v = price / 100;
+            var p = v.toFixed(2);
+            if(p.substring(p.length - 3, p.length) === '.00'){
+                p = p.substring(0, p.length - 3);
+            } else if(p.substring(p.length - 1, p.length) === '0' && p !== '0'){
+                p = p.substring(0, p.length - 1);
+            }
+            
+            if(price < 0){
+                return '-¥' + Math.abs(p);
+            }else{
+                return '¥' + p;
+            }
+        } else {
+            return '-'
+        }
+    },
+
+    formatValue: function(value) {
+        return value || value === 0 ? Math.round(value) : '-'
+    },
+
+}

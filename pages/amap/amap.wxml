@@ -1,0 +1,124 @@
+<!--pages/amap/amap.wxml-->
+
+<view class="fixed-search-bar">
+  <form bindreset="onCancelSearch">
+    <view class="amap-search-bar">
+      <view class="search-wrapper">
+        <view class="search-icon" style="left: 28rpx;"></view>
+        <input type="text" confirm-type="search" value="{{ keywrods }}" placeholder="请输入地址" bindfocus="onInputFocus" bindinput="onInputKeywords" />
+        <!-- <button plain class="clear-icon" wx:if="{{inputFocus}}" style="right: 32rpx;" bindtap="onInputClear"></button> -->
+      </view>
+      <button class="btn-cancel" wx:if="{{ inputFocus }}" plain formType="reset">取消</button>
+    </view>
+  </form>
+</view>
+
+<view style="height: 130rpx;"></view>
+
+<!--筛选列表-->
+<view wx:if="{{ inputFocus && keywords }}" style="height: calc(100vh - 130rpx); background-color: #fff; position: relative;">
+  <view class="poi-list">
+    <button plain class="btn-item" wx:for="{{ searchList }}" wx:key="{{ item.id }}" data-item="{{ item }}" catchtap="onSelectItem">
+      <view style="width: 680rpx; padding: 18rpx 0; border-bottom: 1rpx solid #ddd;">
+        <view class="text-default font-weight-semibold">
+          <block wx:for="{{ item.highlightNodes }}" wx:for-item="text" wx:for-index="index" wx:key="{{ index }}">
+            <text class="{{ text === keywords && 'text-orange' }}">{{ text }}</text>
+          </block>
+        </view>
+        <view class="font-size-mini text-secondary overflow-ellipsis">{{ item.address }}</view>
+      </view>
+    </button>
+  </view>
+
+  <view wx:if="{{ loading }}" class="d-flex justify-content-center align-items-center position-absolute" style="height: 200rpx; top: 0; left: 0; right: 0;">
+    <view class="loading-icon spinner"></view>
+  </view>
+
+  <view wx:if="{{ !loading && searchList.length === 0 }}" class="no-result">
+    暂无结果
+  </view>
+</view>
+
+<!--地图选点-->
+<view wx:else class="amap-container">
+  <!--地图-->
+  <map
+    style="{{ mapHeight == 500 ? 'animation: mapExpend .3s forwards;' : 'animation: mapCollapse .3s forwards;' }}"
+    id="map"
+    bindregionchange="regionChange"
+    show-location="{{ false }}"
+    longitude="{{ location.lng }}"
+    latitude="{{ location.lat }}"
+    scale="17"
+  >
+    <image 
+      src="./pin.png" 
+      class="location-pin" 
+      style="{{ mapHeight == 500 ? 'animation: markerExpend .3s forwards;' : 'animation: markerCollapse .3s forwards;' }}"
+    ></image>
+  </map>
+  <view 
+    class="icon-back-location" 
+    style="{{ mapHeight == 500 ? 'animation: locationExpend .3s forwards;' : 'animation: locationCollapse .3s forwards;' }}"
+    bindtap="initLocation"
+  ></view>
+  <view wx:if="{{ inputFocus }}" class="focus-mask"></view>
+  <!--地图-地址列表-分割线-->
+  <view wx:if="{{ !inputFocus || !keywords }}" class="d-flex align-items-center justify-content-center" style="background: rgba(240, 240, 240, 1); height: 30rpx;">
+    <view>
+      <view style="background-color: #dddddd; width: 40rpx; height: 4rpx;"></view>
+      <view style="background-color: #dddddd; width: 40rpx; height: 4rpx; margin-top: 6rpx;"></view>
+    </view>
+  </view>
+
+  <!--无授权提示-->
+  <view wx:if="{{ !locationAuth }}" class="d-flex flex-column align-items-center justify-content-center" style="height: calc(100vh - 130rpx - 500rpx - 2rpx); background-color: #fff;">
+    <text class="font-size-sm text-secondary mb-5">开启地理位置授权，才能使用地图选点功能!</text>
+    <button plain style="border: 1rpx solid #00ade7; color: #00ade7; line-height: 80rpx;" open-type="openSetting" size="mini" type="primary" hover-class="btn-hover" bindopensetting="opensetting">
+      开启地理位置授权
+    </button>
+  </view>
+  <!--地址列表-->
+  <scroll-view
+    wx:else
+    upper-threshold="{{ 100 }}"
+    bindscrolltoupper="upper"
+    scroll-y="{{ true }}"
+    bindscroll="scroll"
+    class="pois-scroll-view"
+    style="{{ mapHeigth == 500 ? 'animation: listCollapse .3s forwards;' : 'animation: listExpend .3s forwards;' }}"
+  >
+    <view class="poi-list{{ pois.length > 3 ? ' min-height-980' : '' }}">
+      <button plain class="btn-item" bindtap="onSelectCenter">
+        <view class="item">
+          <view class="prefix">
+            <view style="width: 16rpx; height: 16rpx; border-radius: 50%;" class="bg-primary"></view>
+          </view>
+          <view style="width: 640rpx;">
+            <view class="title font-weight-semibold text-orange">{{ centerPoi.desc }}</view>
+            <view class="label font-size-mini text-secondary overflow-ellipsis">{{ centerPoi.name }}</view>
+          </view>
+        </view>
+      </button>
+      <!--附近列表-->
+      <view class="nearby" wx:if="{{pois.length > 0}}">附近的点</view>
+      <button plain class="btn-item" wx:for="{{ pois }}" wx:key="{{ item.id }}" data-item="{{ item }}" bindtap="onSelectItem">
+        <view class="item">
+          <view class="prefix">
+            <view style="width: 16rpx; height: 16rpx; border-radius: 50%;" class="bg-grey"></view>
+          </view>
+          <view style="width: 640rpx;">
+            <view class="title font-weight-semibold text-default">{{ item.name }}</view>
+            <view class="label font-size-mini text-secondary overflow-ellipsis">{{ item.address }}</view>
+          </view>
+        </view>
+      </button>
+    </view>
+
+    <view wx:if="{{ loading }}" class="d-flex justify-content-center align-items-center position-absolute" style="height: 200rpx; top: 0; left: 0; right: 0;">
+      <view class="loading-icon spinner"></view>
+    </view>
+
+    <view wx:if="{{ !loading && pois.length === 0 }}" class="no-result">暂无附近的点</view>
+  </scroll-view>
+</view>

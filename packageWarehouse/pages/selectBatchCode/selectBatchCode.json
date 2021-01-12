@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "选择批次",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "searchInput": "/components/searchInput/searchInput"
+  }
+}

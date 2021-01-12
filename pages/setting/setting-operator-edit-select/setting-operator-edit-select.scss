@@ -1,0 +1,47 @@
+.page {
+  height: 100%;
+  padding: 20rpx;
+  background-color: #f7f7f8;
+  font-size: 28rpx;
+  color: #A1A6B3;
+}
+
+/* 公用卡片 */
+.page > .card {
+  background: #fff;
+  border-radius: 8rpx;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.page > .tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10rpx;
+
+  background: #fff;
+  border-radius: 8rpx;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.page > .tags-container > text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 210rpx;
+  height: 56rpx;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #A1A6B3;
+  margin: 10rpx;
+}
+
+.page > .tags-container > text.active {
+  color: #00ADE7;
+  border-color: #00ADE7;
+}
+
+.page > .btn-submit {
+  margin: 20rpx 0;
+}

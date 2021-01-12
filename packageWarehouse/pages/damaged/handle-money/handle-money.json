@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

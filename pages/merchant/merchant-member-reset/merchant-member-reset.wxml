@@ -1,0 +1,45 @@
+<!--pages/merchant/merchant-member-reset/merchant-member-reset.wxml-->
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<view class="page-merchant-member-reset">
+  <view class="form">
+    <view class="card form-area-view">
+
+      <view class="form-item form-item-required no-border">
+        <view class="form-item-content show-password">
+          <text class="label">新密码</text>
+          <input
+              wx:if="{{ input.type === 'text' }}"
+              type="text"
+              placeholder="请输入新的登录密码"
+              value="{{ editData.password }}"
+              bindinput="inputPassword"
+              bindchange="changePassword"
+          />
+          <input
+              wx:if="{{ input.type === 'password' }}"
+              type="password"
+              placeholder="请输入新的登录密码"
+              value="{{ editData.password }}"
+              bindinput="inputPassword"
+              bindchange="changePassword"
+          />
+          <image src="{{ input.icon }}" class="show-icon" bind:tap="changeInputType"></image>
+        </view>
+        <text class="form-item-error">{{error.password}}</text>
+      </view>
+
+    </view>
+
+  </view>
+
+  <button
+      class="btn-submit"
+      hover-class="btn-submit-hover"
+      loading="{{loading}}"
+      disabled="{{ loading }}"
+      bind:tap="submit"
+  >确认</button>
+</view>
+
+

@@ -1,0 +1,12 @@
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm" placeholder="搜索" bind:input="inputChange"/>
+<view class="margin-main margin-bottom20 padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff padding26-20 margin-bottom20" hover-class="link-hover" bind:tap="selectItem" data-index="{{index}}">
+        <view class="left">
+            <view class="title font-size32 font-w-bold">{{item.batch_code}}</view>
+        </view>
+        <view class="right">
+            <image class="d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+        </view>
+    </view>
+</view>
+<defaultPage wx:if="{{dataItem.items.length === 0}}" currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>

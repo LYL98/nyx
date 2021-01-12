@@ -1,0 +1,120 @@
+
+@import './../../theme.scss';
+/*日历start*/
+.calender-bg{
+  background: rgba($color: #000, $alpha: .5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+@keyframes calender-bottom
+{
+  from {bottom: -1000rpx;}
+  to {bottom: 0;}
+}
+.calender {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  padding-bottom: 50rpx;
+  animation: calender-bottom .3s;
+}
+
+.celender-head {
+  padding: 30rpx 30rpx 0;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 28rpx;
+  >.left, >.right {
+    width: 100rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    flex: initial;
+    &:active{
+      opacity: 0.5;
+    }
+  }
+  >.center {
+    flex: 1;
+    color: #353535;
+  }
+}
+
+.calender-body {
+  color: #999;
+  padding: 0 30rpx;
+  >.head{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 120rpx;
+    font-size: 28rpx;
+    color: #666;
+    >.item{
+      flex: 1;
+    }
+  }
+  .date-day{
+    display: flex;
+    text-align: center;
+    >.item{
+      flex: 1;
+      margin: 10rpx 0;
+      >.num{
+        height: 64rpx;
+        line-height: 64rpx;
+        font-size: 28rpx;
+        color: #242424;
+        position: relative;
+        &.last-month, &.next-month{
+          color: #ccc;
+        }
+        >view{
+          width: 64rpx;
+          height: 64rpx;
+          line-height: 64rpx;
+          text-align: center;
+          margin: 0 auto;
+        }
+        &.now{
+          color: $--color-primary;
+          font-weight: bold;
+        }
+        &.select, &:active{
+          color: #fff;
+          >view{
+            border-radius: 50%;
+            background: $--color-primary;
+            position: relative;
+            z-index: 2;
+          }
+        }
+        &.half-select{
+          background: rgba($color: $--color-primary, $alpha: .2);
+        }
+        &.begin-select, &.end-select{
+          &::before{
+            background: rgba($color: $--color-primary, $alpha: .2);
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+          }
+          &.end-select::before{
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*日历end*/

@@ -1,0 +1,91 @@
+
+<view class="padding-top20">
+    <view class="margin-main margin-bottom16 font-w-bold padding-left20">调拨信息</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item" data-page="/pages/share/selectStorehouse/selectStorehouse?page=planAdd&pageField=src_storehouse" bind:tap="skipPage">
+            <view class="title">调出仓</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.src_storehouse_id}}">{{addData.src_storehouse_title}}</view>
+                    <view class="content placeholder" wx:else>请选择调出仓</view>
+                    <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.src_storehouse_id_error}}">{{addData.src_storehouse_id_error}}</view>
+            </view>
+        </view>
+        <view class="item" data-page="/pages/share/selectStorehouse/selectStorehouse?page=planAdd&pageField=tar_storehouse" bind:tap="skipPage">
+            <view class="title">调入仓</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.tar_storehouse_id}}">{{addData.tar_storehouse_title}}</view>
+                    <view class="content placeholder" wx:else>请选择调入仓</view>
+                    <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.tar_storehouse_id_error}}">{{addData.tar_storehouse_id_error}}</view>
+            </view>
+        </view>
+        <view class="item" bind:tap="showSelectCalendar" data-type="available_date">
+            <view class="title">销售日期</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.available_date}}">{{addData.available_date}}</view>
+                    <view class="content placeholder" wx:else>请选择销售日期</view>
+                    <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.available_date_error}}">{{addData.available_date_error}}</view>
+            </view>
+        </view>
+        <view class="item" bind:tap="showSelectCalendar" data-type="estimate_arrive_at">
+            <view class="title">预计到货时间</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.estimate_arrive_at}}">{{addData.estimate_arrive_at}}</view>
+                    <view class="content placeholder" wx:else>请选择预计到货时间</view>
+                    <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.estimate_arrive_at_error}}">{{addData.estimate_arrive_at_error}}</view>
+            </view>
+        </view>
+    </view>
+
+    <!--商品-->
+    <block wx:for="{{addData.p_items}}" wx:key="index">
+        <view class="margin-main title-add margin-bottom20">
+            <view class="left">
+                <view class="title font-w-bold">调拨商品-{{index + 1}}</view>
+                <view wx:if="{{index > 0}}" class="delete" hover-class="link-hover" bind:tap="deleteItem" data-index="{{index}}">删除</view>
+            </view>
+            <view class="right">
+                <button wx:if="{{index === addData.p_items.length - 1}}" class="btn-primary btn-size-62" bind:tap="addItem">增加商品</button>
+            </view>
+        </view>
+        <view class="margin-main bg-body-fff margin-bottom20 list-input">
+            <view class="item" data-page="/pages/share/selectGItem/selectGItem?page=planAdd&index={{index}}&isDeleted=0" bind:tap="skipPage">
+                <view class="title">商品</view>
+                <view class="input">
+                    <view class="select">
+                        <view class="content" wx:if="{{item.c_item_id}}">{{item.item_title}}</view>
+                        <view class="content placeholder" wx:else>请选择商品</view>
+                        <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                    </view>
+                    <view class="error-hint" wx:if="{{item.c_item_id_error}}">{{item.c_item_id_error}}</view>
+                </view>
+            </view>
+            <view class="item">
+                <view class="title">调拨数量(件)</view>
+                <view class="input">
+                    <input placeholder="请输入调拨数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                        type="number" data-maindata="addData" data-fieldkey="p_items[{{index}}].num" value="{{item.num}}"/>
+                    <view class="error-hint" wx:if="{{item.num_error}}">{{item.num_error}}</view>
+                </view>
+            </view>
+        </view>
+    </block>
+    
+    <view class="bottom-btn">
+        <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+    </view>
+</view>
+
+<selectCalendar value="{{dateTemp}}" bind:cancel="cancelSelectCalendar" bind:change="selectCalendar" wx:if="{{isShowCalendar}}"/>
+<selectTime value="{{timeTemp}}" bind:cancel="cancelSelectTime" bind:change="selectTime" wx:if="{{isShowTime}}"/>

@@ -1,0 +1,61 @@
+
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff padding20 margin-bottom16">
+        <view class="margin-bottom30 font-size32 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+        <view class="margin-bottom16 font-size28 stock-num">库数量：{{trayItems.stock_num}}件</view>
+        <view class="font-size28">
+            <text>应出库：{{detail.num}}件</text>
+            <text class="middle">|</text>
+            <text>已出库：{{detail.num_out ? detail.num_out + '件' : '-'}}</text>
+        </view>
+    </view>
+
+    <!--仓库-->
+    <block wx:for="{{addData.tray_items}}" wx:key="index">
+        <view class="margin-main title-add margin-bottom20">
+            <view class="left">
+                <view class="title font-w-bold">仓库-{{index + 1}}</view>
+            </view>
+            <block wx:if="{{index === 0}}">
+                <view class="right margin-right20">
+                    <button class="btn-white btn-size-62" bind:tap="addTray">手动增加</button>
+                </view>
+                <view class="right">
+                    <button class="btn-primary btn-size-62" bind:tap="handleScan">扫码增加</button>
+                </view>
+            </block>
+            <view class="right margin-right20">
+                <view wx:if="{{index > 0}}" class="delete" hover-class="link-hover" bind:tap="deleteTray" data-index="{{index}}">删除</view>
+            </view>
+        </view>
+        <view class="margin-main bg-body-fff margin-bottom20 list-input">
+            <picker range="{{trayItems.items}}" range-key="warehouse_tray_code" bindchange="changeTray" data-index="{{index}}">
+                <view class="item">
+                    <view class="title">仓库</view>
+                    <view class="input">
+                        <view class="select">
+                            <view class="content" wx:if="{{item.tray_index !== ''}}">
+                                {{trayItems.items[item.tray_index].warehouse_title}} / {{trayItems.items[item.tray_index].tray_code}}
+                            </view>
+                            <view class="content placeholder" wx:else>请选择仓库</view>
+                            <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                        </view>
+                        <view class="error-hint" wx:if="{{item.tray_index_error}}">{{item.tray_index_error}}</view>
+                    </view>
+                </view>
+            </picker>
+            <view class="item">
+                <view class="title">出库数量(件)</view>
+                <view class="input">
+                    <input placeholder="请输入出库数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                        type="number" data-maindata="addData" data-fieldkey="tray_items[{{index}}].num" value="{{item.num}}"/>
+                    <view class="error-hint" wx:if="{{item.num_error}}">{{item.num_error}}</view>
+                </view>
+            </view>
+        </view>
+    </block>
+    
+    <view class="bottom-btn">
+        <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认出库</button>
+    </view>
+</view>

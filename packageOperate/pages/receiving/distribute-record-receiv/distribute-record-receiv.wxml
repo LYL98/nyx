@@ -1,0 +1,20 @@
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 detail">
+        <view class="margin-bottom16 font-size32 font-w-bold">{{detail.item_code || '-'}}/{{detail.item_title || '-'}}</view>
+        <view class="font-size28 font-w-bold">调拨数量：{{detail.num}}件</view>
+    </view>
+    <view class="margin-main item-list">
+        <view class="margin-main margin-bottom16">收货记录</view>
+        <view wx:for="{{detail.accepts}}" wx:key="index" class="item bg-body-fff">
+            <view class="content">
+                <view class="left">
+                    <view class="margin-bottom10 font-size28">到货数量：{{item.num_arrive ? item.num_arrive + '件' : '-'}}</view>
+                    <view class="margin-bottom10 font-size28">收货数量：{{item.num ? item.num + '件' : '-'}}</view>
+                    <view class="margin-bottom16 font-size28">备注：{{item.remark || '-'}}</view>
+                    <view class="margin-bottom10 font-size28 aided">收货人：{{item.creator.realname}}</view>
+                    <view class="font-size28 aided">收货时间：{{item.created}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

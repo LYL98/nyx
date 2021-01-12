@@ -1,0 +1,43 @@
+.page-merchant-modify-tags {
+    background-color: #f7f7f8;
+    height: 100%;
+    padding: 30rpx 20rpx;
+    font-size: 28rpx;
+    color: #20232C;
+    > .form-item {
+        padding-bottom: 30rpx;
+        .label {
+            font-family: PingFangSC-Medium;
+        }
+        .tags-title{
+            padding: 20rpx 30rpx 0;
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20rpx;
+            padding: 30rpx 10rpx 10rpx;
+            > view {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+                margin: 0 10rpx 20rpx;
+                width: 210rpx;
+                height: 56rpx;
+                border: 1rpx solid #A1A6B3;
+                border-radius: 6rpx;
+                font-size: 28rpx;
+                color: #A1A6B3;
+                background: #fff;
+                &.active {
+                    color: #00ADE7;
+                    border-color: #00ADE7;
+                }
+            }
+        }
+    }
+    > .btn-submit {
+        margin-top: 70rpx;
+    }
+}

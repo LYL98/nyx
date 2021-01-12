@@ -1,0 +1,106 @@
+
+.select {
+  display: flex;
+  align-items: center;
+  padding-right: 10rpx;
+  min-width: 40rpx;
+  text-align: right;
+}
+
+.select .placeholder {
+  color: rgb(140, 140, 140);
+}
+
+.select > .icon-right {
+  margin-left: 20rpx;
+  width: 13rpx;
+  height: 24rpx;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAAAXNSR0IArs4c6QAAANpJREFUOBFjYCADMC5ctnk2IyMjPwczd1JYmOMXYsxgYmBkMPv//3/ojz9ftq9atZ+HKE2MzGwBjIwMj/4zMNgQq5ERZPKiVTsVGf7+OvD/P4McUOAIBwuPJz6ngjWRqhGuiRSNKJqI1YihiRiNWDUR0ohTEz6NTCBJXCAuzP0+AzObAzwe/36dB1KLVxMuw/Bqwoh0YPoEGYTTTxgakFIJVk34NGC1iZAGDE3EaEDRRKwGuCZSNIA1kaoBpInl/99fGxiIzHwgDSDAAtRwCliw3CSlYIFoJZEEAFSNv2ioNnsDAAAAAElFTkSuQmCC") no-repeat center;
+  background-size: cover;
+}
+
+.select-page-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  z-index: 1000000;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  &.active {
+    width: 100%;
+  }
+}
+
+.select-page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  background-color: #FFF;
+  transition: width .3s ease-in-out;
+
+  &.active {
+    width: 600rpx;
+  }
+
+}
+
+/* 公用卡片 */
+.select-page > .card {
+  background: #fff;
+  border-radius: 8rpx;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.select-page > .tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10rpx;
+  max-height: calc(100vh - 140rpx);
+  overflow: auto;
+  background: #fff;
+  border-radius: 8rpx;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.select-page > .tags-container > text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 170rpx;
+  height: 56rpx;
+  font-size: 26rpx;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+  color: #A1A6B3;
+  border: 1rpx solid #A1A6B3;
+  margin: 10rpx;
+}
+
+.select-page > .tags-container > text.active {
+  color: #00ADE7;
+  border-color: #00ADE7;
+}
+
+.select-page > .btn-submit {
+  margin: 20rpx 20rpx;
+  border: none;
+}
+
+/* 提交按钮 */
+.select-page >.btn-submit {
+  border-radius: 8rpx;
+  font-size: 34rpx;
+  color: #FFFFFF;
+  background: #00ADE7;
+}
+
+/* 提交按钮点击时的样式 */
+.select-page >.btn-submit-hover, .btn-hover {
+  opacity: 0.4;
+}

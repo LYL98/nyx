@@ -1,0 +1,235 @@
+//返回价格
+var returnPrice = function (data) {
+    var pr = data ? (data/100).toFixed(2) : '0';
+    var index = pr.indexOf(".");
+    if (index > 0) {
+        pr = pr.substring(0, index + 3);
+    }
+    index = pr.indexOf('.00');
+    if (index > 0) {
+        pr = pr.substring(0, index);
+    }
+    return pr;
+}
+
+//返回重量
+var returnWeight = function(data) {
+    if(!data) return 0;
+    return data / 10;
+}
+
+var returnPriceAbs = function (price) {
+    return Math.abs(returnPrice(price));
+}
+//返回毛重
+var returnGrossWeight = function (data) {
+    return data / 10;
+}
+
+//返回五舍五入
+var returnToFixed = function (data, num) {
+    return data.toFixed(num || 2);
+}
+
+//返回折扣
+var returnDiscount = function (data) {
+    var d = data ? (data / 10).toFixed(1) : '0';
+    var index = d.indexOf(".");
+    if (index > 0) {
+        d = d.substring(0, index + 2);
+    }
+    index = pr.indexOf('.0');
+    if (index > 0) {
+        d = d.substring(0, index);
+    }
+    return d;
+}
+
+/**
+ * 返回加载更多or已加载所有
+ */
+var returnMore = function(num, query, loading) {
+    if(loading) return '加载中...';
+    if (num) {
+      if (num / query.page_size <= query.page) {
+        return '已加载所有';
+      } else {
+        return '加载更多...';
+      }
+    } else {
+      return '已加载所有';
+    }
+}
+
+/*
+  下单专用
+*/
+//返回使用余额价格（余额，是否用余额，订单价格）
+var returnBalancePrice = function (balance, isBalance, orderPrice) {
+    if (!isBalance) {
+        return returnPrice(0);
+    }
+    if (balance >= orderPrice) {
+        return returnPrice(orderPrice);
+    }
+    return returnPrice(balance);
+}
+
+//返回要支付的价格（余额，是否用余额，订单价格）
+var returnPayPrice = function (balance, isBalance, orderPrice) {
+    if (isBalance) {
+        var b = balance >= orderPrice ? orderPrice : balance;
+        return returnPrice(orderPrice - b);
+    }
+    return returnPrice(orderPrice);
+}
+
+//返回要支付类型(微信额度，余额额度)
+var returnPayType = function (weixin, balance) {
+    if (balance === 0) {
+        return '微信';
+    } else if (weixin === 0) {
+        return '余额';
+    } else {
+        return '微信+余额';
+    }
+}
+//返回是否显示支付选项(余额，金额，判断类型)
+var returnShowPayType = function (balance, price, judgeType) {
+    //余额
+    if (judgeType === 'balance') {
+        if (balance >= price) return true;
+        return false;
+    }
+    //余额+微信
+    else if (judgeType === 'balanceWeixin') {
+        if (balance > 0 && balance < price) return true;
+        return false;
+    } else {
+        return false;
+    }
+}
+
+//日期格式化
+/**
+ *
+ yyyy：年
+ MM：月
+ dd：日
+ hh：1~12小时制(1-12)
+ HH：24小时制(0-23)
+ mm：分
+ ss：秒
+ S：毫秒
+ E：星期几
+ D：一年中的第几天
+ F：一月中的第几个星期(会把这个月总共过的天数除以7)
+ w：一年中的第几个星期
+ W：一月中的第几星期(会根据实际情况来算)
+ a：上下午标识
+ k：和HH差不多，表示一天24小时制(1-24)。
+ K：和hh差不多，表示一天12小时制(0-11)。
+ z：表示时区
+ */
+var returnDateFormat = function (dateStr, format) {
+    if (!dateStr) {
+        return ''
+    } else if (format === 'yyyy-MM-dd') {
+        return dateStr.substring(0, 10);
+    } else if (format === 'MM-dd') {
+        return dateStr.substring(5, 10);
+    } else if (format === 'HH:mm:ss') {
+        return dateStr.substring(11, 19);
+    } else {
+        return dateStr;
+    }
+}
+
+
+var returnPercentage = function (item_num, sun) {
+    var d = item_num / sun * 100;
+    d = d.toFixed(2);
+    if (d.substring(d.length - 3, d.length) === '.00') {
+        return d.substring(0, d.length - 3);
+    }
+    if (d.substring(d.length - 1, d.length) === '0') {
+        return d.substring(0, d.length - 1);
+    }
+    return d;
+}
+
+//返回库存提示
+var returnItemStock = function (itemStock) {
+    if (itemStock <= 0) {
+        return '库存不足';
+    } else if (itemStock > 0 && itemStock <= 10) {
+        return '仅剩' + itemStock + '件';
+    }
+    return '';
+}
+
+// 省略文本
+var returnOmissionText = function (text, maxLength) {
+    text = text ? text.toString() : '';
+    maxLength = maxLength || 5;
+    return text.length >= maxLength ? text.slice(0, maxLength) + '...' : text;
+}
+
+var returnTencentImagePath = function (tencentPath, filePath) {
+    return tencentPath + filePath;
+}
+
+var returnArrayTotal = function(array, key){
+    var total = 0;
+    for(var i = 0; i < array.length; i++){
+        total += Number(array[i][key]);
+    }
+    return total;
+}
+
+var returnArrayJoinStr = function(array=[], joinSign='|') {
+    return array.join(joinSign)
+}
+
+//数值处理
+var math = {
+    floor: Math.floor
+}
+
+//判断数据类型
+var dataType = function(data){
+    var d = typeof data;
+    return d;
+}
+//两个数值计算
+var returnCalc = function(a,b,type){
+    if(type === 'add'){
+        return Number(a) + Number(b)
+    }else if(type === 'reduce'){
+        return Number(a) - Number(b)
+    }
+}
+
+module.exports = {
+    returnPrice: returnPrice,
+    returnWeight: returnWeight,
+    returnPriceAbs: returnPriceAbs,
+    returnGrossWeight: returnGrossWeight,
+    returnToFixed: returnToFixed,
+    returnMore: returnMore,
+    returnBalancePrice: returnBalancePrice,
+    returnPayPrice: returnPayPrice,
+    returnPayType: returnPayType,
+    returnDateFormat: returnDateFormat,
+    returnItemStock: returnItemStock,
+    returnShowPayType: returnShowPayType,
+    returnDiscount: returnDiscount,
+    returnOmissionText: returnOmissionText,
+    returnTencentImagePath: returnTencentImagePath,
+    returnPercentage: returnPercentage,
+    returnArrayTotal: returnArrayTotal,
+    returnArrayJoinStr:returnArrayJoinStr,
+    math: math,
+    dataType: dataType,
+    returnCalc: returnCalc
+}

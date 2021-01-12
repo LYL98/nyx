@@ -1,0 +1,62 @@
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+<view class="top">
+    <view class="left">
+        <view class="b {{query.custom_type === 'B' && 'active'}}" hover-class="link-hover" data-key="B" bind:tap="changeCustomType">商城</view>
+        <view class="c {{query.custom_type === 'C' && 'active'}}" hover-class="link-hover" data-key="C" bind:tap="changeCustomType">零售</view>
+    </view>
+    <view class="right">
+        <searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+            isScan bind:scan="scanInput" placeholder="批次、商品编号" fixed="{{false}}"
+            data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+            filter filterData="{{filterData}}" bind:filterChange="filterChange"/>
+    </view>
+</view>
+<view class="margin-main item-list padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff">
+        <view class="top">
+            <view class="title">{{item.p_item && item.p_item.code || '-'}}/{{item.p_item && item.p_item.title || '-'}}</view>
+            <view class="status color-orange " wx:if="{{item.unqualified}}">不合格商品</view>
+            <view class="status color-orange " wx:if="{{!row.unqualified && ['sale_ac_edit', 'dt_ac_edit'].includes(item.out_type)}}">打货</view>
+        </view>
+        <view class="content">
+            <view class="left">
+                <view class="margin-bottom16 font-size32 ">批次：{{item.batch_code}}</view>
+                <view class="margin-bottom10 font-size28 font-w-bold" >场地库存：{{item.num ? item.num + '件' : '-'}}</view>
+            </view>
+            <view class="right">
+                <button wx:if="{{(auth.isAdmin || auth.OperateItemSupStockAllocate)}}"
+                    class="btn-primary btn-size-72"
+                    
+                    data-item="{{item}}"
+                    bind:tap="handleAllocateItems"
+                >分配</button>
+                <navigator
+                    url="/packageOperate/pages/sup-stock-warehousing/sup-stock-warehousing?index={{index}}&storehouse_id={{query.storehouse_id}}"
+                    wx:if="{{(auth.isAdmin || auth.OperateItemSupStockWarehousing)}}"
+                    style="margin-top: 10rpx;"
+                >
+                    <button class="btn-primary btn-size-72">入库</button>
+                </navigator>
+                <!-- url="/packageOperate/pages/receiving/purchase-close/purchase-close?id={{item.id}}" -->
+                <!-- <navigator
+                    
+                    
+                    
+                > -->
+                    <button class="btn-primary btn-size-72" 
+                        style="margin-top: 10rpx;"
+                        wx:if="{{(query.custom_type === 'B') && (auth.isAdmin || auth.OperateItemSupStockDistribute)}}"
+                        data-item="{{item}}" data-index="{{index}}"
+                        bind:tap="handleDistributeItem"
+                      >调拨</button>
+                <!-- </navigator> -->
+            </view>
+        </view>
+    </view>
+    <view class="load-more margin-bottom20" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{auth.isAdmin || auth.OperateItemSupStockAllocate || auth.OperateItemSupStockWarehousing || auth.OperateItemSupStockDistribute}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫码操作</button>
+</view>

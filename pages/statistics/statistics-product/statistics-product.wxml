@@ -1,0 +1,63 @@
+<!--pages/statistics/statistics-product.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<wxs src="./../statistics.wxs" module="statistics" />
+
+<view class="page">
+
+    <view class="title">商品销售统计 / {{query.system_class1}} / {{query.system_class2}} / {{query.system_class3}}</view>
+
+    <view class="list" wx:if="{{orderItemSumData.num > 0}}">
+        <view style="overflow-x: scroll;">
+            <view class="head-view" style="width: 1040rpx;">
+                <view class="col1 col-text">商品</view>
+                <!--<view class="col2 col-text" bindtap="changeSort" data-sort="{{query.sort === 'item_total_price' ? '-item_total_price' : 'item_total_price'}}">-->
+                    <!--订单商品金额-->
+                    <!--<image src="{{rankSSrc}}" wx:if="{{query.sort === 'item_total_price' }}"></image>-->
+                    <!--<image src="{{rankSl}}" wx:elif="{{query.sort === '-item_total_price'}}"></image>-->
+                    <!--<image src="{{rankSrc}}" wx:if="{{query.sort != '-item_total_price' && query.sort != 'item_total_price'}}"></image>-->
+                <!--</view>-->
+                <view class="col2 col-text">分类</view>
+                <!--<view class="col3 col-text">称重金额</view>-->
+                <view class="col4 col-text" bindtap="changeSort" data-sort="{{query.sort === 'amount_real' ? '-amount_real' : 'amount_real'}}">
+                    订单商品金额
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'amount_real' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-amount_real'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-amount_real' && query.sort != 'amount_real'}}"></image>
+                </view>
+                <view class="col5 col-text" bindtap="changeSort" data-sort="{{query.sort === 'count_real' ? '-count_real' : 'count_real'}}">
+                    件数
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'count_real' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-count_real'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-count_real' && query.sort != 'count_real'}}"></image>
+                </view>
+            </view>
+            <view bindtap="onItemClick" style="width: 1040rpx;"
+                data-item-id="{{item.id}}"
+                data-item-code="{{item.code}}"
+                data-item-title="{{item.title}}"
+                class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{orderItemSumData.items}}"
+                wx:key="index">
+                <view class="col1 col-text">
+                    <text class="title">{{item.title}}</text>
+                    <view class="info">
+                        <text class="display-class">{{item.display_class_title}}</text>
+                        <text class="buyer">{{item.buyer ? item.buyer.realname : ''}}</text>
+                    </view>
+                </view>
+                <view class="col2 col-text">{{item.system_class_title}}</view>
+                <!--<view class="col3 col-text">-->
+                    <!--<text wx:if="{{item.check_chg < 0}}" style="color: #00d600;">{{statistics.formatPrice(item.check_chg)}}</text>-->
+                    <!--<text wx:elif="{{item.check_chg > 0}}" style="color: #ff3724;">{{statistics.formatPrice(item.check_chg)}}</text>-->
+                    <!--<text wx:else>{{statistics.formatPrice(item.check_chg)}}</text>-->
+                <!--</view>-->
+                <view class="col4 col-text">￥{{tools.returnPrice(item.amount_real)}}</view>
+                <view class="col3 col-text">{{item.count_real}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="page-bottom">
+        <view class="load-more" wx:if="{{orderItemSumData.num > 0 && !showSkeleton}}">{{tools.returnMore(orderItemSumData.num, query)}}</view>
+        <view class="load-none" wx:elif="{{!showSkeleton}}">暂无数据</view>
+    </view>
+</view>

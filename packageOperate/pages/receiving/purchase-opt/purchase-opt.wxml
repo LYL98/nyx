@@ -1,0 +1,222 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 detail">
+        <view class="margin-bottom10 font-size32 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+        <view class="margin-bottom10 aided font-size28">供应商：{{detail.supplier.title}}</view>
+        <view class="margin-bottom10 aided font-size28">采购员：{{detail.buyer_name}}</view>
+        <view class="margin-bottom10 aided font-size28">采购日期：{{detail.order_date}}</view>
+        <view class="margin-bottom36 aided font-size28">预计到货：{{detail.estimate_arrive_at}}</view>
+        <view class="font-size28 font-w-bold">采购数量：{{detail.num}}件</view>
+        <view class="font-size28 num" wx:if="{{detail.num_in > 0}}">可收货数量：{{detail.num - detail.num_in}}件</view>
+    </view>
+
+    <view class="margin-main margin-bottom16">品控信息</view>
+
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item">
+            <view class="title">品控抽检(件)</view>
+            <view class="input">
+                <input placeholder="请输入品控抽检数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="number" data-maindata="inventoryData" data-fieldkey="qa_sample_num" value="{{inventoryData.qa_sample_num}}"/>
+                <view class="error-hint" wx:if="{{inventoryData.qa_sample_num_error}}">{{inventoryData.qa_sample_num_error}}</view>
+            </view>
+        </view>
+        <view class="item">
+            <view class="title">不合格数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入不合格数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="number" data-maindata="inventoryData" data-fieldkey="un_qa_num" value="{{inventoryData.un_qa_num}}"/>
+                <view class="error-hint" wx:if="{{inventoryData.un_qa_num_error}}">{{inventoryData.un_qa_num_error}}</view>
+            </view>
+        </view>
+    </view>
+
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item" bind:tap="showSelectCalendar"  wx:if="{{itemData.fisrt_system_class.has_produce_date}}">
+            <view class="title">生产日期</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{inventoryData.produce_date}}">{{inventoryData.produce_date}}</view>
+                    <view class="content placeholder" wx:else>请选择生产日期</view>
+                    <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{inventoryData.produce_date_error}}">{{inventoryData.produce_date_error}}</view>
+            </view>
+        </view>
+        <!--禁用-->
+        <block wx:if="{{lifeDesabled}}">
+            <view class="item disabled">
+                <view class="title">保质期(天)</view>
+                <view class="input">{{inventoryData.shelf_life}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">库存期(天)</view>
+                <view class="input">{{inventoryData.stock_life}} </view>
+            </view>
+        </block>
+        <!--可用-->
+        <block wx:else>
+            <view class="item">
+                <view class="title">保质期(天)</view>
+                <view class="input">
+                    <input placeholder="请输入保质期" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                        type="number" data-maindata="inventoryData" data-fieldkey="shelf_life" value="{{inventoryData.shelf_life}}"/>
+                    <view class="error-hint" wx:if="{{inventoryData.shelf_life_error}}">{{inventoryData.shelf_life_error}}</view>
+                </view>
+            </view>
+            <view class="item">
+                <view class="title">库存期(天)</view>
+                <view class="input">
+                    <input placeholder="请输入库存期" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                        type="number" data-maindata="inventoryData" data-fieldkey="stock_life" value="{{inventoryData.stock_life}}"/>
+                    <view class="error-hint" wx:if="{{inventoryData.stock_life_error}}">{{inventoryData.stock_life_error}}</view>
+                </view>
+            </view>
+        </block>
+    </view>
+
+    <view class="margin-main bg-body-fff remark-body margin-bottom20">
+        <myTextarea placeholder="请输入备注" maxlength="50" bind:input="inputChange" bind:focus="inputFocus"
+            data-maindata="inventoryData" data-fieldkey="remark" value="{{inventoryData.remark}}"/>
+        <view class="error-hint" wx:if="{{inventoryData.remark_error}}">{{inventoryData.remark_error}}</view>
+        <view class="hint font-size24">{{inventoryData.remark.length}}/50</view>
+    </view>
+
+    <view class="margin-main margin-bottom16">品控标准</view>
+    <view class="margin-main bg-body-fff remark-body margin-bottom20">
+        <rich-text class="textarea" wx:if="{{itemData.system_class.qa_standard}}" nodes="{{itemData.system_class.qa_standard}}"></rich-text>
+        <text class="textarea" wx:else>暂无品控标准</text>
+    </view>
+
+    <view class="margin-main margin-bottom16">物流/存储信息</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item">
+                    <view class="title">产品尺寸(长: mm)</view>
+                    <view class="input">
+                        <input placeholder="请输入长度" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="length" value="{{inventoryData.length}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.length_error}}">{{inventoryData.length_error}}</view>
+                    </view>
+        </view>
+        <view class="item">
+                    <view class="title">产品尺寸(宽: mm)</view>
+                    <view class="input">
+                        <input placeholder="请输入宽度" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="width" value="{{inventoryData.width}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.width_error}}">{{inventoryData.width_error}}</view>
+                    </view>
+        </view>
+        <view class="item">
+                    <view class="title">产品尺寸(高: mm)</view>
+                    <view class="input">
+                        <input placeholder="请输入高度" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="height" value="{{inventoryData.height}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.height_error}}">{{inventoryData.height_error}}</view>
+                    </view>
+        </view>
+        <picker range="{{storageData}}" range-key="value" bindchange="selectStorageData">
+            <view class="item">
+                        <view class="title">存储环境(商品在仓库的存储条件)</view>
+                        <view class="input">
+                            <view class="select">
+                                <view class="content" wx:if="{{inventoryData.store_env}}">{{storageType[inventoryData.store_env]}}</view>
+                                <view class="content placeholder" wx:else>请选择</view>
+                                <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                            </view>
+                            <!-- <view class="error-hint" wx:if="{{addData.type_error}}">{{addData.type_error}}</view> -->
+                        </view>
+            </view>
+        </picker>
+
+        <picker range="{{productData}}" range-key="value" bindchange="selectProductData">
+            <view class="item">
+                        <view class="title">产品外包装</view>
+                        <view class="input">
+                            <view class="select">
+                                <view class="content" wx:if="{{inventoryData.pro_package}}">{{productType[inventoryData.pro_package]}}</view>
+                                <view class="content placeholder" wx:else>请选择</view>
+                                <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                            </view>
+                            <!-- <view class="error-hint" wx:if="{{addData.type_error}}">{{addData.type_error}}</view> -->
+                        </view>
+            </view>
+        </picker>
+
+        <view class="item">
+                    <view class="title">堆码等级</view>
+                    <view class="input">
+                        <input placeholder="仅可输入数字" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="stack_code_level" value="{{inventoryData.stack_code_level}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.stack_code_level_error}}">{{inventoryData.stack_code_level_error}}</view>
+                    </view>
+        </view>
+        <view class="item">
+                    <view class="title">出入库等级</view>
+                    <view class="input">
+                        <input placeholder="仅可输入数字" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="inout_stock_level" value="{{inventoryData.inout_stock_level}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.inout_stock_level_error}}">{{inventoryData.inout_stock_level_error}}</view>
+                    </view>
+        </view>
+    </view>
+    <view class="margin-main margin-bottom16">商品详情</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item disabled">
+            <view class="title">图片</view>
+            <view class="input">
+                <div style="height: 84rpx; overflow: hidden; display: block;">
+                    <image wx:for="{{itemData.images}}" wx:key="index" src="{{tencentPath + item + '_min200x200'}}" style="width: 84rpx; height: 84rpx; margin-left: 10rpx; display: inline-block"
+                        data-current="{{item}}" data-urls="{{itemData.images}}" bind:tap="previewImg"/>
+                </div>
+            </view>
+        </view>
+        <view class="item disabled">
+            <view class="title">产地</view>
+            <view class="input">{{itemData.origin_place}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">规格</view>
+            <view class="input">{{itemData.item_spec || '-'}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">毛重</view>
+            <view class="input">
+                <block wx:if="{{itemData.gross_weight > 0}}">
+                    <text>{{tools.returnWeight(itemData.gross_weight)}}</text>
+                    <text>斤</text>
+                </block>
+            </view>
+        </view>
+        <view class="item disabled">
+            <view class="title">净重</view>
+            <view class="input">
+                <block wx:if="{{itemData.net_weight > 0}}">
+                    <text>{{tools.returnWeight(itemData.net_weight)}}</text>
+                    <text>斤</text>
+                </block>
+            </view>
+        </view>
+        <view class="item disabled">
+            <view class="title">筐</view>
+            <view class="input">
+                <block wx:if="{{itemData.frame_id}}">含筐</block>
+                <block wx:else>-</block>
+            </view>
+        </view>
+        <view class="item disabled">
+            <view class="title">包装规格</view>
+            <view class="input">{{itemData.package_spec}}</view>
+        </view>
+    </view>
+    <view class="margin-main bg-body-fff remark-body margin-bottom20">
+        <rich-text class="textarea" wx:if="{{itemData.content}}" nodes="{{itemData.content}}"></rich-text>
+        <text class="textarea" wx:else>暂无商品详情</text>
+    </view>
+    
+    <view class="bottom-btn">
+        <button class="margin-main btn-primary btn-size-88" bind:tap="addEditData" disabled="{{submitLoading}}" loading="{{submitLoading}}">确认品控</button>
+    </view>
+</view>
+
+<selectCalendar value="{{inventoryData.produce_date}}" bind:cancel="cancelSelectCalendar" bind:change="selectCalendar" wx:if="{{isShowCalendar}}"/>

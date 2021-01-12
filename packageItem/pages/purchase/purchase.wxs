@@ -1,0 +1,68 @@
+//商品总金额（注意采购价已/100）
+var returnItemTotalPrice = function (item) {
+    if(!item.price_buy || !item.num) return '-';
+    var p = parseFloat(item.price_buy);
+    var n = parseFloat(item.num);
+    var d = p * n;
+    if(isNaN(d) || n <= 0) return '-';
+    if(d < 0.0099) return 0;
+    var pr = d.toFixed(2);
+    var index = pr.indexOf(".");
+    if (index > 0) {
+        pr = pr.substring(0, index + 3);
+    }
+    index = pr.indexOf('.00');
+    if (index > 0) {
+        pr = pr.substring(0, index);
+    }
+    return pr;
+}
+
+//筐价格价
+var returnFrameTotalPrice = function (item) {
+    if(!item.frame_price || !item.num) return '-';
+    var p = parseFloat(item.frame_price);
+    var n = parseFloat(item.num);
+    var d = p / 100 * n;
+    if(isNaN(d) || n <= 0) return '-';
+    if(d < 0.0099) return 0;
+    var pr = d.toFixed(2);
+    var index = pr.indexOf(".");
+    if (index > 0) {
+        pr = pr.substring(0, index + 3);
+    }
+    index = pr.indexOf('.00');
+    if (index > 0) {
+        pr = pr.substring(0, index);
+    }
+    return pr;
+}
+
+//采购总金额（注意采购价已/100）
+var returnTotalPrice = function (item) {
+    if((!item.price_buy && item.price_buy !== "0") || !item.num) return '-';
+    var p = parseFloat(item.price_buy);
+    var n = parseFloat(item.num);
+    var d = p * n;
+    if(item.frame_price){
+        d = d + item.frame_price / 100 * n
+    }
+    if(isNaN(d) || n <= 0) return '-';
+    if(d < 0.0099) return 0;
+    var pr = d.toFixed(2);
+    var index = pr.indexOf(".");
+    if (index > 0) {
+        pr = pr.substring(0, index + 3);
+    }
+    index = pr.indexOf('.00');
+    if (index > 0) {
+        pr = pr.substring(0, index);
+    }
+    return pr;    
+}
+
+module.exports = {
+    returnItemTotalPrice: returnItemTotalPrice,
+    returnFrameTotalPrice: returnFrameTotalPrice,
+    returnTotalPrice: returnTotalPrice
+}

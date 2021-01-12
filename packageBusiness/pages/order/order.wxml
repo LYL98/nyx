@@ -1,0 +1,10 @@
+<view class="page-order" wx:if="{{auth.isAdmin || auth.OrderList}}">
+  <container-order-list
+      id="order-list"
+      condition="{{ search.order.condition }}"
+      auth="{{ auth }}"
+      province="{{ province }}"
+      province_code="{{ province_code}}"
+      opt_type="{{opt_type}}"
+  ></container-order-list>
+</view>

@@ -1,0 +1,38 @@
+.form-item {
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e5e5e5;
+  position: relative;
+}
+
+.form-item.borderless {
+  border-bottom-color: transparent;
+}
+
+.form-item > .form-item-content {
+  padding: 35rpx 0;
+  line-height: 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-item > .form-item-error {
+  font-size: 20rpx;
+  color: #F26A6A;
+  position: absolute;
+  bottom: 3rpx;
+}
+
+.form-item > .form-item-help-text {
+  font-size: 20rpx;
+  color: rgb(140, 140, 140);
+  position: absolute;
+  bottom: 3rpx;
+  right: 20rpx;
+}
+
+.form-item-required > .form-item-content > .label::before {
+  content: '*';
+  color: #F26A6A;
+  margin-right: 4rpx;
+}

@@ -1,0 +1,41 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+    isScan bind:scan="scanInput" placeholder="搜索" fixed="{{false}}"
+    data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+    filter filterData="{{filterData}}" bind:filterChange="filterChange"
+>
+    <view slot="filter-slot" class="slot-view">
+        <view class="title">日期</view>
+        <view class="date" hover-class="link-hover" bind:tap="showSelectCalendar">{{query.delivery_date}}</view>
+    </view>
+</searchInput>
+<view class="margin-main item-list padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff">
+        <view class="content">
+            <view class="left">
+                <view class="margin-bottom10 font-size32 font-w-bold">{{item.item_code}}/{{item.item_title}}</view>
+                <view class="font-size28 num">应出库：{{item.num}}件、已出库：{{item.num_out ? item.num_out + '件' : '-'}}</view>
+            </view>
+            <view class="right" catch:tap>
+                <navigator wx:if="{{(auth.isAdmin || auth.WarehouseOutStorageAdd) && item.num_out < item.num}}"
+                    url="/packageWarehouse/pages/out-storage-plan/market-out-storage/market-out-storage?index={{index}}">
+                    <button class="btn-primary btn-size-72">出库</button>
+                </navigator>
+            </view>
+        </view>
+        <view class="out-detail" wx:if="{{item.out_details && item.out_details.length > 0}}">
+            <view class="out-detail-item" wx:for="{{item.out_details}}" wx:for-item="o" wx:for-index="i" wx:key="i">
+                <view class="left">托盘：{{o.warehouse}}/{{o.tray}}</view>
+                <view class="right">{{o.num}}件</view>
+            </view>
+        </view>
+    </view>
+    <view class="load-more margin-bottom20" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{auth.isAdmin || auth.WarehouseOutStorageAdd}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫码出库</button>
+</view>
+
+<selectCalendar value="{{query.delivery_date}}" bind:cancel="cancelSelectCalendar" bind:change="selectCalendar" wx:if="{{isShowCalendar}}"/>

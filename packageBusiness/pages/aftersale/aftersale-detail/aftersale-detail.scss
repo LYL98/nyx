@@ -1,0 +1,410 @@
+.page-aftersale-detail {
+    background-color: #f7f7f8;
+    height: 100%;
+    border-top: 1rpx solid #eee;
+    position: relative;
+}
+
+.page-aftersale-detail > .detail-container {
+    margin-bottom: 40rpx;
+    padding: 0rpx 20rpx;
+    font-size: 28rpx;
+    color: #20232C;
+}
+
+.page-aftersale-detail > .detail-container > .item-area {
+    margin-top: 30rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-area-label {
+    font-family: PingFangSC-Medium;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card {
+    margin-top: 20rpx;
+    padding: 30rpx 20rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item + .item {
+    margin-top: 20rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item.address {
+    align-items: flex-start;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item.address > .content {
+    width: 500rpx;
+    text-align: right;
+    word-wrap: break-word;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item > .label {
+    color: #A1A6B3;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item > .content.waiting_dispose {
+    color: #70ACF0;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .item-card > .item > .content.close {
+    color: #20232C;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card {
+    margin-top: 20rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper {
+    padding: 0 20rpx 30rpx;
+    box-sizing: border-box;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity .red {
+    color: #FF6868;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity .green {
+    color: #12B571;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity .black {
+    color: #242424;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list {
+    padding-top: 26rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item {
+    display: flex;
+    padding-bottom: 40rpx;
+    position: relative;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > image {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 8rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item {
+    flex: 1;
+    margin-left: 24rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .title {
+    font-family: PingFangSC-Medium;
+    font-size: 30rpx;
+    line-height: 34rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .tags {
+    margin-top: 6rpx;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .tags > text {
+    margin-top: 8rpx;
+    margin-right: 8rpx;
+    border: 1rpx solid #00AE66;
+    border-radius: 4rpx;
+    padding: 0 5rpx;
+    font-size: 26rpx;
+    color: #00AE66;
+    line-height: 26rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .tags > text.active {
+    background: #F2FFF2;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price {
+    margin-top: 40rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left > .real {
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #FF6868;
+    line-height: 28rpx;
+}
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left > .frame-id {
+    margin-left: 4rpx;
+    font-size: 20rpx;
+    color: #C7C7C7;
+    line-height: 20rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left > .pre {
+    margin-left: 4rpx;
+    font-size: 20rpx;
+    color: #C7C7C7;
+    line-height: 20rpx;
+    text-decoration: line-through;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .right {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 166rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .right > .number {
+    font-size: 26rpx;
+    color: #A5A5A5;
+    line-height: 26rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .right > .total {
+    font-size: 26rpx;
+    color: #20232C;
+    line-height: 26rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change {
+    border-top: 1rpx solid #eee;
+    padding: 20rpx 0 30rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header > .change {
+    display: flex;
+    align-items: center;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header > .change > text {
+    display: flex;
+    align-items: center;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header > .change > image {
+    width: 25rpx;
+    height: 15rpx;
+    margin-left: 14rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content {
+    margin-top: 20rpx;
+    padding: 20rpx 20rpx 5rpx;
+    background-color: #FAFAFB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item {
+    height: 64rpx;
+    font-size: 26rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > text {
+    display: block;
+    width: 200rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend {
+    height: 100%;
+    width: 248rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 26rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend
+> .num {
+    position: absolute;
+    top: -6rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend
+> .line {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 26rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend >
+.line > .horizontal-line {
+    display: block;
+    height: 2rpx;
+    width: 240rpx;
+    padding: 0;
+    background-color: #a5a5a5;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend
+> .line > .arrow {
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6rpx solid;
+    border-color: transparent transparent transparent #A5A5A5;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .show-order {
+    width: 100%;
+    padding-top: 10rpx;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .show-order > button {
+    margin: 0;
+    width: 210rpx;
+    line-height: 72rpx;
+    font-size: 28rpx;
+    background: #FFFFFF;
+    border: 1px solid #A5A5A5;
+    border-radius: 6rpx;
+    color: #A5A5A5;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper {
+    padding: 30rpx 20rpx 40rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list + .comment-list {
+    margin-top: 42rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .member {
+    margin-right: 80rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .operator {
+    margin-left: 80rpx;
+    justify-content: flex-end;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment {
+    display: flex;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .avatar {
+    width: 68rpx;
+    height: 68rpx;
+    border-radius: 50%;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment.member > .content-wrapper {
+    flex: 1;
+    margin-left: 8rpx;
+    display: flex;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment.operator > .content-wrapper {
+    flex: 1;
+    display: flex;
+    margin-right: 8rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .content-wrapper > .content-arrow {
+    margin-top: 20rpx;
+    display: block;
+    width: 0;
+    height: 0;
+    border: 12rpx solid;
+    border-color: transparent #f7f7f8 transparent transparent;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment.operator > .content-wrapper > .content-arrow {
+    border-color: transparent transparent transparent #f7f7f8;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .content-wrapper > .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f7f8;
+    border-radius: 8rpx;
+    padding: 14rpx 20rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .revoke {
+    width: 100%;
+    color: #A5A5A5;
+    font-size: 24rpx;
+    text-align: center;
+    margin: 42rpx 0;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .content-wrapper > .content > .description {
+    color: #242424;
+    margin-bottom: 10rpx;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .content-wrapper > .content > .images > image {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 8rpx;
+    margin: 0 10rpx 10rpx 0;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .content-wrapper > .content > .video > video {
+    width: 280rpx;
+    height: 140rpx;
+    border-radius: 8rpx;
+    margin: 0 10rpx 10rpx 0;
+}
+
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .comment-wrapper > .comment-list > .comment > .content-wrapper > .content > .timestamp {
+    margin-top: 4rpx;
+    font-size: 20rpx;
+    color: #C7C7C7;
+    line-height: 20rpx;
+}
+.page-aftersale-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .title > .sub-title {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 24rpx;
+    color: #fff;
+    background-color: #00ade7;
+    text-align: center;
+    padding: 0 4rpx;
+    border-radius: 8rpx;
+
+}
+
+.fixed-footer {
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #FFF;
+    padding: 26rpx 20rpx;
+}
+
+.fixed-footer .btn-submit {
+    width: 710rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+}

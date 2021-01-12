@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "品控收货",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "distribute": "/packageOperate/pages/receiving/distribute/distribute",
+    "purchase": "/packageOperate/pages/receiving/purchase/purchase"
+  }
+}

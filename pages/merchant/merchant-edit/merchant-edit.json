@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "pg-form": "../../../components/form/form/form",
+    "pg-form-item": "../../../components/form/form-item/form-item",
+    "pg-input": "../../../components/form/input/input",
+    "pg-picker": "../../../components/form/picker/picker",
+    "pg-avatar": "../../../components/form/avatar/avatar",
+    "pg-upload": "../../../components/form/upload/upload",
+    "pg-select": "../../../components/form/select/select"
+  }
+}

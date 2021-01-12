@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "调价",
+  "usingComponents": {
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

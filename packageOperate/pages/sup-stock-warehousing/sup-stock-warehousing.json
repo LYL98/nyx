@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "selectWarehouse": "/components/selectWarehouse/selectWarehouse"
+  }
+}

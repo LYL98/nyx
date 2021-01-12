@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "品控",
+  "usingComponents": {
+    "selectCalendar": "/components/selectCalendar/selectCalendar",
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

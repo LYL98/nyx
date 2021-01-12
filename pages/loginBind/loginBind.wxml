@@ -1,0 +1,7 @@
+<!--授权绑定-->
+<image class="d-b" src="./../../assets/img/login/login1.png" style="width: 100%; height: 280rpx;" />
+<view class="btn-view">
+    <getUserInfo bind:callback="getUserInfoCallBack"/>
+</view>
+
+<navigator class="botton-btn t-c" open-type="navigateBack">暂不登录</navigator>

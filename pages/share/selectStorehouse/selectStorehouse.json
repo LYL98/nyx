@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择仓",
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "searchInput": "/components/searchInput/searchInput"
+  }
+}

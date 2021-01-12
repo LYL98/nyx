@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "商户管理",
+  "usingComponents": {
+    "container-merchant-list": "merchant-list/merchant-list",
+    "container-intention-list": "intention-list/intention-list"
+  }
+}

@@ -1,0 +1,12 @@
+.title-add{
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10rpx;
+    >.left{
+        flex: 1;
+    }
+}
+.myFlex{
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "myTextarea": "/components/myTextarea/myTextarea"
+
+  }
+}

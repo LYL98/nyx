@@ -1,0 +1,42 @@
+<view class="blank" wx:if="{{ fixed }}"></view>
+<view class="search-body {{filter && 'is-filter'}} {{ fixed && 'fixed' }}">
+    
+    <view class="search">
+        <view class="add" bind:tap="handleShowAdd" wx:if="{{ showAdd }}">
+            <image src="./../../assets/img/icon-add.png" style="width: 34rpx; height: 32rpx;"></image>
+            <view>新增</view>
+        </view>
+        <view class="icon">
+            <image src="./../../assets/img/icon-search.png" style="width: 34rpx; height: 35rpx;"/>
+        </view>
+        <view class="input">
+            <input placeholder="{{placeholder}}" placeholder-class="search-input-placeholder" focus="{{focus}}" value="{{value}}" bindinput="inputChange" confirm-type="search" bindconfirm="inputConfirm"/>
+        </view>
+        <view class="filter" hover-class="hover" wx:if="{{filter}}" bind:tap="showFilter">
+            <image src="./../../assets/img/icon-filter.png" style="width: 34rpx; height: 32rpx;" />
+            <view>筛选</view>
+        </view>
+    </view>
+</view>
+
+<!--筛选-->
+<view class="filter-body" bind:tap="hideFilter" wx:if="{{isShowFilter}}">
+    <view class="filter" catch:tap>
+        <view class="top">
+            <block wx:for="{{filterData}}" wx:key="index">
+                <view class="title">{{item.title}}</view>
+                <view class="values">
+                    <view wx:for="{{item.items}}" wx:for-item="ii" wx:for-index="i" wx:key="i"
+                        class="item add-dot {{filterResult[item.key] === ii.key && 'active'}}" hover-class="hover"
+                        data-key="{{item.key}}" data-value="{{ii.key}}" bind:tap="activeFilter"
+                    >{{ii.title}}</view>
+                </view>
+            </block>
+            <slot name="filter-slot"></slot>
+        </view>
+        <view class="bottom">
+            <view class="reset" hover-class="hover" bind:tap="handleReset">重置</view>
+            <view class="affirm" hover-class="hover" bind:tap="handleAffirm">确认</view>
+        </view>
+    </view>
+</view>

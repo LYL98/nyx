@@ -1,0 +1,24 @@
+<!--pages/setting/setting.wxml-->
+<view class="weui-navbar">
+  <block wx:for="{{tabs}}" wx:key="*this">
+    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+      <view class="weui-navbar__title">{{item}}</view>
+    </view>
+  </block>
+  <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+</view>
+
+<view wx:if="{{ activeIndex == (tabs.length === 1 ? -1 : 0) }}" class="page-setting">
+  <setting-operator
+          id="setting-operator"
+          auth="{{ auth }}"
+  ></setting-operator>
+</view>
+
+<view wx:if="{{ activeIndex == (tabs.length === 1 ? 0 : 1) }}" class="page-setting">
+  <setting-profile
+          id="setting-profile"
+          userInfo="{{ userInfo }}"
+          auth="{{ auth }}"
+  ></setting-profile>
+</view>

@@ -1,0 +1,25 @@
+<!--pages/setting/setting-profile/setting-profile.wxml-->
+<view class="page-setting">
+    <view class="card list-detail">
+        <view class="item">
+            <text class="label">头像</text>
+            <view class="content image-container">
+                <image class="image"
+                       wx:if="{{loginUserInfo.avatar !== ''}}"
+                       src="{{ tencentPath + loginUserInfo.avatar + '_min200x200' }}"
+                       data-src="{{loginUserInfo.avatar}}"
+                       bindtap="previewAvatar"
+                ></image>
+                <image class="image"
+                       wx:else
+                       src="{{ defaultAvatar }}"
+                ></image>
+            </view>
+        </view>
+        <view class="item">
+            <text class="label">姓名</text>
+            <text class="content">{{ loginUserInfo.realname}}</text>
+        </view>
+    </view>
+    <button class="btn-logout" hover-class="btn-hover" bindtap="logout">退出登录</button>
+</view>

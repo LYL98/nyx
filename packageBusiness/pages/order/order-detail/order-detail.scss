@@ -1,0 +1,487 @@
+/* pages/order/order-detail/order-detail.wxss */
+
+.page-order-detail {
+    background-color: #f7f7f8;
+    height: 100%;
+    border-top: 1rpx solid #eee;
+    position: relative;
+}
+
+.page-order-detail > .detail-container {
+    margin-bottom: 240rpx;
+    padding: 0rpx 20rpx;
+    font-size: 28rpx;
+    color: #20232C;
+}
+
+.page-order-detail > .detail-container > .item-area {
+    margin-top: 30rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-area-label {
+    font-family: PingFangSC-Medium;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card {
+    margin-top: 20rpx;
+    padding: 30rpx 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item + .item {
+    margin-top: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item.max-width {
+    align-items: flex-start;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item.max-width > .content {
+    width: 500rpx;
+    text-align: right;
+    word-wrap: break-word;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .label {
+    color: #A1A6B3;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.wait_confirm {
+    color: #59BDDF;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.confirmed {
+    color: #70ACF0;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.assigned {
+    color: #70ACF0;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.wait_delivery {
+    color: #70ACF0;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.deliveried {
+    color: #8E91E7;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.received {
+    color: #20232C;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.order_done {
+    color: #20232C;
+}
+
+.page-order-detail > .detail-container > .item-area > .item-card > .item > .content.order_canceled {
+    color: #A1A6B3;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card {
+    margin-top: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper {
+    padding: 0 20rpx;
+    box-sizing: border-box;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity {
+
+    border-bottom: 20rpx solid #f7f7f8;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity .red {
+    color: #FF6868;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity .green {
+    color: #12B571;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity .black {
+    color: #242424;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view + view {
+    border-top: 1rpx solid #eee;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list {
+    padding-top: 26rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item {
+    display: flex;
+    padding-bottom: 40rpx;
+    position: relative;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > image {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 8rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item {
+    flex: 1;
+    margin-left: 24rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .title {
+    font-family: PingFangSC-Medium;
+    font-size: 30rpx;
+    line-height: 34rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .tags {
+    margin-top: 6rpx;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .tags > text {
+    margin-top: 8rpx;
+    margin-right: 8rpx;
+    border: 1rpx solid #00AE66;
+    border-radius: 4rpx;
+    padding: 0 5rpx;
+    font-size: 26rpx;
+    color: #00AE66;
+    line-height: 26rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .tags > text.active {
+    background: #F2FFF2;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price {
+    margin-top: 40rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left > .real {
+    font-family: PingFangSC-Medium;
+    font-size: 28rpx;
+    color: #FF6868;
+    line-height: 28rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .left > .frame-id {
+    margin-left: 4rpx;
+    font-size: 20rpx;
+    color: #C7C7C7;
+    line-height: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .right {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 166rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .right > .number {
+    font-size: 26rpx;
+    color: #A5A5A5;
+    line-height: 26rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .price > .right > .total {
+    font-size: 26rpx;
+    color: #20232C;
+    line-height: 26rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change {
+    border-top: 1rpx solid #eee;
+    padding: 20rpx 0 30rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header > .change {
+    display: flex;
+    align-items: center;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header > .change > text {
+    display: flex;
+    align-items: center;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .header > .change > image {
+    width: 25rpx;
+    height: 15rpx;
+    margin-left: 14rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content {
+    margin-top: 20rpx;
+    padding: 20rpx 20rpx 5rpx;
+    background-color: #FAFAFB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item {
+    height: 64rpx;
+    font-size: 26rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > text {
+    display: block;
+    width: 200rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend {
+    height: 100%;
+    width: 248rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 26rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend
+    > .num {
+    position: absolute;
+    top: -6rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend
+    > .line {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 26rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend >
+    .line > .horizontal-line {
+    display: block;
+    height: 2rpx;
+    width: 240rpx;
+    padding: 0;
+    background-color: #a5a5a5;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > view.price-change > .content > .change-item > .trend
+    > .line > .arrow {
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6rpx solid;
+    border-color: transparent transparent transparent #A5A5A5;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.total-price {
+    margin-top: 30rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.total-price > .price-item {
+    display: flex;
+    justify-content: space-between;
+    line-height: 28rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.total-price > .price-item + .price-item {
+    margin-top: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.price-compute {
+    padding: 30rpx 0 0;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.price-compute > .compute-item {
+    display: flex;
+    justify-content: space-between;
+    line-height: 28rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.price-compute > .compute-item + .compute-item {
+    margin-top: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.price-compute .remark {
+    margin-left: 20rpx;
+    font-size: 26rpx;
+    color: #A5A5A5;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.total-price {
+    padding: 32rpx 0;
+    text-align: right;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.total-price > .price {
+    font-family: PingFangSC-Medium;
+    font-size: 30rpx;
+    line-height: 30rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.pay-status {
+    padding: 32rpx 0;
+    text-align: right;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > view.pay-status > .price {
+    font-family: PingFangSC-Medium;
+    font-size: 30rpx;
+    line-height: 30rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper {
+    padding: 0 10rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper .icon-flod {
+    width: 25rpx;
+    height: 15rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper .header {
+    height: 110rpx;
+    padding: 0 10rpx;
+    font-size: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .pay-records > .header {
+    border-bottom: 1rpx solid #eee;
+}
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .pay-records > .no-record {
+    padding: 40rpx;
+    border-bottom: 1rpx solid #eee;
+    font-size: 26rpx;
+    color: #A1A6B3;
+    line-height: 26px;
+    text-align: center;
+}
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .pay-records > .record {
+    padding: 30rpx 0;
+    border-bottom: 1rpx solid #eee;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .pay-records > .record > view {
+    padding: 0 10rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 28rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .pay-records > .record > view + view {
+    margin-top: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .pay-records > .record > .record-item {
+    color: #A1A6B3;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .return-records > .no-record {
+    padding: 40rpx 0;
+    border-top: 1rpx solid #eee;
+    font-size: 26rpx;
+    color: #A1A6B3;
+    line-height: 26px;
+    text-align: center;
+}
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .return-records > .record {
+    padding: 30rpx 0;
+    border-top: 1rpx solid #eee;
+}
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .return-records > .record > view {
+    padding: 0 10rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 28rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .return-records > .record > view + view {
+    margin-top: 20rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .records-wrapper > .return-records > .record > .record-item {
+    color: #A1A6B3;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .logs-wrapper {
+    padding: 0 20rpx 30rpx;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .logs-wrapper > .order-logs {
+    padding-top: 24rpx;
+    border-top: 20rpx solid #f7f7f8;
+    font-size: 22rpx;
+    color: #A1A6B3;
+    line-height: 22rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-order-detail > .detail-container > .item-area > .area-card > .logs-wrapper > .order-logs > view + view {
+    margin-top: 14rpx;
+}
+
+
+.page-order-detail > .fixed-view {
+    width: 100%;
+    height: 140rpx;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    position: fixed;
+    z-index: 999;
+    bottom: 0;
+    align-items: center;
+}
+
+.page-order-detail > .fixed-view > button {
+    width: 710rpx;
+    height: 88rpx;
+    border-color: #00ADE7;
+    font-size: 34rpx;
+    color: #00ADE7;
+    border-radius: 8rpx;
+}
+
+.page-order-detail > .fixed-view > .button-hover {
+    background-color: #eee;
+}
+.page-order-detail > .detail-container > .item-area > .area-card > .commodity-wrapper > .commodity > .list > .list-item > .detail-item > .title > .sub-title {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 24rpx;
+    color: #fff;
+    background-color: #00ade7;
+    text-align: center;
+    padding: 0 4rpx;
+    border-radius: 6rpx;
+
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "变动信息",
+  "usingComponents": {
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

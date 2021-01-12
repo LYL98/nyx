@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "新增采购单",
+  "usingComponents": {
+    "selectCalendar": "/components/selectCalendar/selectCalendar",
+    "selectTime": "/components/selectTime/selectTime"
+  }
+}

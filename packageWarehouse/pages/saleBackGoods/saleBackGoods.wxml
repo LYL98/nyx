@@ -1,0 +1,28 @@
+
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+
+<view style="height: 10rpx;"></view>
+
+<view class="margin-main item-list" >
+    <view  class="item bg-body-fff margin-bottom20">
+        <view class="top">
+            <view class="title font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+        </view>
+        <view class="content padding26-20">
+            <view class="num font-w-bold" wx:if="{{detail.frame && detail.frame.title}}">筐：{{detail.frame.title}}</view>
+            <view class="num font-w-bold">数量：{{detail.back_num}}件</view>
+        </view>
+    </view>
+</view>
+<view class="margin-main bg-body-fff remark-body margin-bottom20">
+    <myTextarea placeholder="如收到的货有异常情况请在此进行备注(选填)" maxlength="50" bind:input="inputChange" bind:focus="inputFocus" data-maindata="addData" data-fieldkey="desc" value="{{addData.desc}}" />
+    <view class="hint font-size24">{{addData.desc.length}}/50</view>
+</view>
+<view class="bottom-btn">
+    <view class="title">*退货商品收货后，将进入仓库的残损区<view style="font-size: 28rpx;">如退货商品有筐，请手动发起退筐</view></view>
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">
+        确认收货</button>
+</view>
+
+
+    

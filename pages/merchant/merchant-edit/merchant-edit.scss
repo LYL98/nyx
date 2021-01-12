@@ -1,0 +1,70 @@
+.merchant-edit {
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #20232C;
+  position: relative;
+
+  padding: 0 20rpx;
+
+  &.has-fixed-footer {
+    max-height: calc(100vh - 138rpx);
+  }
+
+  .form-group {
+    margin-top: 30rpx;
+  }
+
+  .form-group .header {
+    font-family: PingFangSC-Medium;
+    padding-left: 20rpx;
+  }
+
+  .form-group .content {
+    margin-top: 20rpx;
+    padding-left: 20rpx;
+    box-shadow: 0 0 10rpx 0 rgba(0,0,0,0.10);
+    border-radius: 8rpx;
+    border-radius: 8rpx;
+    background-color: #FFF;
+  }
+
+  .form-group .textarea-container {
+    padding: 20rpx;
+    height: 240rpx;
+  }
+
+}
+
+.fixed-footer {
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #FFF;
+  padding: 26rpx 20rpx;
+}
+
+.fixed-footer .btn-submit {
+  width: 710rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+.mb-188 {
+  margin-bottom: 188rpx;
+}
+
+.pl-20 {
+  padding-left: 20rpx;
+}
+
+.creator-info {
+  font-size: 28rpx;
+  line-height: 50rpx;
+  padding: 20rpx;
+}
+
+.user-name{
+  max-width: 480rpx;
+}

@@ -1,0 +1,10 @@
+<!--components/form/form-item/form-item.wxml-->
+
+<view class="form-item{{ required && !detail_module ? ' form-item-required' : '' }}{{ borderless ? ' borderless' : '' }}">
+  <view class="form-item-content">
+    <text class="label">{{ label }}</text>
+    <slot></slot>
+  </view>
+  <text class="form-item-error" wx:if="{{ errors.length > 0 }}">{{errors[0].msg}}</text>
+  <text class="form-item-help-text" wx:if="{{ helpText }}">{{ helpText }}</text>
+</view>

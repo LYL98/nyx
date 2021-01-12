@@ -1,0 +1,42 @@
+<view class="padding30-40-20">
+    <view class="font-size28 line-height38 font-w-bold margin-bottom10">{{detail.item_code}}/{{detail.item_title}}</view>
+    <view class="font-size28 line-height38" wx:if="{{operate === 'out_storage_plan'}}">
+        应出库：{{outStoragePlanData.num}}件，已出库：<block wx:if="{{outStoragePlanData.num_out}}">{{outStoragePlanData.num_out}}件</block><block wx:else>-</block>
+    </view>
+</view>
+<view class="margin-main item-list">
+    <view class="item bg-body-fff margin-bottom20">
+        <view class="top">
+            <view class="title font-w-bold">{{detail.warehouse_title}}/{{detail.tray_code}}</view>
+        </view>
+        <view class="content padding26-20">
+            <view class="font-size30 margin-bottom10">批次：{{detail.batch_code}}</view>
+            <view class="font-size30 margin-bottom10">供应商：{{detail.supplier_title}}</view>
+            <view class="font-size30 margin-bottom10">商品过期时间：{{detail.due_date}}</view>
+            <view class="font-size30 margin-bottom10">库存过期时间：{{detail.stock_due_date}}</view>
+            <view class="font-size30 margin-bottom10">生产日期：{{detail.produce_date || '-'}}</view>
+             <view class="font-size30 margin-bottom10">保质期：{{detail.shelf_life ? detail.shelf_life + '天' : '-'}}</view>
+            <view class="font-size30 margin-bottom36">入库时间：{{detail.created}}</view>
+            <view class="font-size32 font-w-bold">库存：{{detail.num}}件</view>
+        </view>
+    </view>
+</view>
+
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+    <view class="item disabled">
+        <view class="title">出库</view>
+        <view class="input">场地</view>
+    </view>
+    <view class="item">
+        <view class="title">出库数量(件)</view>
+        <view class="input">
+            <input placeholder="请输入出库数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                type="number" data-maindata="addData" data-fieldkey="num" value="{{addData.num}}"/>
+            <view class="error-hint" wx:if="{{addData.num_error}}">{{addData.num_error}}</view>
+        </view>
+    </view>
+</view>
+
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+</view>

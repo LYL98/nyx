@@ -1,0 +1,177 @@
+<!--pages/setting/setting-operator/setting-operator.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<wxs src="./../setting.wxs" module="setting" />
+
+<view class="page">
+    <view class="background"></view>
+    <view class="query">
+        <view class="add" bind:tap="handleOperatorAdd" wx:if="{{auth.isAdmin || auth.SystemOperatorAdd}}">
+            <image src="./../../../assets/img/icon-add.png"></image>
+            <text>新增</text>
+        </view>
+        <wux-search-bar class="search"
+                        clear value="{{ inputValue }}"
+                        controlled placeholder="请输入用户名、手机号"
+                        bind:change="onChange" bind:focus="onFocus"
+                        bind:blur="onBlur" bind:confirm="onConfirm"
+                        bind:clear="onClear" bind:cancel="onCancel" ></wux-search-bar>
+
+        <view class="filter" bindtap="toggerFilterDialog">
+            <image src="./../../../assets/img/icon-filter.png"/>
+            <text>筛选</text>
+        </view>
+
+        <view class="filter-dialog" wx:if="{{ dialog.isShowFilterDialog }}">
+            <view class="overlay" bindtap="toggerFilterDialog"></view>
+
+            <view class="form-container" wx:if="{{ dialog.isShowFilterDialog && !dialog.isShowRoleDialog }}">
+
+                <view class="form">
+
+                    <view class="form-item" wx:if="{{ loginUserInfo.opt_type === 'global' }}">
+                        <view class="label">
+                            <text>权限级别</text>
+                        </view>
+                        <view class="tags-container city">
+                            <text class="{{ query.opt_type === 'global' && query.province_code === '' ? 'active' : '' }}" catch:tap="changeProvince">总部</text>
+                            <text
+                                    class="{{ item.code === query.province_code ? 'active' : '' }}"
+                                    wx:for="{{ showProvinceList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.code }}"
+                                    data-key="key_province_code"
+                                    data-value="{{ item.code }}"
+                                    data-name="{{ item.title }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                        </view>
+                    </view>
+
+                    <view class="form-item">
+                        <view class="label">
+                            <text>职务</text>
+                        </view>
+                        <view class="tags-container city">
+                            <text
+                                    class="{{ item.code === query.post ? 'active' : '' }}"
+                                    wx:for="{{ showPostList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.code }}"
+                                    data-key="key_post"
+                                    data-value="{{ item.code }}"
+                                    data-name="{{ item.title }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                        </view>
+                    </view>
+
+                    <view class="form-item">
+                        <view class="label">
+                            <text>角色</text>
+                            <view class="more" catch:tap="openRoleDialog">
+                                <text class="{{ hasSelectRole !== '全部' ? 'active' : '' }}">{{hasSelectRole}}</text>
+                                <image src="./../../../assets/img/icon-right.png"></image>
+                            </view>
+                        </view>
+                        <view class="tags-container city">
+                            <text
+                                    class="{{ item.id === query.role_id ? 'active' : '' }}"
+                                    wx:for="{{ showRoleList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.id }}"
+                                    data-key="key_role"
+                                    data-value="{{ item.id }}"
+                                    data-name="{{ item.title }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                        </view>
+                    </view>
+
+                    <view class="form-item">
+                        <view class="label">
+                            <text>状态</text>
+                        </view>
+                        <view class="tags-container city">
+                            <text
+                                    class="{{ item.code === query.is_freeze ? 'active' : '' }}"
+                                    wx:for="{{ showStatusList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.code }}"
+                                    data-key="key_status"
+                                    data-value="{{ item.code }}"
+                                    data-name="{{ item.title }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                        </view>
+                    </view>
+
+                </view>
+
+                <view class="operate">
+                    <view class="reset" bind:tap="resetQuery">重置</view>
+                    <view class="submit" bind:tap="submitQuery">确认</view>
+                </view>
+
+            </view>
+
+            <!--二级筛选-->
+            <view class="city-container" wx:if="{{ dialog.isShowRoleDialog }}">
+                <view class="header">
+                    <view class="image-container" catch:tap="closeRoleDialog">
+                        <image src="./../../../assets/img/icon-left.png"></image>
+                    </view>
+                    <view class="title">
+                        <text>选择角色</text>
+                    </view>
+                </view>
+                <view class="tags-container">
+                    <text
+                            class="{{ item.id === query.role_id ? 'active' : '' }}"
+                            wx:for="{{ roleList }}"
+                            wx:for-item="item"
+                            wx:key="{{ item.id }}"
+                            data-key="key_role"
+                            data-value="{{ item.id }}"
+                            data-name="{{ item.title }}"
+                            catch:tap="changeQuery"
+                    >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                </view>
+            </view>
+
+        </view>
+
+    </view>
+
+    <view class="title">总共{{operatorListData.num}}个人员</view>
+
+    <view class="scroll-list-item">
+        <view
+            class="card item"
+            wx:for="{{ operatorListData.items }}"
+            data-item="{{ item }}"
+            wx:key="{{ item.id }}"
+            bind:tap="showOperatorDetail"
+        >
+            <view class="item-title">
+                <text>{{ index + 1 }}.</text>
+                <text>{{ item.realname }}</text>
+                <text class="phone">{{ item.phone }}</text>
+                <text class="freeze" wx:if="{{item.is_freeze}}">{{ item.is_freeze ? '冻结' : '正常' }}</text>
+            </view>
+            <view class="item-description">
+                <view class="city">
+                    <text>职务: </text>
+                    <text>{{ setting.returnPostName(showPostList, item.post) }}</text>
+                </view>
+                <view class="created">
+                    <text>创建时间: </text>
+                    <text>{{ tools.returnDateFormat(item.created, 'yyyy-MM-dd') }}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="list-footer">
+        <text>{{tools.returnMore(operatorListData.num, query)}}</text>
+    </view>
+</view>

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "defaultPage": "/components/defaultPage/defaultPage",
+    "searchInput": "/components/searchInput/searchInput",
+    "selectCalendar": "/components/selectCalendar/selectCalendar"
+  }
+}

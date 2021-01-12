@@ -1,0 +1,130 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 detail">
+        <view class="margin-bottom10 font-size32 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+        <view class="margin-bottom36 font-size30">可售日期：{{detail.available_date || '-'}}</view>
+        <view class="margin-bottom10 aided font-size30">批次：{{detail.batch_code}}</view>
+        <view class="margin-bottom10 aided font-size28">调出仓：{{detail.src_storehouse_title}}</view>
+        <view class="margin-bottom36 aided font-size28">预计到货：{{detail.estimate_arrive_at}}</view>
+        <view class="font-size28 font-w-bold">调拨数量：{{detail.num}}件</view>
+    </view>
+
+    <block wx:if="{{detail.qa_records.length > 0}}">
+        <view class="margin-main margin-bottom16 title-add">
+            <view class="left">品控信息</view>
+            <navigator class="right" url="/packageOperate/pages/receiving/distribute-record-opt/distribute-record-opt?id={{detail.id}}">查看全部品控记录</navigator>
+        </view>
+        <view class="margin-main bg-body-fff margin-bottom20 list-input">
+            <view class="item disabled">
+                <view class="title">品控抽检</view>
+                <view class="input">
+                    {{
+                       detail.qa_records[detail.qa_records.length - 1].qa_sample_num ?
+                       detail.qa_records[detail.qa_records.length - 1].qa_sample_num + '件' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">不合格数量</view>
+                <view class="input">
+                    {{
+                       detail.qa_records[detail.qa_records.length - 1].un_qa_num ?
+                       detail.qa_records[detail.qa_records.length - 1].un_qa_num + '件' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled" wx:if="{{detail.qa_records[detail.qa_records.length - 1].produce_date}}">
+                <view class="title">生产日期</view>
+                <view class="input">
+                    {{detail.qa_records[detail.qa_records.length - 1].produce_date}}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">保质期</view>
+                <view class="input">
+                    {{
+                        detail.qa_records[detail.qa_records.length - 1].shelf_life ?
+                        detail.qa_records[detail.qa_records.length - 1].shelf_life + '天' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">库存期</view>
+                <view class="input">
+                    {{
+                        detail.qa_records[detail.qa_records.length - 1].stock_life ? 
+                        detail.qa_records[detail.qa_records.length - 1].stock_life + '天' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">备注</view>
+                <view class="input">{{detail.qa_records[detail.qa_records.length - 1].remark || '-'}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">品控人</view>
+                <view class="input">{{detail.qa_records[detail.qa_records.length - 1].creator.realname}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">品控时间</view>
+                <view class="input">{{detail.qa_records[detail.qa_records.length - 1].created}}</view>
+            </view>
+        </view>
+    </block>
+
+    <view class="margin-main margin-bottom16 title-add">
+        <view class="left">收货信息</view>
+        <navigator
+            wx:if="{{detail.accepts.length > 0}}"
+            class="right"
+            url="/packageOperate/pages/receiving/distribute-record-receiv/distribute-record-receiv?id={{detail.id}}"
+        >查看全部收货记录</navigator>
+    </view>
+
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item">
+            <view class="title">到货数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入到货数量" placeholder-class="list-input-placeholder" bindinput="numInput" bindfocus="inputFocus"
+                    type="number" data-maindata="inventoryData" data-fieldkey="num_arrive" value="{{inventoryData.num_arrive}}"/>
+                <view class="error-hint" wx:if="{{inventoryData.num_arrive_error}}">{{inventoryData.num_arrive_error}}</view>
+            </view>
+        </view>
+        <view class="item">
+            <view class="title">收货数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入收货数量" placeholder-class="list-input-placeholder" bindinput="numInput" bindfocus="inputFocus"
+                    type="number" data-maindata="inventoryData" data-fieldkey="num_accept" value="{{inventoryData.num_accept}}"/>
+                <view class="error-hint" wx:if="{{inventoryData.num_accept_error}}">{{inventoryData.num_accept_error}}</view>
+            </view>
+        </view>
+    </view>    
+
+    <block wx:if="{{isShowNo}}">
+        <view class="margin-main bg-body-fff margin-bottom20 list-input">
+            <view class="item disabled">
+                <view class="title">不合格数量</view>
+                <view class="input">{{inventoryData.un_qa_num}}件</view>
+            </view>
+        </view>
+    </block>
+
+    <view class="margin-main bg-body-fff remark-body margin-bottom20">
+        <myTextarea placeholder="请输入备注" maxlength="50" bind:input="inputChange" bind:focus="inputFocus"
+            data-maindata="inventoryData" data-fieldkey="remark" value="{{inventoryData.remark}}"/>
+        <view class="error-hint" wx:if="{{inventoryData.remark_error}}">{{inventoryData.remark_error}}</view>
+        <view class="hint font-size24">{{inventoryData.remark.length}}/50</view>
+    </view>
+    
+    <view class="bottom-btn">
+        <view class="btn-view margin-main">
+            <view class="left">
+                <button class=" btn-primary btn-size-88" bind:tap="addEditInStorage" disabled="{{submitLoading || !inventoryData.num_accept || inventoryData.num_accept === '' || inventoryData.num_accept <= 0}}">确认收货并入库</button>
+            </view>
+            <view class="right">
+                <button class=" btn-primary btn-size-88" bind:tap="addEditData" disabled="{{submitLoading}}" loading="{{submitLoading}}">确认收货</button>
+            </view>
+        </view>
+    </view>
+</view>

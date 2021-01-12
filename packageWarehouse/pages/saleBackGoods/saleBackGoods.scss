@@ -1,0 +1,16 @@
+.bottom-btn{
+    .title{
+        // height: 30rpx;
+        color: red;
+        font-size: 28rpx;
+        text-align: center;
+        padding-top: 10rpx;
+        padding-bottom: 10rpx;
+        background-color: #fff;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 114rpx;
+        z-index: 2
+    }
+}

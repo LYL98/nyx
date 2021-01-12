@@ -1,0 +1,42 @@
+<wxs src="../../../utils/tools.wxs" module="tools" />
+
+<view class="page">
+
+    <view class="title">商品销售统计 / {{query.system_class}}</view>
+
+    <view class="list" wx:if="{{dataItem.length > 0}}">
+        <view style="overflow-x: scroll;">
+            <view class="head-view" style="width: 800rpx;">
+                <view class="col1 col-text">二级科学分类</view>
+                <view class="col2 col-text" bindtap="changeSort" data-sort="{{query.sort === 'amount_real' ? '-amount_real' : 'amount_real'}}">
+                    订单商品金额
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'amount_real' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-amount_real'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-amount_real' && query.sort != 'amount_real'}}"></image>
+                </view>
+                <view class="col4 col-text" bindtap="changeSort" data-sort="{{query.sort === 'count_real' ? '-count_real' : 'count_real'}}">
+                    件数
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'count_real' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-count_real'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-count_real' && query.sort != 'count_real'}}"></image>
+                </view>
+                <view class="col5 col-text">占比</view>
+            </view>
+            <view bindtap="onItemClick" style="width: 800rpx;"
+                data-item="{{item}}"
+                class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{dataItem}}"
+                wx:key="index">
+                <view class="col1 col-text">{{item.item_system_class || '其它'}}</view>
+                <view class="col2 col-text">￥{{tools.returnPrice(item.amount_real)}}</view>
+                <view class="col4 col-text">{{item.count_real}}</view>
+                <!-- totalItemTotalPrice  -->
+                <!-- tools.returnPercentage(item.amount_real/100, total_shop -->
+                <view class="col5 col-text">{{item.ratio}}%</view>
+            </view>
+        </view>
+    </view>
+    <view class="page-bottom">
+        <view class="load-none" wx:if="{{dataItem.length === 0}}" style="margin-top: 200rpx;">暂无数据</view>
+    </view>
+</view>

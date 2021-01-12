@@ -1,0 +1,18 @@
+.title-add{
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10rpx;
+    >.left{
+        flex: 1;
+    }
+}
+
+.delete{
+    margin: 0 40rpx 20rpx;
+    padding-top: 10px;
+    overflow: hidden;
+    >view{
+        float: right;
+        color: #A1A6B3;
+    }
+}

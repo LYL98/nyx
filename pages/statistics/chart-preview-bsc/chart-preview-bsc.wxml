@@ -1,0 +1,50 @@
+<!--pages/statistics/chart-preview/chart-preview.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<wxs src="./../statistics.wxs" module="statistics" />
+
+<view class="page">
+  <view class="chart">
+
+<!--    <view class="line-chart-header-container">-->
+<!--      <view class="line-chart-header">-->
+<!--        <view class="left-selector">-->
+<!--          {{selectedProvince}}-->
+<!--        </view>-->
+<!--        <view class="right-selector">-->
+<!--          <picker class="picker" bindchange="onOperationIndexSelect" value="{{index}}" range="{{indexNames}}">-->
+<!--            <text>{{selectedOperationIndex}}</text>-->
+<!--            <image class="c-img" src="../../../assets/img/icon-arrow-down.png" ></image>-->
+<!--          </picker>-->
+<!--        </view>-->
+<!--      </view>-->
+<!--    </view>-->
+
+    <view class="line-chart-container" style="padding-top: 20rpx;">
+      <ec-canvas id="mychart-dom-line-operation" canvas-id="mychart-line-operation" ec="{{ ecOperation }}"></ec-canvas>
+    </view>
+  </view>
+  <cover-view class="index-spec-dialog-background" wx:if="{{isShowIndexSpecDialog}}">
+    <cover-view class="index-spec-dialog">
+      <cover-view class="icon-container" bindtap="closeIndexSpecDialog">
+        <cover-image class="close-icon" src="../../../assets/img/icon_close_operation.png"></cover-image>
+      </cover-view>
+      <cover-view class="title"><cover-view>指标放大倍数</cover-view></cover-view>
+      <cover-view class="content-container">
+        <cover-view class="content-left">
+          <cover-view class="content"
+                      wx:for="{{indexNames}}"
+                      wx:for-item="indexName"
+                      wx:key="{{index}}"
+          >{{statistics.returnIndexName(indexName)}}:</cover-view>
+        </cover-view>
+        <cover-view class="content-right">
+          <cover-view class="content"
+                      wx:for="{{zoomRate}}"
+                      wx:for-item="zoom"
+                      wx:key="{{zoom}}"
+          >{{zoom}}倍</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</view>

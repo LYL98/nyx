@@ -1,0 +1,10 @@
+.content{
+    display: flex;
+    align-items: center;
+    >.left{
+        flex: 1;
+    }
+    >.right{
+        padding-left: 40rpx;
+    }
+}

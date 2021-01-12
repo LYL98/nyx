@@ -1,0 +1,47 @@
+<!--components/form/select/select.wxml-->
+<wxs src="./select.wxs" module="tools" />
+<view class="select" bind:tap="onTap">
+  <text wx:if="{{ selected_str }}">{{ tools.returnOmissionText(selected_str, 20) }}</text>
+  <text class="placeholder" wx:if="{{ !selected_str && !detail_module }}">{{ placeholder }} </text>
+  <view class="icon-right" wx:if="{{ !disabled && !detail_module }}"></view>
+</view>
+
+<view class="select-page-container{{ active ? ' active' : '' }}" bind:tap="onCancel">
+
+  <view class="select-page{{ active ? ' active' : '' }}">
+
+    <view class="tags-container" wx:if="{{ !multiple }}">
+
+      <view style="padding: 20rpx; text-align: center; width: 100%" wx:if="{{ options.length === 0 }}">
+        {{ noDataText }}
+      </view>
+
+      <text
+        class="{{ value === item.value ? 'active' : '' }}"
+        wx:for="{{ options }}"
+        wx:for-item="item"
+        wx:key="value"
+        data-item="{{ item }}"
+        catch:tap="onSelect"
+      >{{ tools.returnOmissionText(item.label, 5) }}</text>
+    </view>
+  
+    <view class="tags-container" wx:if="{{ multiple }}">
+
+      <view style="padding: 20rpx; text-align: center;" wx:if="{{ options.length === 0 }}">
+        {{ noDataText }}
+      </view>
+
+      <text
+        class="{{ tools.isSelected(value, item.value) }}"
+        wx:for="{{ options }}"
+        wx:for-item="item"
+        wx:key="value"
+        data-item="{{ item }}"
+        catch:tap="onSelect"
+      >{{ tools.returnOmissionText(item.label, 5) }}</text>
+  </view>
+  
+    <button plain hover-class="btn-submit-hover" class="btn-submit" hover-class="btn-submit-hover" catch:tap="onSubmit">确认</button>
+  </view>
+</view>

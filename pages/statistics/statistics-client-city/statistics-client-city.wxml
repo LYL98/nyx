@@ -1,0 +1,184 @@
+<!--pages/statistics/statistics-client-city/statistics-client-city.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<wxs src="./../statistics.wxs" module="statistics" />
+
+<view class="page">
+    <view class="background"></view>
+    <view class="query">
+        <view class="query-date">
+            <picker class="picker" bindchange="onFixDateSelect" value="{{index}}" range="{{fixDates}}">
+                <view class="picker-content">
+                    <text>{{currentFixDate}}</text>
+                    <image src="./../../../assets/img/icon-arrow-down.png" />
+                </view>
+            </picker>
+        </view>
+        <view class="query-date-range">
+            <image src="./../../../assets/img/icon-date.png" />
+            <picker
+                    mode="date"
+                    value="{{startDate}}"
+                    start="2000-01-01"
+                    end="2100-01-01"
+                    bindchange="onSelectStartDate">
+                <view class="picker">{{startDate}}</view>
+            </picker>
+            <view style="color: #A1A6B3;">至</view>
+            <picker
+                    mode="date"
+                    value="{{endDate}}"
+                    start="2000-01-01"
+                    end="2100-01-01"
+                    bindchange="onSelectEndDate">
+                <view class="picker">{{endDate}}</view>
+            </picker>
+        </view>
+        <view class="filter" bindtap="toggerFilterDialog">
+            <image src="./../../../assets/img/icon-filter.png" />
+            <text>筛选</text>
+        </view>
+
+        <view class="filter-dialog" wx:if="{{ dialog.isShowFilterDialog }}">
+            <view class="overlay" bindtap="toggerFilterDialog"></view>
+
+            <view class="form-container" wx:if="{{ dialog.isShowFilterDialog && !dialog.isShowZoneDialog}}">
+                <view class="form">
+                    <view class="form-item">
+                        <view class="label">
+                            <text>选择区域</text>
+                            <view class="more" catch:tap="openZoneDialog">
+                                <text class="{{ hasSelectZone !== '全部' ? 'active' : '' }}">{{hasSelectZone}}</text>
+                                <image src="./../../../assets/img/icon-right.png"></image>
+                            </view>
+                        </view>
+                        <view class="tags-container city">
+                            <text
+                                    class="{{ item.id === query.zone_id ? 'active' : '' }}"
+                                    wx:for="{{ showZoneList }}"
+                                    wx:for-item="item"
+                                    wx:key="{{ item.id }}"
+                                    data-key="zone_id"
+                                    data-value="{{ item.id }}"
+                                    data-name="{{ item.title }}"
+                                    catch:tap="changeQuery"
+                            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                        </view>
+                    </view>
+                    <view class="form-item">
+                        <view class="label">选择日期</view>
+                        <view class="picker-date-container">
+                            <view class="picker-fix-date-view">
+                                <picker class="picker" bindchange="onFixDateSelectInDialog" value="{{index}}" range="{{fixDates}}">
+                                    <view class="picker-content">
+                                        <text>{{currentFixDate}}</text>
+                                        <image src="./../../../assets/img/icon-arrow-down.png" />
+                                    </view>
+                                </picker>
+                            </view>
+                            <view class="picker-date-view">
+                                <picker
+                                        mode="date"
+                                        value="{{startDate}}"
+                                        start="2000-01-01"
+                                        end="2100-01-01"
+                                        bindchange="onSelectStartDateInDialog">
+                                    <view class="picker">{{startDate}}</view>
+                                </picker>
+                                <view style="color: #A1A6B3;">至</view>
+                                <picker
+                                        mode="date"
+                                        value="{{endDate}}"
+                                        start="2000-01-01"
+                                        end="2100-01-01"
+                                        bindchange="onSelectEndDateInDialog">
+                                    <view class="picker">{{endDate}}</view>
+                                </picker>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="operate">
+                    <view class="reset" bind:tap="resetQuery">重置</view>
+                    <view class="submit" bind:tap="submitQuery">确认</view>
+                </view>
+            </view>
+
+            <view class="city-container" wx:if="{{ dialog.isShowZoneDialog }}">
+                <view class="header">
+                    <view class="image-container" catch:tap="closeZoneDialog">
+                        <image src="./../../../assets/img/icon-left.png"></image>
+                    </view>
+                    <view class="title">
+                        <text>选择区域</text>
+                    </view>
+                </view>
+                <view class="tags-container">
+                    <text
+                            class="{{ item.id === query.zone_id ? 'active' : '' }}"
+                            wx:for="{{ zoneList }}"
+                            wx:for-item="item"
+                            wx:key="{{ item.id }}"
+                            data-key="zone_id"
+                            data-value="{{ item.id }}"
+                            data-name="{{ item.title }}"
+                            catch:tap="changeSecondQuery"
+                    >{{ tools.returnOmissionText(item.title, 5) }}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="title">{{zoneTitle}}</view>
+    <view class="list">
+        <view style="overflow-x: scroll;">
+            <view class="head-view" style="width: 1350rpx;">
+                <view class="col1-client col-text" style="width: 180rpx;">县域</view>
+                <view class="col-text" style="width: 180rpx;" bindtap="changeSort" data-sort="{{query.sort === 'gmv' ? '-gmv' : 'gmv'}}">
+                    GMV
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'gmv' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-gmv'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-gmv' && query.sort != 'gmv'}}"></image>
+                </view>
+                <view class="col-text" style="width: 220rpx;" bindtap="changeSort" data-sort="{{query.sort === 'price_per_store' ? '-price_per_store' : 'price_per_store'}}">
+                    客单价
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'price_per_store' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-price_per_store'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-price_per_store' && query.sort != 'price_per_store'}}"></image>
+                </view>
+                <view class="col-text" style="width: 220rpx;" bindtap="changeSort" data-sort="{{query.sort === 'amount_real' ? '-amount_real' : 'amount_real'}}">
+                    订单商品金额
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'amount_real' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-amount_real'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-amount_real' && query.sort != 'amount_real'}}"></image>
+                </view>
+                <view class="col-text" style="width: 220rpx;" bindtap="changeSort" data-sort="{{query.sort === 'store_num' ? '-store_num' : 'store_num'}}">
+                    下单门店数
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'store_num' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-store_num'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-store_num' && query.sort != 'store_num'}}"></image>
+                </view>
+                <view class="col-text" style="width: 160rpx;" bindtap="changeSort" data-sort="{{query.sort === 'piece_num' ? '-piece_num' : 'piece_num'}}">
+                    件数
+                    <image src="{{rankSSrc}}" wx:if="{{query.sort === 'piece_num' }}"></image>
+                    <image src="{{rankSl}}" wx:elif="{{query.sort === '-piece_num'}}"></image>
+                    <image src="{{rankSrc}}" wx:if="{{query.sort != '-piece_num' && query.sort != 'piece_num'}}"></image>
+                </view>
+                <view class="col-text" style="width: 130rpx;">占比</view>
+            </view>
+            <view bindtap="onItemClick" style="width: 1350rpx;"
+                data-city-code="{{item.city_id}}"
+                data-city-title="{{item.city_title}}"
+                class="item-view {{index % 2 === 0 ? 'highlight-row' : ''}}"
+                wx:for="{{orderItemSumData}}"
+                wx:key="index">
+                <view class="col1-client col-text" style="width: 180rpx;">{{item.city_title}}</view>
+                <view class="col-text" style="width: 220rpx;">￥{{tools.returnPrice(item.gmv)}}</view>
+                <view class="col-text" style="width: 220rpx;">￥{{tools.returnPrice(item.price_per_store)}}</view>
+                <view class="col-text" style="width: 220rpx;">￥{{tools.returnPrice(item.amount_real)}}</view>
+                <view class="col-text" style="width: 220rpx;">{{item.store_num}}</view>
+                <view class="col-text" style="width: 160rpx;">{{item.piece_num}}</view>
+                <!-- tools.returnPercentage(item.gmv / 100, total_client) -->
+                <view class="col-text" style="width: 130rpx;">{{item.ratio}}%</view>
+            </view>
+        </view>
+    </view>
+</view>

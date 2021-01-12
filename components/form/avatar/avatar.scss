@@ -1,0 +1,52 @@
+.avatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar > ul.image-container {
+  padding: 0;
+  display: flex;
+}
+
+.avatar > ul.image-container > li {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.avatar > ul.image-container > li + li {
+  margin-left: 6rpx;
+}
+
+.avatar > .image-container > li > .image {
+  width: 100rpx;
+  height: 100rpx;
+  border: 1rpx solid #f7f7f8;
+  box-sizing: border-box;
+  border-radius: 8rpx;
+}
+
+.avatar > .image-container > li > .delete-button {
+  padding: 10rpx;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  right: 0;
+}
+
+.avatar > .image-container > li > .delete-button > image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.avatar > .upload-button {
+  margin-left: 6rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #f7f7f8;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAIVJREFUSA3tl0EKwCAMBNfi6+yp/sEntt9Lyc2jmz14MEJAJKM4ikEg2O4+Xo8gjhoFzdCirHOXAitsLqzYo9hUTelSklO1Yo9iz1NdvcKoD747ZuYpBd8m1cWoCzEnt2eYxzzG9DftOOsxc0hibp6xKHAdT9XrrsTM81SH/05e2oB4lfkBJOIVYYjaJkYAAAAASUVORK5CYII=");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 30rpx 30rpx;
+}

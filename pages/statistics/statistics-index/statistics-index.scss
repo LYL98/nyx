@@ -1,0 +1,38 @@
+page {
+  height: 100%;
+}
+
+.tabs {
+  box-sizing: border-box;
+  height: 100rpx;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #FFF;
+  display: flex;
+  border: 1rpx solid #E5E5E5;
+  overflow: hidden;
+  // border-bottom: 1rpx solid #E5E5E5;
+}
+
+.tab {
+  line-height: 100rpx;
+  height: 100rpx;
+  min-width: 50%;
+  flex-grow: 1;
+  vertical-align: center;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #999;
+  transition: all .2s ease-in-out;
+  border: 1rpx solid #E5E5E5;
+}
+
+.tab.active {
+  /* background-color: #00ADE7; */
+  color: #00ADE7;
+  font-size: 40rpx;
+}

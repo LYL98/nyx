@@ -1,0 +1,41 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+    isScan bind:scan="scanInput" placeholder="搜索" fixed="{{false}}"
+    data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+    filter filterData="{{filterData}}" bind:filterChange="filterChange"/>
+<view class="margin-main item-list padding-top20">
+    <view wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff" data-index="{{index}}" bind:tap="skipDetail">
+        <view class="top">
+            <view class="title">调拨计划单：{{item.code}}</view>
+            <view class="status {{distributePlanStatusType[item.status]}}">{{distributePlanStatus[item.status]}}</view>
+        </view>
+        <view class="content">
+            <view class="left">
+                <view class="margin-bottom10 aided font-size28">调出仓：{{item.src_storehouse.title}}</view>
+                <view class="margin-bottom10 aided font-size28">调入仓：{{item.tar_storehouse.title}}</view>
+                <view class="margin-bottom10 aided font-size28">销售日期：{{item.available_date}}</view>
+                <view class="aided font-size28">预计到货：{{item.estimate_arrive_at}}</view>
+            </view>
+            <view class="right" catch:tap>
+                <navigator wx:if="{{(auth.isAdmin || auth.ItemSupDistributePlanAudit) && item.status === 'init'}}"
+                    url="/packageItem/pages/distribute/distributeAudit/distributeAudit?id={{item.id}}&type=plan">
+                    <button class="btn-primary btn-size-72">审核</button>
+                </navigator>
+                <navigator wx:if="{{(auth.isAdmin || auth.ItemSupDistributePlanModify) && item.status === 'init'}}"
+                    url="/packageItem/pages/distribute/planEdit/planEdit?id={{item.id}}" style="margin-top: 12rpx;">
+                    <button class="btn-primary btn-size-72">修改</button>
+                </navigator>
+                <navigator wx:if="{{(auth.isAdmin || auth.ItemSupDistributePlanClose) && item.status === 'init'}}"
+                    url="/packageItem/pages/distribute/distributeClose/distributeClose?id={{item.id}}&type=plan" style="margin-top: 12rpx;">
+                    <button class="btn-white btn-size-72">关闭</button>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class="load-more margin-bottom20" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{auth.isAdmin || auth.ItemSupDistributePlanAdd}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="addPlan">新增调拨计划</button>
+</view>

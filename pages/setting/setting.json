@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "设置",
+    "usingComponents": {
+      "setting-profile": "setting-profile/setting-profile",
+      "setting-operator": "setting-operator/setting-operator"
+    }
+}

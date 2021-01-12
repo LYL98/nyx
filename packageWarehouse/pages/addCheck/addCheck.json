@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "新增盘点",
+  "usingComponents": {
+    "selectWarehouse": "/components/selectWarehouse/selectWarehouse",
+    "myTextarea": "/components/myTextarea/myTextarea"
+  }
+}

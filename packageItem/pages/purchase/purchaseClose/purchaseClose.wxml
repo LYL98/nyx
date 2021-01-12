@@ -1,0 +1,12 @@
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff remark-body">
+        <myTextarea placeholder="请输入备注（必填）" maxlength="200" bind:input="inputChange" bind:focus="inputFocus"
+            data-maindata="addData" data-fieldkey="remark" value="{{addData.remark}}" focus/>
+        <view class="error-hint" wx:if="{{addData.remark_error}}">{{addData.remark_error}}</view>
+        <view class="hint font-size24">{{addData.remark.length}}/200</view>
+    </view>
+</view>
+
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认关闭</button>
+</view>

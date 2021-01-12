@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "售后订单",
+  "usingComponents": {
+    "container-aftersale-list": "/packageBusiness/pages/aftersale/aftersale-list/aftersale-list"
+  }
+}

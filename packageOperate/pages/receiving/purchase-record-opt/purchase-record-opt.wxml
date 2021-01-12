@@ -1,0 +1,23 @@
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 detail">
+        <view class="margin-bottom16 font-size32 font-w-bold">{{detail.item_code || '-'}}/{{detail.item_title || '-'}}</view>
+        <view class="font-size28 font-w-bold">采购数量：{{detail.num}}件</view>
+    </view>
+    <view class="margin-main item-list">
+        <view class="margin-main margin-bottom16">品控记录</view>
+        <view wx:for="{{detail.qa_records}}" wx:key="index" class="item bg-body-fff">
+            <view class="content">
+                <view class="left">
+                    <view class="margin-bottom10 font-size28">品控抽检：{{item.qa_sample_num ? item.qa_sample_num + '件' : '-'}}</view>
+                    <view class="margin-bottom10 font-size28">不合格数量：{{item.un_qa_num ? item.un_qa_num + '件' : '-'}}</view>
+                    <view class="margin-bottom10 font-size28" wx:if="{{item.produce_date}}">生产日期：{{item.produce_date}}</view>
+                    <view class="margin-bottom10 font-size28">保质期：{{item.shelf_life ? item.shelf_life + '天' : '-'}}</view>
+                    <view class="margin-bottom10 font-size28">库存期：{{item.stock_life ? item.stock_life + '天' : '-'}}</view>
+                    <view class="margin-bottom16 font-size28">备注：{{item.remark || '-'}}</view>
+                    <view class="margin-bottom10 font-size28 aided">品控人：{{item.creator.realname}}</view>
+                    <view class="font-size28 aided">品控时间：{{item.created}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

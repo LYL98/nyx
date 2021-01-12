@@ -1,0 +1,51 @@
+
+/*时间start*/
+.time-bg{
+  background: rgba($color: #000, $alpha: .5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+@keyframes time-bottom
+{
+  from {bottom: -1000rpx;}
+  to {bottom: 0;}
+}
+.time {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  animation: time-bottom .3s;
+  >.time-haed{
+    display: flex;
+    border-bottom: 1rpx solid #ececec;
+    >.left, >.right{
+      padding: 0 30rpx;
+      height: 84rpx;
+      line-height: 84rpx;
+      &.left{
+        color: #999;
+      }
+      &.right{
+        color: #00ADE7;
+      }
+    }
+    >.center{
+      flex: 1;
+    }
+  }
+  >picker-view{
+    height: 460rpx;
+    padding: 10rpx 0;
+    view{
+      text-align: center;
+      line-height: 34px;
+    }
+  }
+}
+/*时间end*/

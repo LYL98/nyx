@@ -1,0 +1,111 @@
+
+<view class="padding30-40-20 font-size28 line-height38 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+<view class="margin-main item-list">
+    <view class="item bg-body-fff margin-bottom20">
+        <view class="top">
+            <view class="title font-w-bold">{{detail.warehouse_title}}/{{detail.tray_code}}</view>
+        </view>
+        <view class="content padding26-20">
+            <view class="font-size30 margin-bottom10">批次：{{detail.batch_code}}</view>
+            <view class="font-size30 margin-bottom10">供应商：{{detail.supplier_title}}</view>
+            <view class="font-size30 margin-bottom10">商品过期时间：{{detail.due_date}}</view>
+            <view class="font-size30 margin-bottom10">库存过期时间：{{detail.stock_due_date}}</view>
+            <view class="font-size30 margin-bottom10">生产日期：{{detail.produce_date || '-'}}</view>
+             <view class="font-size30 margin-bottom10">保质期：{{detail.shelf_life ? detail.shelf_life + '天' : '-'}}</view>
+            <view class="font-size30 margin-bottom36">入库时间：{{detail.created}}</view>
+            <view class="font-size32 font-w-bold">库存：{{detail.num}}件</view>
+        </view>
+    </view>
+</view>
+<view class="padding30-40-20 font-size28 line-height38 font-w-bold">品控信息</view>
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+    <picker range="{{rangeData}}" range-key="value" bindchange="changeOrderType">
+        <view class="item">
+                <view class="title">品控类型</view>
+                <view class="input">
+                    <view class="select">
+                        <view class="content" wx:if="{{addData.qa_type}}">
+                            {{qaTypes[addData.qa_type]}}
+                        </view>
+                        <view class="content placeholder" wx:else>请选择品控类型</view>
+                        <image class="icon d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                    </view>
+                    <view class="error-hint" wx:if="{{addData.qa_type_error}}">{{addData.qa_type_error}}</view>
+                </view>
+        </view>
+    </picker>
+    <!-- 日常品控 -->
+    <block wx:if="{{addData.qa_type === 'daily_qa'}}">
+        <view class="item">
+            <view class="title">抽检数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus" type="number" data-maindata="addData" data-fieldkey="qa_sample_num" value="{{addData.qa_sample_num}}" />
+                <view class="error-hint" wx:if="{{addData.qa_sample_num_error}}">
+                    {{addData.qa_sample_num_error}}
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <view class="title">不合格数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus" type="number" data-maindata="addData" data-fieldkey="un_qa_num" value="{{addData.un_qa_num}}" />
+                <view class="error-hint" wx:if="{{addData.un_qa_num_error}}">
+                    {{addData.un_qa_num_error}}
+                </view>
+            </view>
+        </view>
+    </block>
+
+<!-- 库期调整 -->
+    <block wx:if="{{addData.qa_type === 'due_date_modify'}}">
+        <view class="item" wx:if="{{detail.produce_date}}" bind:tap="showSelectCalendar" data-type="produce_date">
+            <view class="title">生产日期</view>
+            <view class="input">
+                <view class="select">
+                    <view class="content" wx:if="{{addData.produce_date}}">{{addData.produce_date}}</view>
+                    <view class="content placeholder" wx:else>请选择生产日期</view>
+                    <image class="icon d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                </view>
+                <view class="error-hint" wx:if="{{addData.produce_date_error}}">{{addData.produce_date_error}}</view>
+            </view>
+        </view>
+         <view class="item {{detail.produce_date ? 'disabled' : ''}}">
+            <view class="title">保质期(天)</view>
+            <view class="input">
+                <input placeholder="{{shelf_life_ph}}天" placeholder-class="list-input-placeholder" bindinput="inputDateNum" bindfocus="inputFocus"
+                   disabled="{{detail.produce_date}}" type="number" data-maindata="addData" data-fieldkey="new_shelf_life" value="{{addData.new_shelf_life}}"/>
+                <view class="error-hint" wx:if="{{addData.new_shelf_life_error}}">{{addData.new_shelf_life_error}}</view>
+            </view>
+        </view>
+        <view class="item {{detail.produce_date ? 'disabled' : ''}}">
+            <view class="title">库存期(天)</view>
+            <view class="input">
+                <input placeholder="{{stock_life_ph}}天" placeholder-class="list-input-placeholder" bindinput="inputDateNum" bindfocus="inputFocus"
+                   disabled="{{detail.produce_date}}" type="number" data-maindata="addData" data-fieldkey="new_stock_life" value="{{addData.new_stock_life}}"/>
+                <view class="error-hint" wx:if="{{addData.new_stock_life_error}}">{{addData.new_stock_life_error}}</view>
+            </view>
+        </view>
+        <view class="item disabled">
+            <view class="title">新商品过期时间</view>
+            <view class="input">{{newShelfDueDate || detail.due_date}}</view>
+        </view>
+        <view class="item disabled">
+            <view class="title">新库存过期时间</view>
+            <view class="input">{{newStockDueDate || detail.stock_due_date}}</view>
+        </view>
+    </block>
+    
+
+</view>
+
+<view class="margin-main bg-body-fff remark-body margin-bottom20">
+    <myTextarea placeholder="请输入备注（选填）" maxlength="50" bind:input="inputChange" bind:focus="inputFocus" data-maindata="addData" data-fieldkey="remark" value="{{addData.remark}}" />
+    <view class="error-hint" wx:if="{{addData.remark_error}}">{{addData.remark_error}}</view>
+    <view class="hint font-size24">{{addData.remark.length}}/50</view>
+</view>
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">
+        确认
+    </button>
+</view>
+<selectCalendar value="{{dateTemp}}" bind:cancel="cancelSelectCalendar" bind:change="selectCalendar" wx:if="{{isShowCalendar}}"/>

@@ -1,0 +1,61 @@
+/* pages/merchant/merchant-modify-detail/merchant-modify-detail.wxss */
+.page-merchant-modify-detail {
+    background-color: #f7f7f8;
+    height: 100%;
+    padding: 20rpx;
+    font-size: 28rpx;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view {
+    margin-top: 20rpx;
+    padding-left: 20rpx;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item {
+    height: 110rpx;
+    padding-right: 20rpx;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item + .form-item {
+    border-top: 1rpx solid #e5e5e5;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item > .form-item-error {
+    font-size: 20rpx;
+    color: #F26A6A;
+    position: absolute;
+    bottom: 3rpx;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item > .form-item-content {
+    padding-top: 35rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item > .form-item-content > input {
+    text-align: right;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item.address > .form-item-content > input {
+    width: 480rpx;
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item > .form-item-content .picker-is-post-pay {
+    display: flex;
+    align-items: center;
+    color: rgb(140, 140, 140);
+}
+
+.page-merchant-modify-detail > .form > .form-area > .form-area-view > .form-item > .form-item-content .picker-is-post-pay > image {
+    margin-left: 20rpx;
+    width: 13rpx;
+    height: 24rpx;
+}
+
+.page-merchant-modify-detail > .btn-submit {
+    margin-top: 100rpx;
+}
+

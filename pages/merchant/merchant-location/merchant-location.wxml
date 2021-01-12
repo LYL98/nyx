@@ -1,0 +1,198 @@
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+<view class="merchant-location">
+    <view class="options">
+        <block wx:if="{{isShowCircum}}">
+            <view class="item close" hover-class="link-hover" bind:tap="hideCircum">
+                <image src="./../../../assets/img/icon_close_operation.png" style="width: 22rpx; height: 22rpx;" />
+            </view>
+            <view class="item" style="text-align: left;">周边门店</view>
+            <view class="search" hover-class="link-hover" data-isfocus="{{false}}" bind:tap="showSearchResult">
+                <image src="./../../../assets/img/icon-arrow-down.png" style="width: 34rpx; height: 34rpx;" />
+            </view>
+        </block>
+        <block wx:else>
+            <view class="item" bind:tap="openProvinceDialog">
+                <text>{{tools.returnOmissionText(selectedProvince.title)}}</text>
+                <image src="./../../../assets/img/icon-bottom.png" style="width: 18rpx; height: 11rpx;" />
+            </view>
+            <view class="item {{!query.province_code && 'disabled'}}" bind:tap="openZoneDialog">
+                <text>{{tools.returnOmissionText(selectedZone.title)}}</text>
+                <image src="./../../../assets/img/icon-bottom.png" style="width: 18rpx; height: 11rpx;" />
+            </view>
+            <view class="item {{!query.zone_id && 'disabled'}}" bind:tap="openCityDialog">
+                <text>{{tools.returnOmissionText(selectedCity.title)}}</text>
+                <image src="./../../../assets/img/icon-bottom.png" style="width: 18rpx; height: 11rpx;" />
+            </view>
+            <view class="search" hover-class="link-hover" data-isfocus="{{true}}" bind:tap="showSearchResult">
+                <image src="./../../../assets/img/icon-search.png" style="width: 34rpx; height: 35rpx;" />
+            </view>
+        </block>
+    </view>
+
+    <view class="map">
+        <map
+            id="map"
+            longitude="{{ location.lng }}"
+            latitude="{{ location.lat }}"
+            scale="{{ scale }}"
+            markers="{{ markers }}"
+            include-points="{{ showType === 'store' ? [] : markers }}"
+            bindcallouttap="makertap"
+            bindmarkertap="makertap"
+            bindtap="maptap"
+            show-location="{{isShowCircum}}"
+        >
+        </map>
+    </view>
+
+    <view class="location-mark" hover-class="link-hover" bind:tap="getLocation" style="bottom: {{showType === 'store' && currentIndex >= 0 ? 270 : 60}}rpx;">
+        <view class="loop">
+            <view class="dot"></view>
+        </view>
+    </view>
+
+    <view class="store-detail-view" wx:if="{{showType === 'store' && currentIndex >= 0}}">
+        <view class="store-detail">
+            <view class="title">
+                <view class="left">{{storeData[currentIndex].title}}</view>
+                <view class="right nav"
+                    wx:if="{{storeData[currentIndex].geo && storeData[currentIndex].geo.lng && storeData[currentIndex].geo.lat}}"
+                    data-item="{{storeData[currentIndex]}}"
+                    bindtap="openLocation"
+                >导航</view>
+                <view class="right" wx:else>无定位</view>
+            </view>
+            <view class="city" wx:if="{{storeData[currentIndex].geo.city_title}}">县域：{{storeData[currentIndex].geo.city_title}}</view>
+            <view class="linkman">联系人：{{storeData[currentIndex].linkman}}（{{storeData[currentIndex].phone}}）</view>
+            <view class="address">地址：{{storeData[currentIndex].address}}</view>
+        </view>
+    </view>
+</view>
+
+<!--搜索结果、周边结果-->
+<view class="search-query-condition" wx:if="{{query.condition}}" data-isfocus="{{false}}" bind:tap="showSearchResult">
+    <view class="left" hover-class="link-active">"{{query.condition}}"的搜索结果({{storeData.length}})</view>
+    <view class="right" hover-class="link-active" catch:tap="clearQueryCondition">
+        <image src="./../../../assets/img/icon_close_operation.png" style="width: 22rpx; height: 22rpx;" />
+    </view>
+</view>
+<view class="search-result-body" wx:if="{{isShowSearchResult}}" bind:tap="hideSearchResult">
+    <view class="search-result" catch:tap>
+        <!--周边-->
+        <view class="top" wx:if="{{isShowCircum}}">
+            <view class="item close" hover-class="link-hover" bind:tap="hideSearchResult">
+                <image src="./../../../assets/img/icon_close_operation.png" style="width: 22rpx; height: 22rpx;" />
+            </view>
+            <view class="item" style="text-align: left;">周边门店列表</view>
+        </view>
+        <!--搜索-->
+        <view class="top" wx:else>
+            <view class="item close" hover-class="link-hover" bind:tap="hideSearchResult">
+                <image src="./../../../assets/img/icon_close_operation.png" style="width: 22rpx; height: 22rpx;" />
+            </view>
+            <view class="item search">
+                <view class="input">
+                    <image src="./../../../assets/img/icon-search.png" style="width: 34rpx; height: 35rpx;" />
+                    <input
+                        placeholder="搜索门店名称"
+                        placeholder-class="search-input-placeholder"
+                        focus="{{inputFocus}}"
+                        confirm-type="search"
+                        value="{{query.condition}}"
+                        bindconfirm="inputConfirm"
+                    />
+                </view>
+            </view>
+        </view>
+
+        <view class="bottom">
+            <block wx:if="{{storeData.length > 0}}">
+                <view class="store-detail" hover-class="link-hover" wx:for="{{storeData}}" wx:key="index" data-index="{{index}}" bind:tap="clickSearchItem">
+                    <view class="title">
+                        <view class="left">{{item.title}}</view>
+                        <view class="right nav"
+                            wx:if="{{item.geo && item.geo.lng && item.geo.lat}}"
+                            data-item="{{item}}"
+                            catch:tap="openLocation"
+                        >导航</view>
+                        <view class="right" wx:else>无定位</view>
+                    </view>
+                    <view class="city" wx:if="{{item.geo.city_title}}">县域：{{item.geo.city_title}}</view>
+                    <view class="linkman">联系人：{{item.linkman}}（{{item.phone}}）</view>
+                    <view class="address">地址：{{item.address}}</view>
+                </view>
+                <view class="hint" wx:if="{{isShowCircum}}">已加载所有</view>
+                <view class="hint" wx:else>如未找到您满意的结果，请优化搜索词~</view>
+            </block>
+            <view class="not-data" wx:else>暂无数据~</view>
+        </view>
+    </view>
+</view>
+
+<!--条件筛选-->
+<view class="filter-dialog" wx:if="{{ dialog.isShowProvinceDialog}}" bind:tap="closeProvinceDialog">
+    <view class="city-container" wx:if="{{ dialog.isShowProvinceDialog }}" catch:tap>
+        <view class="header">
+            <view class="image" hover-class="link-hover" bind:tap="closeProvinceDialog">
+                <image src="./../../../assets/img/icon-left.png"></image>
+            </view>
+            <view class="title">选择区域</view>
+        </view>
+        <view class="tags-container">
+            <text
+                class="{{ item.code === query.province_code ? 'active' : '' }}"
+                wx:for="{{ provinceList }}"
+                wx:key="index"
+                data-key="province_code"
+                data-value="{{ item.code }}"
+                data-item="{{ item }}"
+                catch:tap="changeQuery"
+            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+        </view>
+    </view>
+</view>
+<view class="filter-dialog" wx:if="{{dialog.isShowZoneDialog}}" bind:tap="closeZoneDialog">
+    <view class="city-container" wx:if="{{ dialog.isShowZoneDialog }}" catch:tap>
+        <view class="header">
+            <view class="image" hover-class="link-hover" bind:tap="closeZoneDialog">
+                <image src="./../../../assets/img/icon-left.png"></image>
+            </view>
+            <view class="title">选择片区</view>
+        </view>
+        <view class="tags-container">
+            <text
+                class="{{ item.id === query.zone_id ? 'active' : '' }}"
+                wx:for="{{ zoneList }}"
+                wx:key="index"
+                data-key="zone_id"
+                data-value="{{ item.id }}"
+                data-item="{{ item }}"
+                catch:tap="changeQuery"
+            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+        </view>
+    </view>
+</view>
+<view class="filter-dialog" wx:if="{{dialog.isShowCityDialog }}" bind:tap="closeCityDialog">
+    <view class="city-container" wx:if="{{ dialog.isShowCityDialog }}" catch:tap>
+        <view class="header">
+            <view class="image" hover-class="link-hover" bind:tap="closeCityDialog">
+                <image src="./../../../assets/img/icon-left.png"></image>
+            </view>
+            <view class="title">选择县域</view>
+        </view>
+        <view class="tags-container">
+            <text
+                class="{{ item.id === query.city_id ? 'active' : '' }}"
+                wx:for="{{ cityList }}"
+                wx:key="index"
+                data-key="city_id"
+                data-value="{{ item.id }}"
+                data-item="{{ item }}"
+                catch:tap="changeQuery"
+            >{{ tools.returnOmissionText(item.title, 5) }}</text>
+        </view>
+    </view>
+</view>
+
+<!--打开设置-->
+<openSetting wx:if="{{isShowSetting}}" warn="{{settingWarn}}" />

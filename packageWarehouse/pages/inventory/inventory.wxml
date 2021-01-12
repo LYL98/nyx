@@ -1,0 +1,55 @@
+<wxs src="./../../../utils/tools.wxs" module="tools" />
+<searchInput value="{{query.condition}}" bind:confirm="searchInputConfirm"
+    showAdd="{{operate === 'check'}}" bind:getAdd="goToAdd"
+    isScan bind:scan="scanInput" placeholder="搜索"
+    data-maindata="query" data-fieldkey="condition" bind:input="inputChange"
+    filter filterData="{{filterData}}" bind:filterItemChange="filterItemChange" bind:filterChange="filterChange">
+
+    <view slot="filter-slot" class="slot-view">
+        <view class="title">库龄(天)</view>
+        <picker mode="multiSelector" value="{{values}}" range="{{stockAgeList}}" bindchange="selectStockAge"  >
+            <view class="date" hover-class="link-hover">
+                <input class="left" placeholder="请选择最小天数和最大天数" value="{{query.stock_age}}">{{query.stock_age}}</input>
+                <view class="right" catchtap="closeStockAge" wx:if="{{query.stock_age}}">
+                    <image class="d-b" src="./../../../assets/img/icon-delete.png" />
+                </view>
+            </view>
+        </picker>
+    </view>
+</searchInput>
+<view class="padding30-40-20 font-size28 font-w-bold" wx:if="{{dataItem.num > 0}}">总共{{dataItem.num}}个SKU</view>
+<view class="margin-main margin-bottom20">
+    <!--出库计划-->
+    <block wx:if="{{operate === 'out_storage_plan'}}">
+        <navigator wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff padding26-20 margin-bottom20"
+            url="/packageWarehouse/pages/inventoryItem/inventoryItem?sub_item_id={{item.item_id}}&c_item_id={{item.p_item.c_item_id}}&operate={{operate}}">
+            <view class="left">
+                <view class="title font-size32 font-w-bold margin-bottom16">{{item.item_code}}/{{item.item_title}}</view>
+                <view class="num font-size28">应出库：{{item.num}}件，已出库：<block wx:if="{{item.num_out}}">{{item.num_out}}件</block><block wx:else>-</block></view>
+            </view>
+            <view class="right">
+                <image class="d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+            </view>
+        </navigator>
+    </block>
+    <!--其它-->
+    <block wx:else>
+        <navigator wx:for="{{dataItem.items}}" wx:key="index" class="item bg-body-fff padding26-20 margin-bottom20"
+            url="/packageWarehouse/pages/inventoryItem/inventoryItem?item_code={{item.p_item.code}}&c_item_id={{item.p_item.c_item_id}}&operate={{operate}}">
+            <view class="left">
+                <view class="title font-size32 font-w-bold margin-bottom16">{{item.p_item.code}}/{{item.p_item.title}}</view>
+                <view class="num font-size28">库存：{{item.stock_num}}件</view>
+            </view>
+            <view class="right">
+                <image class="d-b" src="./../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+            </view>
+        </navigator>
+    </block>
+    <view class="load-more" wx:if="{{dataItem.num > 0}}">{{tools.returnMore(dataItem.num, query, loading)}}</view>
+    <defaultPage wx:else currentPage="default" appError="{{appError}}" bind:retry="initGetData" loading="{{loading}}"></defaultPage>
+</view>
+
+<view class="bottom-btn" wx:if="{{operate}}">
+    <button class="margin-main btn-primary btn-size-88" bind:tap="handleScan">扫码{{operates[operate].title}}</button>
+</view>
+

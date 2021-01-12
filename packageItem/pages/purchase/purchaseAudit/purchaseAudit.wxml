@@ -1,0 +1,25 @@
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <picker range="{{auditStatusList}}" range-key="value" bindchange="selectAuditStatus">
+            <view class="item">
+                <view class="title">类型</view>
+                <view class="input">
+                    <view class="select">
+                        <view class="content">{{auditStatus[addData.audit_status]}}</view>
+                        <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                    </view>
+                </view>
+            </view>
+        </picker>
+    </view>
+</view>
+<view class="margin-main bg-body-fff remark-body">
+    <myTextarea placeholder="请输入备注" maxlength="200" bind:input="inputChange" bind:focus="inputFocus"
+        data-maindata="addData" data-fieldkey="remark" value="{{addData.remark}}"/>
+    <view class="error-hint" wx:if="{{addData.remark_error}}">{{addData.remark_error}}</view>
+    <view class="hint font-size24">{{addData.remark.length}}/200</view>
+</view>
+
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认审核</button>
+</view>

@@ -1,0 +1,13 @@
+.content{
+    display: flex;
+    align-items: center;
+    >.left{
+        flex: 1;
+    }
+    >.right{
+        padding-left: 20rpx;
+        button {
+            margin-bottom: 10rpx;
+        }
+    }
+}

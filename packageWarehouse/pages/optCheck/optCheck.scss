@@ -1,0 +1,24 @@
+.title-add{
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10rpx;
+    >.left{
+        flex: 1;
+        >view{
+            display: inline-block;
+            &.title{
+                margin-right: 20rpx;
+            }
+        }
+    }
+}
+
+.delete{
+    margin: 0 40rpx 20rpx;
+    padding-top: 10px;
+    overflow: hidden;
+    >view{
+        float: right;
+        color: #A1A6B3;
+    }
+}

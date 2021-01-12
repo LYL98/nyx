@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "门店地图",
+  "usingComponents": {
+    "openSetting": "/components/openSetting/openSetting"
+  }
+}

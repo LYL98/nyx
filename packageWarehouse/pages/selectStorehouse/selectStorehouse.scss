@@ -1,0 +1,23 @@
+page{
+  background: #fff;
+}
+.page-storehouse {
+  padding: 50rpx 0 0 40rpx;
+  > .storehouse-list {
+    display: flex;
+    flex-wrap: wrap;
+    > button {
+      width: 210rpx;
+      margin: 20rpx 20rpx 0 0;
+      background: #fff;
+      color: #A1A6B3;
+      padding: 0 10rpx;
+      &.selected {
+        color: #00ADE7;
+        &::after{
+          border: 1px solid #00ADE7;
+        }
+      }
+    }
+  }
+}

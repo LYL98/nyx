@@ -1,0 +1,17 @@
+.detail{
+    padding: 26rpx 20rpx;
+}
+.content{
+    display: flex;
+    align-items: center;
+    padding: 26rpx 20rpx;
+    >.left{
+        flex: 1;
+        >.aided{
+            color: #A1A6B3;
+        }
+    }
+    >.right{
+        padding-left: 40rpx;
+    }
+}

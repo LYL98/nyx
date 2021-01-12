@@ -1,0 +1,244 @@
+<!--pages/order/order-list/order-list.wxml-->
+
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<wxs src="./../order.wxs" module="order" />
+<view class="page-order-list">
+  <view style="height: 120rpx;"></view>
+  <view class="query">
+    <view class="search" bind:tap="gotoSearch">
+      <image src="./../../../../assets/img/icon-search.png"></image>
+      <text>搜索</text>
+    </view>
+    <view class="filter" bind:tap="toggerFilterDialog">
+      <image src="./../../../../assets/img/icon-filter.png"></image>
+      <text>筛选</text>
+    </view>
+    <view class="filter-dialog" wx:if="{{ dialog.isShowFilterDialog }}">
+      <view class="left-sidebar" bind:tap="toggerFilterDialog"></view>
+      <view class="form-container" wx:if="{{ dialog.isShowFilterDialog && !dialog.isShowCityDialog }}">
+
+        <view class="form">
+
+          <view class="form-item">
+            <view class="label">订单状态</view>
+            <view class="tags-container">
+              <text
+                  class="{{ query.status === 'wait_confirm' ? 'active' : '' }}"
+                  data-key="status"
+                  data-value="wait_confirm"
+                  catch:tap="changeQuery"
+              >待确认</text>
+              <text
+                  class="{{ (query.status === 'confirmed' || query.status === 'assigned' || query.status === 'wait_delivery') ? 'active' : '' }}"
+                  data-key="status"
+                  data-value="wait_delivery"
+                  catch:tap="changeQuery"
+              >待发货</text>
+              <text
+                  class="{{ query.status === 'deliveried' ? 'active' : '' }}"
+                  data-key="status"
+                  data-value="deliveried"
+                  catch:tap="changeQuery"
+              >待收货</text>
+              <text
+                  class="{{ (query.status === 'received' || query.status === 'order_done') ? 'active' : '' }}"
+                  data-key="status"
+                  data-value="order_done"
+                  catch:tap="changeQuery"
+              >已完成</text>
+              <text
+                  class="{{ query.status === 'order_canceled' ? 'active' : '' }}"
+                  data-key="status"
+                  data-value="order_canceled"
+                  catch:tap="changeQuery"
+              >已取消</text>
+            </view>
+          </view>
+
+          <view class="form-item">
+            <view class="label">付款状态</view>
+            <view class="tags-container">
+              <text
+                  class="{{ query.pay_status === 'done' ? 'active' : '' }}"
+                  data-key="pay_status"
+                  data-value="done"
+                  catch:tap="changeQuery"
+              >已付清</text>
+              <text
+                  class="{{ query.pay_status === 'wait_complete' ? 'active' : '' }}"
+                  data-key="pay_status"
+                  data-value="wait_complete"
+                  catch:tap="changeQuery"
+              >未付清</text>
+            </view>
+          </view>
+
+          <view class="form-item">
+            <view class="label">订单类型</view>
+            <view class="tags-container">
+              <text
+                  class="{{ query.order_type === 'normal' ? 'active' : '' }}"
+                  data-key="order_type"
+                  data-value="normal"
+                  catch:tap="changeQuery"
+              >普通订单</text>
+              <text
+                  class="{{ query.order_type === 'presale' ? 'active' : '' }}"
+                  data-key="order_type"
+                  data-value="presale"
+                  catch:tap="changeQuery"
+              >预售订单</text>
+            </view>
+          </view>
+
+          <view class="form-item">
+            <view class="label">订单性质</view>
+            <view class="tags-container">
+              <text
+                  class="{{ query.to_be_canceled == '1' ? 'active' : '' }}"
+                  data-key="to_be_canceled"
+                  data-value="1"
+                  catch:tap="changeQuery"
+              >现付订单</text>
+              <text
+                  class="{{ query.to_be_canceled == '0' ? 'active' : '' }}"
+                  data-key="to_be_canceled"
+                  data-value="0"
+                  catch:tap="changeQuery"
+              >后付订单</text>
+            </view>
+          </view>
+
+          <view class="form-item">
+            <view class="label">
+              <text>区域</text>
+              <view class="more" wx:if="{{ provinceList.length > 6 }}">
+                <text wx:if="{{ !selectedProvince.code }}">全部</text>
+              </view>
+            </view>
+            <view class="tags-container city">
+              <text
+                      class="{{ item.code === query.province_code ? 'active' : '' }}"
+                      wx:for="{{ showProvinceList }}"
+                      wx:key="index"
+                      data-key="province_code"
+                      data-value="{{ item.code }}"
+                      data-item="{{ item }}"
+                      catch:tap="changeQuery"
+              >{{ tools.returnOmissionText(item.title, 5) }}</text>
+            </view>
+          </view>
+
+          <view class="form-item" wx:if="{{ query.province_code != '' }}">
+            <view class="label">
+              <text>县域</text>
+              <view class="more" catch:tap="openCityDialog" wx:if="{{ cityList.length > 6 }}">
+                <text wx:if="{{ !selectedCity.id }}">全部</text>
+                <text wx:if="{{ selectedCity.id }}" style="color: #00ADE7;">已选 {{ tools.returnOmissionText(selectedCity.title, 5) }}</text>
+                <image src="./../../../../assets/img/icon-right.png"></image>
+              </view>
+            </view>
+            <view class="tags-container city">
+              <text
+                  class="{{ item.id === query.city_id ? 'active' : '' }}"
+                  wx:for="{{ showCityList }}"
+                  wx:key="index"
+                  data-key="city_id"
+                  data-value="{{ item.id }}"
+                  data-item="{{ item }}"
+                  catch:tap="changeQuery"
+              >{{ tools.returnOmissionText(item.title, 5) }}</text>
+            </view>
+          </view>
+
+          <view class="form-item">
+            <view class="label">创建时间</view>
+            <picker
+                mode="date"
+                bind:change="changePicker"
+            >
+              <view class="picker-date-view">
+                <text bind:tap="changeBeginDate">{{ query.begin_date || '开始日期' }}</text>
+                <text class="range">至</text>
+                <text bind:tap="changeEndDate">{{ query.end_date || '结束日期' }}</text>
+              </view>
+            </picker>
+          </view>
+
+        </view>
+
+        <view class="operate">
+          <view class="reset" bind:tap="resetQuery">重置</view>
+          <view class="submit" bind:tap="submitQuery">确认</view>
+        </view>
+
+      </view>
+      <view class="city-container" wx:if="{{ dialog.isShowCityDialog }}">
+        <view class="header">
+          <image src="./../../../../assets/img/icon-left.png" catch:tap="closeCityDialog" style="padding: 20rpx; margin-left: -20rpx;"></image>
+          <view class="title">
+            <text>选择县域</text>
+          </view>
+        </view>
+        <view class="tags-container">
+          <text
+              class="{{ item.id === query.city_id ? 'active' : '' }}"
+              wx:for="{{ cityList }}"
+              wx:for-item="item"
+              wx:key="index"
+              data-key="city_id"
+              data-value="{{ item.id }}"
+              data-item="{{ item }}"
+              catch:tap="changeQuery"
+          >{{ tools.returnOmissionText(item.title, 5) }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="scroll-list-header">总共{{ listItem.num }}个订单</view>
+
+  <view class="scroll-list-item">
+    <view
+        class="item"
+        wx:for="{{ listItem.items }}"
+        data-item="{{ item }}"
+        wx:key="index"
+        bind:tap="showItemDetail"
+    >
+      <view class="item-title">
+        <view>
+          <text>{{ index + 1 }}.</text>
+          <text>订单号: {{ item.code }}</text>
+        </view>
+        <text class="{{ 'order-status ' + order.returnOrderStatusClassName(item.status) }}">{{ order.returnOrderStatus(item.status) }}</text>
+      </view>
+
+      <view class="item-description">
+        <view class="header">
+          <view class="store-title">
+            {{ item.store_title }}
+            <text class="icon is-presale" wx:if="{{ item.is_presale }}">预</text>
+          </view>
+          <view class="pay">
+            <text class="amount">￥{{ tools.returnPrice(item.order_price) }}</text>
+            <text class="status" wx:if="{{ item.pay_status !== 'done' }}">{{ order.returnPayStatus(item.pay_status) }}</text>
+          </view>
+        </view>
+        <view class="footer">
+          <view class="city">
+            <text>县域: </text>
+            <text>{{ tools.returnOmissionText(item.city_title, 6) }}</text>
+          </view>
+          <text class="created">{{ item.created }}</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="list-footer">
+    <text>{{tools.returnMore(listItem.num, query)}}</text>
+  </view>
+
+</view>

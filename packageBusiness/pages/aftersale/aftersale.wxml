@@ -1,0 +1,11 @@
+<view class="page-order" wx:if="{{ auth.isAdmin || auth.OrderAfterSale }}">
+  <container-aftersale-list
+      id="aftersale-list"
+      condition="{{ search.aftersale.condition }}"
+      item="{{ search.aftersale.item }}"
+      auth="{{ auth }}"
+      province="{{ province }}"
+      province_code="{{ province_code}}"
+      opt_type="{{opt_type}}"
+  ></container-aftersale-list>
+</view>

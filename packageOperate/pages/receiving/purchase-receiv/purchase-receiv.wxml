@@ -1,0 +1,209 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+
+<view class="padding-top20">
+    <view class="margin-main bg-body-fff margin-bottom20 detail">
+        <view class="margin-bottom10 font-size32 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+        <view class="margin-bottom10 aided font-size28">供应商：{{detail.supplier.title}}</view>
+        <view class="margin-bottom10 aided font-size28">采购员：{{detail.buyer_name}}</view>
+        <view class="margin-bottom10 aided font-size28">采购日期：{{detail.order_date}}</view>
+        <view class="margin-bottom36 aided font-size28">预计到货：{{detail.estimate_arrive_at}}</view>
+        <view class="font-size28 font-w-bold">采购数量：{{detail.num}}件</view>
+        <view class="font-size28 num" wx:if="{{detail.num_in > 0}}">可收货数量：{{detail.num - detail.num_in}}件</view>
+    </view>
+
+    <block wx:if="{{detail.qa_records.length > 0}}">
+        <view class="margin-main margin-bottom16 title-add">
+            <view class="left">品控信息</view>
+            <navigator class="right" url="/packageOperate/pages/receiving/purchase-record-opt/purchase-record-opt?id={{detail.id}}">查看全部品控记录</navigator>
+        </view>
+        <view class="margin-main bg-body-fff margin-bottom20 list-input">
+            <view class="item disabled">
+                <view class="title">品控抽检</view>
+                <view class="input">
+                    {{
+                       detail.qa_records[detail.qa_records.length - 1].qa_sample_num ?
+                       detail.qa_records[detail.qa_records.length - 1].qa_sample_num + '件' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">不合格数量</view>
+                <view class="input">
+                    {{
+                       detail.qa_records[detail.qa_records.length - 1].un_qa_num ?
+                       detail.qa_records[detail.qa_records.length - 1].un_qa_num + '件' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled" wx:if="{{detail.qa_records[detail.qa_records.length - 1].produce_date}}">
+                <view class="title">生产日期</view>
+                <view class="input">
+                    {{detail.qa_records[detail.qa_records.length - 1].produce_date}}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">保质期</view>
+                <view class="input">
+                    {{
+                        detail.qa_records[detail.qa_records.length - 1].shelf_life ?
+                        detail.qa_records[detail.qa_records.length - 1].shelf_life + '天' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">库存期</view>
+                <view class="input">
+                    {{
+                        detail.qa_records[detail.qa_records.length - 1].stock_life ? 
+                        detail.qa_records[detail.qa_records.length - 1].stock_life + '天' : '-'
+                    }}
+                </view>
+            </view>
+            <view class="item disabled">
+                <view class="title">备注</view>
+                <view class="input">{{detail.qa_records[detail.qa_records.length - 1].remark || '-'}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">品控人</view>
+                <view class="input">{{detail.qa_records[detail.qa_records.length - 1].creator.realname}}</view>
+            </view>
+            <view class="item disabled">
+                <view class="title">品控时间</view>
+                <view class="input">{{detail.qa_records[detail.qa_records.length - 1].created}}</view>
+            </view>
+        </view>
+    </block>
+
+    <view class="margin-main margin-bottom16 title-add">
+        <view class="left">收货信息</view>
+        <navigator
+            wx:if="{{detail.accepts.length > 0}}"
+            class="right"
+            url="/packageOperate/pages/receiving/purchase-record-receiv/purchase-record-receiv?id={{detail.id}}"
+        >查看全部收货记录</navigator>
+    </view>
+
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item">
+            <view class="title">到货数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入到货数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="number" data-maindata="inventoryData" data-fieldkey="num_arrive" value="{{inventoryData.num_arrive}}"/>
+                <view class="error-hint" wx:if="{{inventoryData.num_arrive_error}}">{{inventoryData.num_arrive_error}}</view>
+            </view>
+        </view>
+        <view class="item">
+            <view class="title">收货数量(件)</view>
+            <view class="input">
+                <input placeholder="请输入收货数量" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="number" data-maindata="inventoryData" data-fieldkey="num_accept" value="{{inventoryData.num_accept}}"/>
+                <view class="error-hint" wx:if="{{inventoryData.num_accept_error}}">{{inventoryData.num_accept_error}}</view>
+            </view>
+        </view>
+        <view class="item disabled" wx:if="{{detail.purchase_place_type === 'origin'}}">
+                <view class="title">不合格数量(件)</view>
+                <view class="input">{{inventoryData.num_arrive - inventoryData.num_accept}}</view>
+        </view>
+    </view>
+
+    <view class="margin-main bg-body-fff remark-body margin-bottom20">
+        <myTextarea placeholder="请输入备注" maxlength="50" bind:input="inputChange" bind:focus="inputFocus"
+            data-maindata="inventoryData" data-fieldkey="remark" value="{{inventoryData.remark}}"/>
+        <view class="error-hint" wx:if="{{inventoryData.remark_error}}">{{inventoryData.remark_error}}</view>
+        <view class="hint font-size24">{{inventoryData.remark.length}}/50</view>
+    </view>
+
+    <view class="margin-main margin-bottom16">物流/存储信息</view>
+    <view class="margin-main bg-body-fff margin-bottom20 list-input">
+        <view class="item">
+                    <view class="title">产品尺寸(长: mm)</view>
+                    <view class="input">
+                        <input placeholder="请输入长度" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="length" value="{{inventoryData.length}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.length_error}}">{{inventoryData.length_error}}</view>
+                    </view>
+        </view>
+        <view class="item">
+                    <view class="title">产品尺寸(宽: mm)</view>
+                    <view class="input">
+                        <input placeholder="请输入宽度" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="width" value="{{inventoryData.width}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.width_error}}">{{inventoryData.width_error}}</view>
+                    </view>
+        </view>
+        <view class="item">
+                    <view class="title">产品尺寸(高: mm)</view>
+                    <view class="input">
+                        <input placeholder="请输入高度" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="height" value="{{inventoryData.height}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.height_error}}">{{inventoryData.height_error}}</view>
+                    </view>
+        </view>
+        <picker range="{{storageData}}" range-key="value" bindchange="selectStorageData">
+            <view class="item">
+                        <view class="title">存储环境(商品在仓库的存储条件)</view>
+                        <view class="input">
+                            <view class="select">
+                                <view class="content" wx:if="{{inventoryData.store_env}}">{{storageType[inventoryData.store_env]}}</view>
+                                <view class="content placeholder" wx:else>请选择</view>
+                                <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                            </view>
+                            <!-- <view class="error-hint" wx:if="{{addData.type_error}}">{{addData.type_error}}</view> -->
+                        </view>
+            </view>
+        </picker>
+
+        <picker range="{{productData}}" range-key="value" bindchange="selectProductData">
+            <view class="item">
+                        <view class="title">产品外包装</view>
+                        <view class="input">
+                            <view class="select">
+                                <view class="content" wx:if="{{inventoryData.pro_package}}">{{productType[inventoryData.pro_package]}}</view>
+                                <view class="content placeholder" wx:else>请选择</view>
+                                <image class="icon d-b" src="./../../../../assets/img/icon-right.png" style="width: 13rpx; height: 24rpx;" />
+                            </view>
+                            <!-- <view class="error-hint" wx:if="{{addData.type_error}}">{{addData.type_error}}</view> -->
+                        </view>
+            </view>
+        </picker>
+
+        <view class="item">
+                    <view class="title">堆码等级</view>
+                    <view class="input">
+                        <input placeholder="仅可输入数字" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="stack_code_level" value="{{inventoryData.stack_code_level}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.stack_code_level_error}}">{{inventoryData.stack_code_level_error}}</view>
+                    </view>
+        </view>
+        <view class="item">
+                    <view class="title">出入库等级</view>
+                    <view class="input">
+                        <input placeholder="仅可输入数字" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                            type="number" data-maindata="inventoryData" data-fieldkey="inout_stock_level" value="{{inventoryData.inout_stock_level}}"/>
+                        <view class="error-hint" wx:if="{{inventoryData.inout_stock_level_error}}">{{inventoryData.inout_stock_level_error}}</view>
+                    </view>
+        </view>
+    </view>
+    
+    <view class="bottom-btn">
+        <view class="btn-view margin-main">
+            <view class="left">
+                <button class=" btn-primary btn-size-88" bind:tap="addEditData" data-type="inStorage" disabled="{{submitLoading}}">确认收货并入库</button>
+            </view>
+            <view class="right">
+                <button class=" btn-primary btn-size-88" bind:tap="addEditData" data-type="submit" disabled="{{submitLoading}}" loading="{{submitLoading}}">确认收货</button>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+<!--品控确认-->
+<view class="affirm-body" wx:if="{{isShowAffirm}}" bind:tap="showHideAffirm">
+    <view class="affirm">
+        <view class="item">采购数量：{{detail.num}}件，已收货：{{detail.num_in}}件</view>
+        <view class="item">本次收货数量：{{inventoryData.num_accept}}件，请确认</view>
+        <button class="btn-primary btn-size-88" bind:tap="supAcceptPurAdd" disabled="{{submitLoading}}" loading="{{submitLoading}}" data-accept-type="after_no">后面不会来货了</button>
+        <button class="btn-primary btn-size-88" bind:tap="supAcceptPurAdd" disabled="{{submitLoading}}" loading="{{submitLoading}}" data-accept-type="after_have">后面会来货</button>
+    </view>
+</view>

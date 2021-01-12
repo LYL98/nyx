@@ -1,0 +1,60 @@
+
+module.exports = {
+
+    isSelected: function (array, item) {
+        //无法使用includes方法
+        var isContain = false;
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === item) {
+                isContain = true;
+                break;
+            }
+        }
+
+        if (isContain) {
+            return 'active'
+        } else {
+            return ''
+        }
+    },
+
+    selectRoleTitle: function (roles) {
+        if (roles.length === 0) {
+            return '请选择'
+        } else {
+
+            var title = [];
+            for (var i = 0; i < roles.length; i++) {
+                title.push(roles[i].title);
+            }
+
+            return title.toString();
+        }
+    },
+
+    selectMultiItemTitle: function (items) {
+        if (items.length === 0) {
+            return '请选择'
+        } else {
+
+            var title = [];
+            for (var i = 0; i < items.length; i++) {
+                title.push(items[i].title);
+            }
+
+            return title.toString();
+        }
+    },
+
+    returnPostName: function (postList, post) {
+        var postName = '无';
+        for (var i = 0; i < postList.length; i++) {
+            if (postList[i].code === post) {
+                postName = postList[i].title;
+            }
+        }
+        return postName
+    }
+
+
+}

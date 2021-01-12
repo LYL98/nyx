@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "出库计划",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "market": "/packageWarehouse/pages/out-storage-plan/market/market",
+    "distribute": "/packageWarehouse/pages/out-storage-plan/distribute/distribute"
+  }
+}

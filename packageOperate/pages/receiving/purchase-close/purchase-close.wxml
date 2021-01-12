@@ -1,0 +1,11 @@
+<view class="padding30-40-20 font-size28 line-height38">是否确认关闭采购单，如是，请填写关闭采购单的原因</view>
+<view class="margin-main bg-body-fff remark-body margin-bottom20">
+    <myTextarea placeholder="请输入备注（必填）" maxlength="50" bind:input="inputChange" bind:focus="inputFocus"
+        data-maindata="detail" data-fieldkey="remark" value="{{detail.remark}}"/>
+    <view class="error-hint" wx:if="{{detail.remark_error}}">{{detail.remark_error}}</view>
+    <view class="hint font-size24">{{detail.remark.length}}/50</view>
+</view>
+
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+</view>

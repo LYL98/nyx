@@ -1,0 +1,24 @@
+module.exports = {
+  returnOmissionText: function (text, maxLength) {
+    text = text ? text.toString() : '';
+    maxLength = maxLength || 5;
+    return text.length >= maxLength ? text.slice(0, maxLength) + '...' : text;
+  },
+
+  isSelected: function (array, item) {
+    //无法使用includes方法
+    var isContain = false;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] === item) {
+            isContain = true;
+            break;
+        }
+    }
+
+    if (isContain) {
+        return 'active'
+    } else {
+        return ''
+    }
+},
+};

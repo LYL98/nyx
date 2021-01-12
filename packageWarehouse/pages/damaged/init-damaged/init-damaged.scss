@@ -1,0 +1,29 @@
+.content{
+    display: flex;
+    align-items: center;
+    >.left{
+        flex: 1;
+    }
+    >.right{
+        padding-left: 20rpx;
+        button {
+            margin-bottom: 10rpx;
+        }
+    }
+}
+.top {
+    >.title{
+        >.sub-title{
+            display: inline-block;
+            font-weight: 400;
+            font-size: 24rpx;
+            color: #fff;
+            background-color: #00ade7;
+            text-align: center;
+            padding: 0 4rpx;
+            margin-left: 8rpx;
+            border-radius: 6rpx;
+            line-height: 32rpx;
+        }
+    }
+}

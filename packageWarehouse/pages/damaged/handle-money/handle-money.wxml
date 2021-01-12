@@ -1,0 +1,36 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<view class="padding30-40-20 font-size28 line-height38 font-w-bold">{{detail.item_code}}/{{detail.item_title}}</view>
+<view class="margin-main item-list">
+    <view class="item bg-body-fff margin-bottom20">
+        <!-- <view class="top">
+            <view class="title font-w-bold">{{detail.warehouse_title}}/{{detail.tray_code}}</view>
+        </view> -->
+        <view class="content padding26-20">
+            <view class="font-size30 margin-bottom10">批次：{{detail.batch_code}}</view>
+            <view class="font-size30 margin-bottom10">供应商：{{detail.supplier_title}}</view>
+            <view class="font-size30 margin-bottom10">创建时间：{{detail.created}}</view>
+            <view class="font-size32 font-w-bold">处理数量：{{detail.handle_num}}件</view>
+        </view>
+    </view>
+</view>
+<view class="padding30-40-20 font-size28 line-height38 font-w-bold">销售信息</view>
+<view class="margin-main bg-body-fff margin-bottom20 list-input">
+    
+   <view class="item">
+        <view class="title">销售金额(元)</view>
+        <!--  -->
+        <view class="input">
+                <input placeholder="请输入金额(元)" placeholder-class="list-input-placeholder" bindinput="inputChange" bindfocus="inputFocus"
+                    type="digit" data-maindata="addData" data-fieldkey="sale_amount" value="{{addData.sale_amount}}"/>
+                <view class="error-hint" wx:if="{{addData.sale_amount_error}}">{{addData.sale_amount_error}}</view></view>
+    </view>
+</view>
+
+<view class="margin-main bg-body-fff remark-body margin-bottom20">
+    <myTextarea placeholder="请输入备注（选填）" maxlength="50" bind:input="inputChange" bind:focus="inputFocus" data-maindata="addData" data-fieldkey="remark" value="{{addData.remark}}" />
+    <view class="hint font-size24">{{addData.remark.length}}/50</view>
+</view>
+
+<view class="bottom-btn">
+    <button class="margin-main btn-primary btn-size-88" loading="{{subLoading}}" disabled="{{subLoading}}" bind:tap="handleAffirm">确认</button>
+</view>

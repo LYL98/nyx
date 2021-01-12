@@ -1,0 +1,328 @@
+<wxs src="./../../../../utils/tools.wxs" module="tools" />
+<wxs src="./../aftersale.wxs" module="aftersale" />
+
+<view class="page-aftersale-detail">
+  <view class="detail-container">
+
+    <!-- 商户信息 begin -->
+
+    <view class="item-area">
+      <text class="item-area-label">商户信息</text>
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">商户等级</text>
+          <text class="content">{{ detail.merchant_grade_code || '无' }}</text>
+        </view>
+        <view class="item">
+          <text class="label">商户过去7天退赔率</text>
+          <text class="content">{{detail.aftersale_rate === null ? '-' : detail.aftersale_rate / 10}}%</text>
+        </view>
+        
+      </view>
+    </view>
+
+    <!-- 售后单信息 begin -->
+
+    <view class="item-area">
+      <text class="item-area-label">售后单信息</text>
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">该商品（同发货日期）所有客户提报次数</text>
+          <text class="content">{{detail.merchant_as_same_item}} 次</text>
+        </view>
+        <view class="item">
+          <text class="label">服务单号</text>
+          <text class="content">{{ detail.code }}</text>
+        </view>
+        <view class="item">
+          <text class="label">处理状态</text>
+          <text class="{{ 'content ' + afterSaleStatusType[detail.status] }}">{{ afterSaleStatus[detail.status] }}</text>
+        </view>
+        <view class="item">
+          <text class="label">处理类型</text>
+          <text class="content">{{ afterSaleOptType[detail.opt_type] }}</text>
+        </view>
+        <view class="item">
+          <text class="label">申请人</text>
+          <text class="content">{{ detail.comment[0] && detail.comment[0].realname }} {{ detail.comment[0] && detail.comment[0].phone }}</text>
+        </view>
+        <view class="item">
+          <text class="label">申请时间</text>
+          <text class="content">{{ detail.created }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 售后单信息 end -->
+
+    <!-- 处理结果 begin -->
+
+    <view class="item-area" wx:if="{{ detail.status === 'close' }}">
+      <text class="item-area-label">处理结果</text>
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">处理件数</text>
+          <text class="content">{{ detail.num }} 件</text>
+        </view>
+        <view class="item">
+          <text class="label">是否退货</text>
+          <text class="content">{{detail.if_restore ? '是' : '否'}}</text>
+        </view>
+        <view class="item">
+          <text class="label">退款金额</text>
+          <text class="content" style="color: #FF6868;" wx:if="{{ detail.amount_refund > 0 }}">￥{{ tools.returnPrice(detail.amount_refund) }}</text>
+        </view>
+        <view class="item">
+          <text class="label">处理描述</text>
+          <text class="content" style="width: 518rpx; word-wrap: break-word; text-align: right;">{{ detail.opt_detail || '无' }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 处理结果 end -->
+
+    <!-- 二次处理结果 begin -->
+
+    <view class="item-area" wx:if="{{ detail.handle_second_time }}">
+      <text class="item-area-label">二次处理结果</text>
+      <view class="card item-card">
+        <view class="item">
+          <text class="label">退款金额</text>
+          <text class="content" style="color: #FF6868;">￥{{ tools.returnPrice(detail.handle_second_refund_amount) }}</text>
+        </view>
+        <view class="item">
+          <text class="label">处理描述</text>
+          <text class="content" style="width: 518rpx; word-wrap: break-word; text-align: right;">{{ detail.handle_second_remark || '无' }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 二次处理结果 end -->
+
+    <!-- 司机签收明细 begin -->
+
+    <view class="item-area" wx:if="{{ detail.receiver_id }}">
+      <text class="item-area-label">司机签收明细</text>
+      <view class="card item-card">
+        <view class="item">
+          <view class="label">签收人</view>
+          <view class="content">{{detail.receiver_title || '-'}}</view>
+        </view>
+        <view class="item" style="align-items: center;">
+          <view class="label">签收照片</view>
+          <view class="content">
+            <div style="height: 84rpx; overflow: hidden; display: block;">
+                <image wx:for="{{detail.global_images}}" wx:key="index" src="{{tencentPath + item + '_min200x200'}}" style="width: 84rpx; height: 84rpx; margin-left: 10rpx; display: inline-block"
+                    data-current="{{item}}" data-urls="{{detail.global_images}}" bind:tap="previewImg"/>
+                <image wx:for="{{detail.valuable_images}}" wx:key="index" src="{{tencentPath + item + '_min200x200'}}" style="width: 84rpx; height: 84rpx; margin-left: 10rpx; display: inline-block"
+                    data-current="{{item}}" data-urls="{{detail.valuable_images}}" bind:tap="previewImg"/>
+            </div>
+          </view>
+        </view>
+        <view class="item">
+          <view class="label">签收时间</view>
+          <view class="content">{{detail.receive_time || '-'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 司机签收明细 end -->
+
+    <!-- 商品信息 begin -->
+
+    <view class="item-area">
+      <text class="item-area-label">商品信息</text>
+
+      <view class="card area-card">
+
+        <view class="commodity-wrapper">
+          <view class="commodity">
+
+            <!-- 商品列表 begin -->
+            <view class="list">
+
+              <view  class="list-item">
+                <image data-src="{{detail.item_image}}" bindtap="previewImage" src="{{ tencentPath + detail.item_image + '_min200x200' }}" wx:if="{{ detail.item_image }}"></image>
+                <view class="detail-item">
+                  <view class="title">{{ detail.item_title }} <view class="sub-title" wx:if="{{detail.sale_type === '平台'}}">平台</view></view>
+                  <view class="tags">
+                    <text
+                        wx:for="{{ detail.item_attrs }}"
+                        wx:for-item="attr"
+                        wx:for-index="index"
+                        wx:key="index"
+                        class="{{ index === 0 && 'active' }}"
+                    >{{ attr }}</text>
+                  </view>
+                  <view class="price">
+                    <view class="left">
+                      <text class="real">
+                        ￥{{ tools.returnPrice(detail.item_price_sale) }}/件
+                      </text>
+                      <text class="frame-id" wx:if="{{detail.frame_id}}">(含筐￥{{tools.returnPrice(detail.frame_price)}})</text>
+                    </view>
+                    <view class="right">
+                      <text class="number">X{{ detail.count_real }}</text>
+                      <text class="total">￥{{ tools.returnPrice(detail.amount_real) }}</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+
+              <view class="price-change" wx:if="{{ detail.amount_real !== detail.amount_pre }}">
+
+                <view class="header" data-item="{{ item }}" catch:tap="toggerFlodPriceChange">
+                  <text class="label">价格变动</text>
+                  <view class="change">
+                    <view class="{{  aftersale.returnOrderColorClass(detail.amount_pre, detail.amount_real) }}">
+                      <text>{{ detail.amount_real > detail.amount_pre ? '+' : '-' }}</text>
+                      <text>￥</text>
+                      <text>{{ aftersale.returnAbs(tools.returnPrice(detail.amount_real - detail.amount_pre)) }}</text>
+                    </view>
+                    <image wx:if="{{ ui_is_open }}" src="./../../../../assets/img/icon-top.png"></image>
+                    <image wx:else src="./../../../../assets/img/icon-bottom.png"></image>
+                  </view>
+                </view>
+
+                <view class="content" wx:if="{{ ui_is_open }}">
+
+                  <view class="change-item">
+                    <text>原价:￥{{ tools.returnPrice(detail.amount_pre) }}</text>
+                    <view class="trend">
+                      <view class="{{ 'num ' + aftersale.returnOrderColorClass(detail.amount_pre, detail.amount_real) }}">
+                        <text>{{ detail.amount_real > detail.amount_pre ? '+' : '-' }}</text>
+                        <text>￥</text>
+                        <text>{{ aftersale.returnAbs(tools.returnPrice(detail.amount_real - detail.amount_pre)) }}</text>
+                      </view>
+                      <view class="line">
+                        <text class="horizontal-line"></text>
+                        <text class="arrow"></text>
+                      </view>
+                    </view>
+                    <text style="text-align: right;">现价:￥{{ tools.returnPrice(detail.amount_real) }}</text>
+                  </view>
+
+                  <view class="change-item number-change" wx:if="{{ detail.count_real !== detail.count_pre }}">
+                    <text>原数量:{{ detail.count_pre }}件</text>
+                    <view class="trend">
+                      <view class="{{ 'num ' + aftersale.returnOrderColorClass(detail.count_pre, detail.count_real) }}">
+                        <text>{{ detail.count_real > detail.count_pre ? '+' : '-' }}</text>
+                        <text>{{ aftersale.returnAbs(detail.count_real - detail.count_pre) }}</text>
+                        <text>件</text>
+                      </view>
+                      <view class="line">
+                        <text class="horizontal-line"></text>
+                        <text class="arrow"></text>
+                      </view>
+                    </view>
+                    <text style="text-align: right;">现数量:{{ detail.count_real }}件</text>
+                  </view>
+
+                  <view class="change-item weight-change" wx:if="{{ detail.weight_real !== detail.weight_pre }}">
+                    <text>原重量:{{ tools.returnWeight(detail.weight_pre) }}斤</text>
+                    <view class="trend">
+                      <view class="{{ 'num ' + aftersale.returnOrderColorClass(detail.weight_pre, detail.weight_real) }}">
+                        <text>{{ detail.weight_real > detail.weight_pre ? '+' : '-' }}</text>
+                        <text>{{ aftersale.returnAbs(tools.returnWeight(detail.weight_real - detail.weight_pre)) }}</text>
+                        <text>斤</text>
+                      </view>
+                      <view class="line">
+                        <text class="horizontal-line"></text>
+                        <text class="arrow"></text>
+                      </view>
+                    </view>
+                    <text style="text-align: right;">现重量:{{ tools.returnWeight(detail.weight_real) }}斤</text>
+                  </view>
+
+                </view>
+
+              </view>
+
+            </view>
+            <!-- 商品列表 end -->
+
+            <view class="show-order" wx:if="{{ auth.isAdmin || auth.OrderDetail }}">
+              <button plain hover-class="btn-hover" bind:tap="showOrderDetail">查看订单</button>
+            </view>
+
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+
+    <!-- 商品信息 end -->
+
+    <view class="item-area">
+      <text class="item-area-label">问题描述</text>
+      <view class="card area-card">
+        <view class="comment-wrapper">
+          <view class="comment-list" wx:for="{{ detail.comment }}" wx:for-item="item" wx:index="index" wx:key="{{ index }}">
+            <view class="comment member" wx:if="{{ item.operator_class === 'member' }}">
+              <image data-src="{{item.avatar}}" bindtap="previewImage" src="{{ tencentPath + item.avatar + '_min200x200' }}" class="avatar" wx:if="{{ item.avatar }}"></image>
+              <image src="./../../../../assets/img/default_avatar.png" class="avatar" wx:if="{{ !item.avatar }}"></image>
+              <view class="content-wrapper">
+                <view class="content-arrow"></view>
+                <view class="content">
+                  <view class="description">
+                    <text wx:if="{{detail.reason && index === 0}}">【{{detail.reason}}】</text>
+                    <text wx:if="{{index === 0}}">【{{tools.returnWeight(detail.weight_at_created)}}斤】</text>
+                    {{ item.content }}
+                  </view>
+                  <view class="images">
+                    <image
+                        wx:for="{{ item.images }}"
+                        wx:for-item="image"
+                        wx:index="index"
+                        wx:key="index"
+                        wx:if="{{ image }}"
+                        src="{{ tencentPath + image + '_min200x200' }}"
+                        data-current="{{image}}" data-urls="{{item.images}}" bind:tap="previewImg"
+                    >
+
+                    </image>
+                  </view>
+                  <view class="video">
+                    <video 
+                      wx:for="{{ item.media_urls }}"
+                      wx:for-item="video"
+                      wx:index="index"
+                      wx:key="index"
+                      wx:if="{{ video }}"
+                      src="{{ tencentPath + video }}"
+                      data-src="{{item.media_urls}}"
+                      data-index="{{index}}"
+                    ></video>
+                  </view>
+                  <text class="timestamp">{{ item.created }}</text>
+                </view>
+              </view>
+            </view>
+            <view class="comment operator" wx:if="{{ item.operator_class === 'operator' }}">
+              <view wx-if="{{ item.is_revoke }}" class="revoke">"客服"撤回了一条消息</view>
+              <view wx-if="{{ !item.is_revoke }}" class="content-wrapper">
+                <view class="content">
+                  <text class="description">{{ item.content }}</text>
+                  <text class="timestamp">{{ item.created }}</text>
+                </view>
+                <view class="content-arrow"></view>
+              </view>
+              <image data-src="{{item.avatar}}" bindtap="previewImage" src="{{ tencentPath + item.avatar + '_min200x200' }}" class="avatar" wx:if="{{ item.avatar }}"></image>
+              <image src="./../../../../assets/img/online_avatar.png" class="avatar" wx:if="{{ !item.avatar }}"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <view style="height: 138rpx;" wx:if="{{ detail.status !== 'close' && (auth.isAdmin || auth.OrderAfterSaleDirectDone) }}"></view>
+
+  <view class="fixed-footer" wx:if="{{ detail.status !== 'close' && (auth.isAdmin || auth.OrderAfterSaleDirectDone) }}">
+    <button class="btn-submit" hover-class="btn-submit-hover" bind:tap="onNavigateToDone" loading="{{ loading }}" disabled="{{ loading }}">处理完成</button>
+  </view>
+
+</view>
+

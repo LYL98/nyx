@@ -1,0 +1,34 @@
+<!--pages/order/order.wxml-->
+
+<block wx:if="{{ tabs.length > 1 }}">
+  <view class="weui-navbar">
+    <block wx:for="{{tabs}}" wx:key="*this">
+      <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <view class="weui-navbar__title">{{item}}</view>
+      </view>
+    </block>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+  </view>
+  <view style="height: 230rpx;"></view>
+</block>
+<view style="height: 130rpx;" wx:else></view>
+
+<view wx:if="{{ activeIndex == 0 }}" class="page-merchant">
+  <container-merchant-list
+      id="merchant-list"
+      auth="{{ auth }}"
+      province="{{ province }}"
+      province_code="{{ province_code}}"
+      opt_type="{{opt_type}}"
+  ></container-merchant-list>
+</view>
+
+<view wx:if="{{ activeIndex == 1 }}" class="page-merchant">
+  <container-intention-list
+      id="intention-list"
+      auth="{{ auth }}"
+      province="{{ province }}"
+      province_code="{{ province_code}}"
+      opt_type="{{opt_type}}"
+  ></container-intention-list>
+</view>

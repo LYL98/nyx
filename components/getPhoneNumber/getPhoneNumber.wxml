@@ -1,0 +1,9 @@
+<block wx:if="{{fromPage === 'login'}}">
+  <button
+    class="btn-primary btn-size-88"
+    open-type="getPhoneNumber"
+    bindgetphonenumber="getPhoneNumber"
+    loading="{{loading}}"
+    disabled="{{loading || !loginRes.code ? true : false}}"
+  >授权微信手机号</button>
+</block>

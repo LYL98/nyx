@@ -1,0 +1,207 @@
+<!--pages/setting/setting-operator-edit/setting-operator-edit.wxml-->
+<wxs src="./../merchant.wxs" module="setting" />
+
+<view class="merchant-edit{{type !== 'detail' ? ' has-fixed-footer' : ''}}">
+
+  <pg-form id="pg-form" detail="{{ type == 'detail' }}" wx:if="{{ loadComplete }}">
+
+    <view class="form-group" wx:if="{{ module === 'merchant' || (module === 'intention' && type === 'audit') }}">
+      <view class="header">客户信息</view>
+      <view class="content">
+        <pg-form-item rules="required|max_length:10:blur" label="商户名称">
+          <pg-input 
+            value="{{ formData.merchant_title }}"
+            placeholder="请输入商户名称" 
+            data-key="merchant_title" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item rules="required" label="协议商户" borderless="{{ !formData.is_post_pay }}">
+          <pg-picker 
+            options="{{ is_post_pay_options }}" 
+            value="{{ formData.is_post_pay }}" 
+            data-key="is_post_pay" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item 
+          wx:if="{{ formData.is_post_pay }}" 
+          label="授信额度"
+          rules="required|decimal:2:blur|min_value:1:blur|max_value:1000000:blur" 
+          borderless
+        >
+          <pg-input 
+            value="{{ formData.credit_limit }}" 
+            type="number" 
+            placeholder="请输入授信额度" 
+            data-key="credit_limit" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="header">门店信息</view>
+      <view class="content">
+        <pg-form-item 
+          rules="required" 
+          label="自提点" 
+          wx:if="{{ module === 'merchant' || module === 'store' || (module === 'intention' && type === 'audit') }}"
+        >
+          <pg-picker 
+            options="{{ gb_included_options }}" 
+            value="{{ formData.gb_included }}" 
+            data-key="gb_included" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="门店图片" rules="required">
+          <pg-upload module="merchant" limit="{{5}}" value="{{ formData.images }}" data-key="images" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|max_length:10:blur" label="门店名称" wx:if="{{ module !== 'store' }}">
+          <pg-input value="{{ formData.store_title }}" placeholder="请输入门店名称" data-key="store_title" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|max_length:10:blur" label="门店名称" wx:if="{{ module === 'store' }}">
+          <pg-input value="{{ formData.title }}" placeholder="请输入门店名称" data-key="title" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item label="区域" rules="required">
+          <pg-picker
+            disabled="{{ module === 'store' && type === 'modify' }}" 
+            options="{{ province_options }}" 
+            value="{{ formData.province_code }}" 
+            data-key="province_code" 
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="县域" rules="required" wx:if="{{ !!formData.province_code }}">
+          <pg-select
+            disabled="{{module === 'store' && type === 'modify'}}"
+            options="{{ city_options }}"
+            value="{{ formData.city_id }}"
+            data-key="city_id"
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="客户经理" wx:if="{{ !!formData.province_code && !!formData.city_id && module !== 'store' }}">
+          <pg-picker
+            placeholder="请选择门店客户经理"
+            options="{{ salesman_options }}"
+            value="{{ formData.store_csm_id }}"
+            data-key="store_csm_id"
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="客户经理" wx:if="{{ !!formData.province_code && !!formData.city_id && module === 'store' }}">
+          <pg-picker
+            placeholder="请选择门店客户经理"
+            options="{{ salesman_options }}"
+            value="{{ formData.csm_id }}"
+            data-key="csm_id"
+            bind:change="onChangeKey"
+          />
+        </pg-form-item>
+        <pg-form-item label="地理位置" rules="required" wx:if="{{ formData.province_code && formData.city_id }}">
+          <pg-select onlytap options="{{ geo_options }}" value="{{ formData.geo.poi }}" bind:tap="changeGeo"/>
+        </pg-form-item>
+        <pg-form-item rules="required|max_length:30:blur" label="收货地址">
+          <pg-input value="{{ formData.address }}" placeholder="请输入收货地址" data-key="address" bind:change="onChangeKey"/>
+        </pg-form-item>
+
+        <pg-form-item rules="required|max_length:10:blur" label="收货人" wx:if="{{ module === 'merchant' || module === 'store' || (module === 'intention' && type === 'audit') }}">
+          <pg-input value="{{ formData.linkman }}" placeholder="请输入收货人" data-key="linkman" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|phone:blur" label="联系方式" borderless wx:if="{{ module === 'merchant' || (module === 'intention' && type === 'audit') }}">
+          <pg-input value="{{ formData.store_phone }}" placeholder="请输入联系方式" data-key="store_phone" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|phone:blur" label="联系方式" wx:if="{{ module === 'store' }}">
+          <pg-input value="{{ formData.phone }}" placeholder="请输入联系方式" data-key="phone" bind:change="onChangeKey"/>
+        </pg-form-item>
+
+        <pg-form-item rules="max_length:10:blur" label="收货人" wx:if="{{ module === 'intention' && (type === 'add' || type === 'modify') }}">
+          <pg-input value="{{ formData.linkman }}" placeholder="请输入收货人" data-key="linkman" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="phone:blur" label="联系方式" borderless  wx:if="{{ module === 'intention' && (type === 'add' || type === 'modify') }}">
+          <pg-input value="{{ formData.store_phone }}" placeholder="请输入联系方式" data-key="store_phone" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item label="指定子账号" wx:if="{{ module === 'store' }}" >
+          <pg-select multiple options="{{ member_list_options }}" value="{{ formData.member_ids }}" data-key="member_ids" bind:change="onChangeKey" />
+        </pg-form-item>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="header">其他信息</view>
+      <view class="content">
+        <pg-form-item label="门店类型">
+          <pg-picker options="{{ store_type_options }}" value="{{ formData.store_type }}" data-key="store_type" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="经营面积">
+          <pg-picker options="{{ business_ares_options }}" value="{{ formData.business_ares }}" data-key="business_ares" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="KP性别">
+          <pg-picker options="{{ kp_gender_options }}" value="{{ formData.kp_gender }}" data-key="kp_gender" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="KP年龄">
+          <pg-picker options="{{ kp_age_options }}" value="{{ formData.kp_age }}" data-key="kp_age" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="其他采购渠道">
+          <pg-picker options="{{ pur_channels_options }}" value="{{ formData.pur_channels }}" data-key="pur_channels" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="经营年限">
+          <pg-picker options="{{ business_years_options }}" value="{{ formData.business_years }}" data-key="business_years" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="一体化收银机">
+          <pg-picker options="{{ is_pos_options }}" value="{{ formData.is_pos }}" data-key="is_pos" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="线上销售工具">
+          <pg-picker options="{{ online_sale_tool_options }}" value="{{ formData.online_sale_tool }}" data-key="online_sale_tool" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="月营业额">
+          <pg-picker options="{{ monthly_turnover_options }}" value="{{ formData.monthly_turnover }}" data-key="monthly_turnover" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="营业状态">
+          <pg-picker options="{{ business_status_options }}" value="{{ formData.business_status }}" data-key="business_status" bind:change="onChangeKey" />
+        </pg-form-item>
+        <pg-form-item label="经营品类" borderless>
+          <pg-select multiple options="{{ business_category_options }}" value="{{ formData.business_category }}" data-key="business_category" bind:change="onChangeKey" />
+        </pg-form-item>
+      </view>
+    </view>
+
+    <view class="form-group" wx:if="{{ module === 'merchant' || (module === 'intention' && type === 'audit') }}">
+      <view class="header">用户信息</view>
+      <view class="content">
+        <pg-form-item label="上传头像">
+          <pg-avatar module="merchant" value="{{ formData.avatar }}" data-key="avatar" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|phone:blur" label="登录手机">
+          <pg-input value="{{ formData.login_phone }}" placeholder="请输入登录手机" data-key="login_phone" bind:change="onChangeKey"/>
+        </pg-form-item>
+        <pg-form-item rules="required|max_length:10:blur" label="姓名" borderless>
+          <pg-input value="{{ formData.realname }}" placeholder="请输入姓名" data-key="realname" bind:change="onChangeKey"/>
+        </pg-form-item>
+      </view>
+    </view>
+
+  </pg-form>
+
+  <view wx:if="{{ type === 'detail' }}" class="creator-info">
+    <view><text>创建人：</text><text>{{ formData.creator && formData.creator.realname || '-' }}</text></view>
+    <view><text>创建时间：</text>{{ formData.created }}<text></text></view>
+  </view>
+  <view wx:else style="height: 188rpx;"></view>
+
+</view> 
+
+<view class="fixed-footer" wx:if="{{ type !== 'detail' }}">
+  <button 
+    class="btn-submit" 
+    hover-class="btn-submit-hover"
+    loading="{{loading}}"
+    disabled="{{ loading }}" 
+    bindtap="onSubmit"
+  >确认</button>
+</view>
+
+

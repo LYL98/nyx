@@ -1,0 +1,14 @@
+<!--pages/merchant/merchant-search/merchant-search.wxml-->
+<view class="page-merchant-search">
+  <view class="header">
+    <input
+        type="text"
+        class="search-input"
+        value="{{condition}}"
+        placeholder="门店名称、用户名称、电话"
+        auto-focus
+        confirm-type="search"
+        bind:confirm="confirmCondition"
+    />
+  </view>
+</view>

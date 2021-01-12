@@ -1,0 +1,9 @@
+<!--components/form/input/input.wxml-->
+<input
+  type="{{ type }}"
+  value="{{ value }}"
+  disabled="{{ disabled || detail_module }}"
+  placeholder="{{ placeholder }}"
+  bindinput="onInput"
+  bindchange="onChange"
+/>

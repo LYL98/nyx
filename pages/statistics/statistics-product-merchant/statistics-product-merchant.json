@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "门店统计",
+  "usingComponents": {
+    "wux-search-bar": "../../../components/search-bar/index"
+  }
+}

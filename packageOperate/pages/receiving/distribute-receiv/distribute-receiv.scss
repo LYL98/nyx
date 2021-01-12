@@ -1,0 +1,49 @@
+.detail{
+    padding: 26rpx 20rpx;
+    >.aided{
+        color: #A1A6B3;
+    }
+    >.num{
+        margin-top: 10rpx;
+        color: #F26A6A;
+    }
+}
+
+.title-add{
+    display: flex;
+    align-items: flex-end;
+    padding: 0 10rpx;
+    margin-bottom: 20rpx;
+    >.left{
+        flex: 1;
+    }
+    >.right{
+        color: #00ADE7;
+    }
+}
+
+.affirm-body{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba($color: #000, $alpha: .4);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    >.affirm{
+        background: #fff;
+        border-radius: 8rpx;
+        width: 560rpx;
+        text-align: center;
+        padding-top: 30rpx;
+        >.item{
+            margin-bottom: 30rpx;
+        }
+        >button{
+            margin: 0 30rpx 30rpx;
+        }
+    }
+}
